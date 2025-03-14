@@ -51,7 +51,7 @@ commentPatches android_kernel_cyanogen_msm8974.sh "CVE-2017-7373";
 commentPatches android_kernel_essential_msm8998.sh "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" "CVE-2017-13218" "CVE-2019-14047/ANY/0002.patch";
 commentPatches android_kernel_fairphone_msm8974.sh "CVE-2018-20169";
 commentPatches android_kernel_fairphone_sdm632.sh "CVE-2019-19319" "CVE-2020-1749" "CVE-2020-8992" "CVE-2021-3347" "CVE-2021-20322";
-commentPatches android_kernel_fairphone_sm7225.sh "CVE-2018-5873" "CVE-2021-3444" "CVE-2022-1184/^5.18/0001.patch" "CVE-2021-3600";
+commentPatches android_kernel_fairphone_sm7225.sh "CVE-2018-5873" "CVE-2021-3444" "CVE-2022-1184/^5.18/0001.patch" "CVE-2021-3600" "CVE-2024-56554/ANY/0001.patch" "CVE-2024-56553/ANY/0001.patch" "CVE-2024-56692/ANY/0001.patch" "CVE-2024-56590/ANY/0001.patch"
 commentPatches android_kernel_fxtec_msm8998.sh "0008-Graphene-Kernel_Hardening-slab" "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" "CVE-2019-11599" "CVE-2019-16746" "CVE-2019-18282" "CVE-2019-19319" "CVE-2019-ctnl-addr-leak" "CVE-2020-0429" "CVE-2020-1749" "CVE-2020-8992" "CVE-2020-16166";
 commentPatches android_kernel_fxtec_sm6115.sh "CVE-2018-5873" "CVE-2021-3444" "CVE-2021-3600";
 commentPatches android_kernel_google_bonito.sh "CVE-2020-0067";
