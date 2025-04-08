@@ -200,7 +200,7 @@ index 2b42726..1577b3d 100644
 -        if(serverOnion.toLowerCase().startsWith("http") && isOnionRoutingEnabled(context)) {
 -            server = serverOnion;
 +        String server = getServerBaseUrl(context);
-+        if (!isOnionRoutingEnabled(context) && server.toLowerCase().startsWith("http://") && server.toLowerCase().contains(".onion/")) {
++        if (!isOnionRoutingEnabled(context) && server.toLowerCase().startsWith("http://") && server.toLowerCase().contains(".onion")) {
 +            server = Constants.PREF_SERVER_CHOICE_PRIMARY_ACTUAL;
          }
  
