@@ -89,10 +89,9 @@ enableVerity "device/razer/cheryl";
 enableVerity "device/samsung/exynos7870-common" # Samsung J5 2017
 enableVerity "device/samsung/sm7125-common" # Samsung A52q
 #enableVerity "device/sony/discovery";
-#enableVerity "device/sony/nile-common";
+enableVerity "device/sony/nile-common"	# e.g. kirin
 #enableVerity "device/sony/pioneer";
 #enableVerity "device/sony/voyager";
-#enableVerity "device/sony/kirin";
 #enableVerity "device/sony/mermaid";
 enableVerity "device/yandex/Amber";
 enableVerity "device/zuk/msm8996-common";
