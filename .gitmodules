@@ -1,9 +1,6 @@
 [submodule "Patches/DivestOS_Wallpapers"]
 	path = Patches/Wallpapers
 	url = https://codeberg.org/AXP-OS/wallpapers.git
-[submodule "Patches/Linux"]
-	path = Patches/Linux
-	url = https://codeberg.org/AXP-OS/kernel_patches.git
 [submodule "PrebuiltApps"]
 	path = PrebuiltApps
 	url = https://codeberg.org/AXP-OS/legacy_prebuilt_apps.git
