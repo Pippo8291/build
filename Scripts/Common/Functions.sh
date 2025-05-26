@@ -82,7 +82,9 @@ enter() {
 export -f enter;
 
 enterAndClear() {
-	if enter "$1"; then gitReset; else return 1; fi;
+	#if enter "$1"; then gitReset; else return 1; fi;
+ 	# disable reset as we changed the patch order to: secpatches -> dos-patches
+ 	if enter "$1"; then true; else return 1; fi;
 }
 export -f enterAndClear;
 
