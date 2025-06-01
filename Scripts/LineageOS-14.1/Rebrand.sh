@@ -25,29 +25,34 @@ echo "Rebranding...";
 
 if enter "bootable/recovery"; then
 sed -i 's|Android Recovery|'"$DOS_BRANDING_NAME"' Recovery|' ./*ui.cpp;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "build"; then
 sed -i 's|echo "ro.build.user=$USER"|echo "ro.build.user=emy"|' tools/buildinfo.sh; #Override build user
 sed -i 's|echo "ro.build.host=`hostname`"|echo "ro.build.host=dosbm"|' tools/buildinfo.sh; #Override build host
 sed -i '/CM_TARGET_PACKAGE/s/lineage/'"$DOS_BRANDING_ZIP_PREFIX"'/' core/Makefile;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "frameworks/base"; then
 generateBootAnimationMask "$DOS_BRANDING_NAME" "$DOS_BRANDING_BOOTANIMATION_FONT" core/res/assets/images/android-logo-mask.png;
 generateBootAnimationShine "$DOS_BRANDING_BOOTANIMATION_COLOR" "$DOS_BRANDING_BOOTANIMATION_STYLE" core/res/assets/images/android-logo-shine.png;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "packages/apps/CMParts"; then
 sed -i '/.*egg_title/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/strings.xml;
 sed -i '/.*cmparts_title/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/strings.xml;
 sed -i '/.*privacy_settings_category/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/strings.xml;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "packages/apps/Settings"; then
 sed -i '/.*cmlicense_title/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/cm_strings.xml;
 sed -i '/.*cmupdate_settings_title/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/cm_strings.xml;
 sed -i '/.*mod_version/s/LineageOS/'"$DOS_BRANDING_NAME"'/' res/values*/cm_strings.xml;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "packages/apps/SetupWizard"; then
@@ -55,6 +60,7 @@ sed -i 's|http://lineageos.org/legal|'"$DOS_BRANDING_LINK_PRIVACY"'|' src/com/cy
 sed -i '/.*os_name/s/LineageOS/'"$DOS_BRANDING_NAME_WIZARD"'/' res/values*/strings.xml;
 sed -i '/.*services/s/LineageOS/'"$DOS_BRANDING_NAME_WIZARD"'/g' res/values*/strings.xml;
 sed -i '/.*setup_services/s/LineageOS/'"$DOS_BRANDING_NAME_WIZARD"'/g' res/values*/strings.xml;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "packages/apps/Updater"; then
@@ -62,10 +68,12 @@ sed -i 's|0OTA_SERVER_CLEARNET0|'"$DOS_OTA_SERVER_PRIMARY"'|' src/org/lineageos/
 sed -i 's|0OTA_SERVER_ONION0|'"$DOS_OTA_SERVER_PRIMARY"'|' src/org/lineageos/updater/misc/Utils.java;
 sed -i 's|>LineageOS|>'"$DOS_BRANDING_NAME"'|' res/values*/strings.xml;
 sed -i 's|https://download.lineageos.org/<xliff:g id="device_name">%1$s</xliff:g>/changes|'"$DOS_BRANDING_LINK_NEWS"'|g' res/values*/strings.xml;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "system/core"; then
 sed -i 's/LineageOS/'"$DOS_BRANDING_NAME"'/' debuggerd/tombstone.cpp;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 if enter "vendor/cm"; then
@@ -73,6 +81,7 @@ sed -i 's|https://lineageos.org/legal|'"$DOS_BRANDING_LINK_ABOUT"'|' config/comm
 sed -i '/.*ZIPPATH=/s/lineage/'"$DOS_BRANDING_ZIP_PREFIX"'/' build/envsetup.sh;
 sed -i '/.*config_mms_user_agent/s/LineageOS/'"$DOS_BRANDING_NAME"'/g' overlay/common/frameworks/base/core/res/res/values*/config.xml
 rm -rf bootanimation;
+MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
 cd "$DOS_BUILD_BASE";
