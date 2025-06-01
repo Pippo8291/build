@@ -146,9 +146,13 @@ applyPatch() {
 		if git apply --check "$@" &> /dev/null; then
 			applyPatchReal "$@";
 		else
-			if git apply --reverse --check "$@" &> /dev/null; then
-				echo "Already applied: $currentWorkingPatch";
-			else
+                        local psubj=$(grep Subject: "$currentWorkingPatch" | cut -d ':' -f2 | sed 's/\[PATCH\]//g' | sed -E 's/^\s+'//g)
+                        if git log --grep="$psubj" &>/dev/null;then
+                            echo "Already applied (subject match found): $currentWorkingPatch"
+                        else
+			    if git apply --reverse --check "$@" &> /dev/null; then
+				echo "Already applied (reverse check): $currentWorkingPatch";
+			    else
 				if git apply --check "$@" --3way &> /dev/null; then
     					echo "Applying (as 3way): $currentWorkingPatch";
 					applyPatchReal "$@" --3way;
@@ -160,7 +164,8 @@ applyPatch() {
 					echo -e "\e[0;31mERROR: Cannot apply: $currentWorkingPatch\e[0m";
 					false
      				fi
-			fi;
+			    fi
+                        fi
 		fi;
 	else
 		echo -e "\e[0;31mERROR: Patch doesn't exist: $currentWorkingPatch\e[0m";
