@@ -55,6 +55,7 @@ cp -r "$DOS_PATCHES_COMMON/android_vendor_divested/." "$DOS_BUILD_BASE/vendor/di
 
 if enterAndClear "art"; then
 applyPatch "$DOS_PATCHES/android_art/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "bionic"; then
@@ -84,10 +85,12 @@ applyPatch "$DOS_PATCHES/android_bionic/0002-Graphene_Bionic_Hardening-11.patch"
 applyPatch "$DOS_PATCHES/android_bionic/0003-Hosts_Cache.patch"; #Sort and cache hosts file data for fast lookup (tdm)
 applyPatch "$DOS_PATCHES/android_bionic/0003-Hosts_Wildcards.patch"; #Support wildcards in cached hosts file (tdm)
 applyPatch "$DOS_PATCHES/android_bionic/0004-hosts_toggle.patch"; #Add a toggle to disable /etc/hosts lookup (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "bootable/recovery"; then
 applyPatch "$DOS_PATCHES/android_bootable_recovery/0001-No_SerialNum_Restrictions.patch"; #Abort package installs if they are specific to a serial number (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "build/make"; then
@@ -96,18 +99,22 @@ applyPatch "$DOS_PATCHES/android_build/0001-Enable_fwrapv.patch"; #Use -fwrapv a
 applyPatch "$DOS_PATCHES/android_build/0003-Exec_Based_Spawning.patch"; #Add exec-based spawning support (GrapheneOS) #XXX: most devices override this
 applyPatch "$DOS_PATCHES/android_build/0004-Selective_APEX.patch"; #Only enable APEX on 6th/7th gen Pixel devices (GrapheneOS)
 sed -i '77i$(my_res_package): PRIVATE_AAPT_FLAGS += --auto-add-overlay' core/aapt2.mk; #Enable auto-add-overlay for packages, this allows the vendor overlay to easily work across all branches.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "build/soong"; then
 applyPatch "$DOS_PATCHES/android_build_soong/0001-Enable_fwrapv.patch"; #Use -fwrapv at a minimum (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/chromium-webview"; then
 git lfs pull; #Ensure the objects are available
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/conscrypt"; then
 applyPatch "$DOS_PATCHES/android_external_conscrypt/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/expat"; then
@@ -117,6 +124,7 @@ applyPatch "$DOS_PATCHES/android_external_expat/0003-tests-Cover-len-0-for-both-
 applyPatch "$DOS_PATCHES/android_external_expat/0004-doc-Document-that-XML_Parse-XML_ParseBuffer-reject-l.patch";
 applyPatch "$DOS_PATCHES/android_external_expat/0005-lib-Detect-integer-overflow-in-dtdCopy.patch";
 applyPatch "$DOS_PATCHES/android_external_expat/0006-lib-xmlparse.c-Detect-billion-laughs-attack-with-iso.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/hardened_malloc"; then
@@ -125,6 +133,7 @@ applyPatch "$DOS_PATCHES_COMMON/android_external_hardened_malloc/0001-Broken_Cam
 applyPatch "$DOS_PATCHES_COMMON/android_external_hardened_malloc/0002-Broken_Displays.patch"; #Add workaround for OnePlus 8 & 9 display driver crash (DivestOS)
 sed -i 's/34359738368/2147483648/' Android.bp; #revert 48-bit address space requirement
 sed -i -e '74,76d;' Android.bp; #fix compile under A13
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/base"; then 
@@ -184,58 +193,72 @@ sed -i 's/MAX_PASSWORD_LENGTH = 16/MAX_PASSWORD_LENGTH = 64/' core/java/android/
 sed -i 's/DEFAULT_STRONG_AUTH_TIMEOUT_MS = 72 \* 60 \* 60 \* 1000;/DEFAULT_STRONG_AUTH_TIMEOUT_MS = 12 * 60 * 60 * 1000;/' core/java/android/app/admin/DevicePolicyManager.java; #Decrease the strong auth prompt timeout to occur more often
 #rm -rf packages/CompanionDeviceManager; #Used to support Android Wear (which hard depends on GMS)
 rm -rf packages/PrintRecommendationService; #Creates popups to install proprietary print apps
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/libs/systemui"; then
 applyPatch "$DOS_PATCHES/android_frameworks_libs_systemui/0001-Icon_Cache.patch"; #Invalidate icon cache between OS releases (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if [ "$DOS_DEBLOBBER_REMOVE_IMS" = true ]; then
 if enterAndClear "frameworks/opt/net/ims"; then
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_ims/0001-Fix_Calling.patch"; #Fix calling when IMS is removed (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/opt/net/wifi"; then
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/0001-Random_MAC.patch"; #Add support for always generating new random MAC (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8953/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-8998.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8996/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-8996.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8998/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-8998.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/sdm845/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-sdm845.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/sm8150/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-sm8150.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/sm8250/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-sm8150.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/sm8350/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-sm8350.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "libcore"; then
 applyPatch "$DOS_PATCHES/android_libcore/0002-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_libcore/0003-Exec_Based_Spawning-1.patch"; #Add exec-based spawning support (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_libcore/0003-Exec_Based_Spawning-2.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/CellBroadcastReceiver"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_CellBroadcastReceiver/0001-presidential_alert_toggle.patch"; #Allow toggling presidential alerts (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Contacts"; then
@@ -243,28 +266,34 @@ applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0001-No_Google_Li
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0002-No_Google_Backup.patch"; #Backups are not sent to Google (GrapheneOS)
 #applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0003-Skip_Accounts.patch"; #Don't prompt to add account when creating a contact (CalyxOS) #TODO: 21REBASE
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0004-No_GMaps.patch"; #Use common intent for directions instead of Google Maps URL (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Dialer"; then
 sed -i 's/>true/>false/' java/com/android/incallui/res/values/lineage_config.xml; #XXX: temporary workaround for black screen on incoming calls https://gitlab.com/LineageOS/issues/android/-/issues/4632
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/ImsServiceEntitlement"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_ImsServiceEntitlement/0001-delay-fcm.patch"; #Delay FCM registration until it's actually required (CalyxOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/LineageParts"; then
 rm -rf src/org/lineageos/lineageparts/lineagestats/ res/xml/anonymous_stats.xml res/xml/preview_data.xml; #Nuke part of the analytics
 applyPatch "$DOS_PATCHES/android_packages_apps_LineageParts/0001-Remove_Analytics.patch"; #Remove analytics (DivestOS)
 cp -f "$DOS_PATCHES_COMMON/contributors.db" assets/contributors.db; #Update contributors cloud
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Messaging"; then
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Messaging/0001-null-fix.patch"; #Handle null case (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Nfc"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Nfc/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Settings"; then
@@ -283,15 +312,18 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0015-SUPL_Toggle.patch";
 if [ "$DOS_MICROG_SUPPORT" = true ]; then applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0016-microG_Toggle.patch"; fi; #Add a toggle for microG enablement (heavily based off of a GrapheneOS patch)
 if [ "$DOS_DEBLOBBER_REMOVE_EUICC_FULL" = false ]; then applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0017-OpenEUICC_Toggle.patch"; fi; #Add a toggle for OpenEUICC enablement (heavily based off of a GrapheneOS patch)
 if [ -d "$DOS_BUILD_BASE"/vendor/divested-carriersettings ]; then applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0018-CC2_Toggle.patch"; fi; #Add a toggle for CarrierConfig2 enablement (heavily based off of a GrapheneOS patch)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/SetupWizard"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_SetupWizard/0001-Remove_Analytics.patch"; #Remove analytics (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Trebuchet"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Trebuchet/361248.patch"; #Launcher3: Allow toggling monochrome icons for all apps
 cp $DOS_BUILD_BASE/vendor/divested/overlay/common/packages/apps/Trebuchet/res/xml/default_workspace_*.xml res/xml/; #XXX: Likely no longer needed
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Updater"; then
@@ -299,11 +331,13 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Updater/0001-Server.patch"; #Swit
 applyPatch "$DOS_PATCHES/android_packages_apps_Updater/0002-Tor_Support.patch"; #Add Tor support (DivestOS)
 if [ "$DOS_OTA_SERVER_EXTENDED" = true ]; then applyPatch "$DOS_PATCHES/android_packages_apps_Updater/0003-Server_Choices.patch"; fi; #Add server choices (DivestOS)
 sed -i 's/PROP_BUILD_VERSION_INCREMENTAL);/PROP_BUILD_VERSION_INCREMENTAL).replaceAll("\\\\.", "");/' app/src/main/java/org/lineageos/updater/misc/Utils.java; #Remove periods from incremental version
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/inputmethods/LatinIME"; then
 applyPatch "$DOS_PATCHES/android_packages_inputmethods_LatinIME/0001-Voice.patch"; #Remove voice input key (DivestOS)
 applyPatch "$DOS_PATCHES/android_packages_inputmethods_LatinIME/0002-Disable_Personalization.patch"; #Disable personalization dictionary by default (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/modules/DnsResolver"; then
@@ -311,29 +345,35 @@ applyPatch "$DOS_PATCHES/android_packages_modules_DnsResolver/0001-Hosts_Cache.p
 applyPatch "$DOS_PATCHES/android_packages_modules_DnsResolver/0001-Hosts_Wildcards.patch"; #DnsResolver: Support wildcards in cached hosts file (tdm)
 applyPatch "$DOS_PATCHES/android_packages_modules_DnsResolver/0002-hosts_toggle.patch"; #Add a toggle to disable /etc/hosts lookup (DivestOS)
 applyPatch "$DOS_PATCHES/android_packages_modules_DnsResolver/0003-Reuse-align_ptr-in-hosts_cache.patch"; #Reuse align_ptr in hosts_cache (danielk43)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/modules/NetworkStack"; then
 applyPatch "$DOS_PATCHES/android_packages_modules_NetworkStack/0001-Random_MAC.patch"; #Avoid reusing DHCP state for full MAC randomization (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/modules/Permission"; then
 applyPatch "$DOS_PATCHES/android_packages_modules_Permission/0005-Browser_No_Location.patch"; #Stop auto-granting location to system browsers (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_packages_modules_Permission/0006-Location_Indicators.patch"; #SystemUI: Use new privacy indicators for location (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_packages_modules_Permission/0007-No_safety_center.patch"; #Disable Safety Center (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/modules/Wifi"; then
 applyPatch "$DOS_PATCHES/android_packages_modules_Wifi/0001-Random_MAC.patch"; #Add support for always generating new random MAC (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/services/Telephony"; then
 if [ -d "$DOS_BUILD_BASE"/vendor/divested-carriersettings ]; then applyPatch "$DOS_PATCHES/android_packages_services_Telephony/0001-CC2.patch"; fi; #Runtime control of platform carrier config package (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/ca-certificates"; then
 rm -rf files; #Remove old certs
 cp -r "$DOS_PATCHES_COMMON/android_system_ca-certificates/files" .; #Copy the new ones into place
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/core"; then
@@ -343,10 +383,12 @@ git revert --no-edit 3cf503f51ee4d1b2f51a517c644a85d02ac5cfcf; #unknown impact
 applyPatch "$DOS_PATCHES/android_system_core/0001-Harden.patch"; #Harden mounts with nodev/noexec/nosuid + misc sysctl changes (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_core/0002-ptrace_scope.patch"; #Add a property for controlling ptrace_scope (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_core/0003-HM-Increase_vm_mmc.patch"; #(GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/extras"; then
 applyPatch "$DOS_PATCHES/android_system_extras/0001-ext4_pad_filenames.patch"; #FBE: pad filenames more (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/sepolicy"; then
@@ -355,10 +397,12 @@ applyPatch "$DOS_PATCHES/android_system_sepolicy/0003-ptrace_scope-1.patch"; #Al
 applyPatch "$DOS_PATCHES/android_system_sepolicy/0003-ptrace_scope-2.patch"; #Allow system to use persist.native_debug (GrapheneOS)
 awk -i inplace '!/true cannot be used in user builds/' Android.mk; #Allow ignoring neverallows under -user
 awk -i inplace '!/domain=gmscore_app/' private/seapp_contexts prebuilts/api/*/private/seapp_contexts; #Disable unused gmscore_app domain (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/update_engine"; then
 git revert --no-edit 94e1a11f391d5d742e9e6aec4e333c14e7501e33; #Do not skip payload signature verification
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/lineage"; then
@@ -381,6 +425,7 @@ awk -i inplace '!/Eleven/' config/common_mobile_full.mk; #Remove Music Player
 awk -i inplace '!/enforce-product-packages-exist-internal/' config/common.mk; #Ignore missing packages
 awk -i inplace '!/com.android.vending/' overlay/common/frameworks/base/core/res/res/values/vendor_required_apps*.xml; #Remove unwanted apps
 awk -i inplace '!/com.google.android/' overlay/common/frameworks/base/core/res/res/values/vendor_required_apps*.xml;
+MSG="DOS patching" commitChanges
 fi;
 
 if enter "vendor/divested"; then
@@ -391,6 +436,7 @@ sed -i 's/OpenCamera/Aperture/' packages.mk; #Use the LineageOS camera app
 awk -i inplace '!/speed-profile/' build/target/product/lowram.mk; #breaks compile on some dexpreopt devices
 sed -i 's/wifi,cell/internet/' overlay/common/frameworks/base/packages/SystemUI/res/values/config.xml; #Use the modern quick tile
 sed -i 's|system/etc|$(TARGET_COPY_OUT_PRODUCT)/etc|' divestos.mk;
+MSG="DOS patching" commitChanges
 fi;
 #
 #END OF ROM CHANGES
@@ -401,16 +447,19 @@ fi;
 #
 if enterAndClear "device/essential/mata"; then
 echo "allow permissioncontroller_app tethering_service:service_manager find;" > sepolicy/private/permissioncontroller_app.te;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/fxtec/pro1"; then
 echo "type qti_debugfs, fs_type, debugfs_type;" >> sepolicy/vendor/file.te; #fixup
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/google/gs101"; then
 git revert --no-edit adfcf46ec8c099e77cf58ec87d02bafc78a0d01e; #potential breakage
 if [ "$DOS_DEBLOBBER_REMOVE_CNE" = true ]; then sed -i '/google iwlan/,+8d' device.mk; fi; #fix stray
 awk -i inplace '!/widevine.mk/' device.mk;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/google/gs201"; then
@@ -418,14 +467,17 @@ if [ "$DOS_DEBLOBBER_REMOVE_CNE" = true ]; then sed -i '/google iwlan/,+8d' devi
 if [ "$DOS_DEBLOBBER_REMOVE_EUICC" = true ]; then sed -i '/eSIM MEP/,+4d' device.mk; fi; #fix stray
 rm -rfv widevine;
 awk -i inplace '!/widevine.mk/' device.mk;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/google/gs-common"; then
 rm -rfv widevine;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/google/redbull"; then
 awk -i inplace '!/sctp/' BoardConfig-common.mk modules.load; #fix compile after hardenDefconfig
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/oneplus/msm8998-common"; then
@@ -433,14 +485,17 @@ if enterAndClear "device/oneplus/msm8998-common"; then
 sed -i '/PRODUCT_SYSTEM_VERITY_PARTITION/iPRODUCT_VENDOR_VERITY_PARTITION := /dev/block/bootdevice/by-name/vendor' common.mk; #Support verity on /vendor too
 awk -i inplace '!/vendor_sensors_dbg_prop/' sepolicy/vendor/hal_camera_default.te; #fixup
 echo "type qti_debugfs, fs_type, debugfs_type;" >> sepolicy/vendor/file.te; #fixup
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/oplus"; then
 echo "allow update_engine_common vendor_custom_ab_block_device:blk_file rw_file_perms;" >> sepolicy/qti/vendor/update_engine_common.te; #fix firmware flash
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "kernel/fairphone/sdm632"; then
 sed -i 's|/../../prebuilts/tools-lineage|/../../../prebuilts/tools-lineage|' lib/Makefile; #fixup typo
+MSG="DOS patching" commitChanges
 fi;
 
 #Make changes to all devices

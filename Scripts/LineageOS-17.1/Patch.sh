@@ -55,10 +55,12 @@ cp -r "$DOS_PATCHES_COMMON/android_vendor_divested/." "$DOS_BUILD_BASE/vendor/di
 
 if enterAndClear "art"; then
 applyPatch "$DOS_PATCHES/android_art/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "bootable/recovery"; then
 applyPatch "$DOS_PATCHES/android_bootable_recovery/0001-No_SerialNum_Restrictions.patch"; #Abort package installs if they are specific to a serial number (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "bionic"; then
@@ -82,6 +84,7 @@ applyPatch "$DOS_PATCHES/android_bionic/0003-Graphene_Bionic_Hardening-9.patch";
 #applyPatch "$DOS_PATCHES/android_bionic/0003-Graphene_Bionic_Hardening-16.patch"; #Move pthread_internal_t behind guard page (GrapheneOS)
 #applyPatch "$DOS_PATCHES/android_bionic/0003-Graphene_Bionic_Hardening-17.patch"; #Add secondary stack randomization (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_bionic/0004-hosts_toggle.patch"; #Add a toggle to disable /etc/hosts lookup (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "build/make"; then
@@ -94,29 +97,35 @@ sed -i '75i$(my_res_package): PRIVATE_AAPT_FLAGS += --auto-add-overlay' core/aap
 awk -i inplace '!/updatable_apex.mk/' target/product/mainline_system.mk; #Disable APEX
 sed -i 's/PLATFORM_MIN_SUPPORTED_TARGET_SDK_VERSION := 23/PLATFORM_MIN_SUPPORTED_TARGET_SDK_VERSION := 28/' core/version_defaults.mk; #Set the minimum supported target SDK to Pie (GrapheneOS)
 commitChanges
+MSG="DOS patching" commitChanges
 fi
 
 if enterAndClear "build/soong"; then
 applyPatch "$DOS_PATCHES/android_build_soong/0001-Enable_fwrapv.patch"; #Use -fwrapv at a minimum (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_build_soong/0002-auto_var_init.patch"; #Enable -ftrivial-auto-var-init=zero (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/qcom/sepolicy-legacy"; then
 applyPatch "$DOS_PATCHES/android_device_qcom_sepolicy-legacy/0001-Camera_Fix.patch"; #Fix camera on -user builds XXX: REMOVE THIS TRASH (DivestOS)
 echo "SELINUX_IGNORE_NEVERALLOWS := true" >> sepolicy.mk; #Ignore neverallow violations XXX: necessary for -user builds of legacy devices
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/aac"; then
 applyPatch "$DOS_PATCHES/android_external_aac/365445.patch"; #Q_asb_2023-08 Increase patchParam array size by one and fix out-of-bounce write in resetLppTransposer().
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/chromium-webview"; then
 git lfs pull; #Ensure the objects are available
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/conscrypt"; then
 applyPatch "$DOS_PATCHES/android_external_conscrypt/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/expat"; then
@@ -124,12 +133,14 @@ applyPatch "$DOS_PATCHES/android_external_expat/0001-lib-Reject-negative-len-for
 applyPatch "$DOS_PATCHES/android_external_expat/0002-lib-Detect-integer-overflow-in-dtdCopy.patch";
 applyPatch "$DOS_PATCHES/android_external_expat/0003-lib-Detect-integer-overflow-in-function-nextScaffold.patch";
 applyPatch "$DOS_PATCHES/android_external_expat/0004-lib-Stop-leaking-opening-tag-bindings-after-closing-.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/freetype"; then
 applyPatch "$DOS_PATCHES/android_external_freetype/365406.patch"; #Q_asb_2023-07 Cherry-pick two upstream changes
 applyPatch "$DOS_PATCHES/android_external_freetype/365446.patch"; #Q_asb_2023-08 Cherrypick following three changes
 applyPatch "$DOS_PATCHES/android_external_freetype/378047.patch"; #Q_asb_2023-12 Make `glyph_name' parameter to `FT_Get_Name_Index' a `const'.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/hardened_malloc"; then
@@ -147,19 +158,23 @@ awk -i inplace '!/ramdisk_available/' Android.bp; #fix compile under A10
 git revert --no-edit 8974af86d12f7e29b54b5090133ab3d7eea0e519; #fix compile under A10
 mv include/h_malloc.h . ; #fix compile under A10
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/libcups"; then
 git fetch https://github.com/LineageOS/android_external_libcups refs/changes/95/376595/1 && git cherry-pick FETCH_HEAD; #Q_asb_2023-11 Upgrade libcups to v2.3.1
 git fetch https://github.com/LineageOS/android_external_libcups refs/changes/96/376596/1 && git cherry-pick FETCH_HEAD; #Q_asb_2023-11 Upgrade libcups to v2.3.3
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/libvpx"; then
 applyPatch "$DOS_PATCHES_COMMON/android_external_libvpx/CVE-2023-5217.patch"; #VP8: disallow thread count changes
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/libxml2"; then
 applyPatch "$DOS_PATCHES/android_external_libxml2/368053.patch"; #R_asb_2023-10 malloc-fail: Fix OOB read after xmlRegGetCounter
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/pdfium"; then
@@ -171,6 +186,7 @@ git fetch https://github.com/LineageOS/android_external_pdfium refs/changes/87/3
 git fetch https://github.com/LineageOS/android_external_pdfium refs/changes/88/378088/1 && git cherry-pick FETCH_HEAD;
 git fetch https://github.com/LineageOS/android_external_pdfium refs/changes/14/378314/1 && git cherry-pick FETCH_HEAD;
 git fetch https://github.com/LineageOS/android_external_pdfium refs/changes/15/378315/1 && git cherry-pick FETCH_HEAD;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/skia"; then
@@ -178,10 +194,12 @@ applyPatch "$DOS_PATCHES/android_external_skia/410984.patch"; #Q_asb_2024-11 Avo
 applyPatch "$DOS_PATCHES/android_external_skia/411484-backport.patch"; #R_asb_2024-12 [pdf] Bounds check in skia_alloc_func
 applyPatch "$DOS_PATCHES/android_external_skia/411485.patch"; #R_asb_2024-12 Check for size overflow before allocating SkMask data
 applyPatch "$DOS_PATCHES/android_external_skia/411486.patch"; #R_asb_2024-12 Prevent overflow when growing an SkRegion's RunArray
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/sonivox"; then
 applyPatch "$DOS_PATCHES_COMMON/android_external_sonivox/391896.patch"; #n-asb-2024-05 Fix buffer overrun in eas_wtengine
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/svox"; then
@@ -190,10 +208,12 @@ sed -i '12iLOCAL_SDK_VERSION := current' pico/Android.mk; #Fix build under Pie
 sed -i 's/about to delete/unable to delete/' pico/src/com/svox/pico/LangPackUninstaller.java;
 awk -i inplace '!/deletePackage/' pico/src/com/svox/pico/LangPackUninstaller.java;
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/zlib"; then
 applyPatch "$DOS_PATCHES/android_external_zlib/352570.patch"; #Q_asb_2023-03 Fix a bug when getting a gzip header extra field with inflate().
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/av"; then
@@ -211,6 +231,7 @@ applyPatch "$DOS_PATCHES/android_frameworks_av/391908.patch"; #Q_asb_2024-03 Fix
 applyPatch "$DOS_PATCHES/android_frameworks_av/402601.patch"; #Q_asb_2024-08 Fix flag check in JAudioTrack.cpp
 applyPatch "$DOS_PATCHES/android_frameworks_av/402602.patch"; #Q_asb_2024-08 StagefrightRecoder: Disabling B-frame support
 applyPatch "$DOS_PATCHES/android_frameworks_av/403300.patch"; #Q_asb_2024-09 omx: check HDR10+ info param size
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/base"; then
@@ -403,6 +424,7 @@ hardenLocationConf services/core/java/com/android/server/location/gps_debug.conf
 rm -rf packages/OsuLogin; #Automatic Wi-Fi connection non-sense
 rm -rf packages/PrintRecommendationService; #Creates popups to install proprietary print apps
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/native"; then
@@ -412,12 +434,15 @@ applyPatch "$DOS_PATCHES/android_frameworks_native/356358.patch"; #Q_asb_2023-05
 applyPatch "$DOS_PATCHES/android_frameworks_native/356359.patch"; #Q_asb_2023-05 Add removeInstanceForPackageMethod to SensorManager
 applyPatch "$DOS_PATCHES/android_frameworks_native/368009.patch"; #Q_asb_2023-09 Allow sensors list to be empty
 applyPatch "$DOS_PATCHES/android_frameworks_native/0001-Sensors.patch"; #Require OTHER_SENSORS permission for sensors (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if [ "$DOS_DEBLOBBER_REMOVE_IMS" = true ]; then
 if enterAndClear "frameworks/opt/net/ims"; then
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_ims/0001-Fix_Calling.patch"; #Fix calling when IMS is removed (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/opt/net/wifi"; then
@@ -427,6 +452,7 @@ applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/378139.patch"; #Q_asb_2
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/410992.patch"; #Q_asb_2024-11 Fix security issue by change the field in WifiConfig
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/0002-Random_MAC.patch"; #Add support for always generating new random MAC (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom/display"; then
@@ -436,38 +462,47 @@ applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8974.patch" --directory="msm8974";
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8994.patch" --directory="msm8994";
 #TODO: missing msm8909, msm8996, msm8998, sdm845, sdm8150
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/apq8084/display"; then
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-apq8084.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8952/display"; then
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8952.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8960/display"; then
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8960.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8974/display"; then
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8974.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8994/display"; then
 applyPatch "$DOS_PATCHES_COMMON/android_hardware_qcom_display/CVE-2019-2306-msm8994.patch";
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8996/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-8996.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/msm8998/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-8998.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "hardware/qcom-caf/sm8150/audio"; then
 applyPatch "$DOS_PATCHES/android_hardware_qcom_audio/0001-Unused-sm8150.patch"; #audio_extn: Fix unused parameter warning in utils.c (codeworkx)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "libcore"; then
@@ -476,12 +511,14 @@ applyPatch "$DOS_PATCHES/android_libcore/0001-Exec_Based_Spawning-1.patch"; #Add
 applyPatch "$DOS_PATCHES/android_libcore/0001-Exec_Based_Spawning-2.patch";
 applyPatch "$DOS_PATCHES/android_libcore/0003-Network_Permission.patch"; #Expose the NETWORK permission (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_libcore/0004-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "lineage-sdk"; then
 awk -i inplace '!/LineageWeatherManagerService/' lineage/res/res/values/config.xml; #Disable Weather
 if [ "$DOS_DEBLOBBER_REMOVE_AUDIOFX" = true ]; then awk -i inplace '!/LineageAudioService/' lineage/res/res/values/config.xml; fi; #Remove AudioFX
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Bluetooth"; then
@@ -490,14 +527,17 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/408528.patch"; #Q_asb_2
 #applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/272652.patch"; #ten-bt-sbc-hd-dualchannel: SBC Dual Channel (SBC HD Audio) support (ValdikSS)
 #applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/272653.patch"; #ten-bt-sbc-hd-dualchannel: Assume optional codecs are supported if were supported previously (ValdikSS)
 applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Camera2"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Camera2/380567.patch"; #Q_asb_2024-01 Camera2: Do not pass location info for startActivity case
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Car/Settings"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Car_Settings/378111.patch"; #Q_asb_2023-06 Convert argument to Intent in car settings AddAccountActivity.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Contacts"; then
@@ -506,10 +546,12 @@ applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0002-No_Google_Ba
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0003-Skip_Accounts.patch"; #Don't prompt to add account when creating a contact (CalyxOS)
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0004-No_GMaps.patch"; #Use common intent for directions instead of Google Maps URL (GrapheneOS)
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Contacts/0005-vCard-Four.patch"; #Add basic support for vCard 4.0 (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Dialer"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Dialer/0001-Not_Private_Banner.patch"; #Add a privacy warning banner to calls (CalyxOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/LineageParts"; then
@@ -517,17 +559,20 @@ rm -rf src/org/lineageos/lineageparts/lineagestats/ res/xml/anonymous_stats.xml 
 applyPatch "$DOS_PATCHES/android_packages_apps_LineageParts/0001-Remove_Analytics.patch"; #Remove analytics (DivestOS)
 cp -f "$DOS_PATCHES_COMMON/contributors.db" assets/contributors.db; #Update contributors cloud
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Messaging"; then
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Messaging/0001-null-fix.patch"; #Handle null case (GrapheneOS)
 applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Messaging/0002-missing-channels.patch"; #Add notification channels where missing (LineageOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Nfc"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_Nfc/368010.patch"; #Q_asb_2023-09 Ensure that SecureNFC setting cannot be bypassed
 applyPatch "$DOS_PATCHES/android_packages_apps_Nfc/380568.patch"; #Q_asb_2024-01 Possible deadlock on the NfcService object
 applyPatch "$DOS_PATCHES/android_packages_apps_Nfc/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/PermissionController"; then
@@ -536,6 +581,7 @@ applyPatch "$DOS_PATCHES/android_packages_apps_PermissionController/0001-Network
 applyPatch "$DOS_PATCHES/android_packages_apps_PermissionController/0001-Network_Permission-2.patch"; #Add INTERNET permission toggle (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_packages_apps_PermissionController/0001-Sensors_Permission-1.patch"; #Always treat OTHER_SENSORS as a runtime permission (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_packages_apps_PermissionController/0001-Sensors_Permission-2.patch"; #Add OTHER_SENSORS permission group (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Settings"; then
@@ -578,10 +624,12 @@ applyPatch "$DOS_PATCHES_COMMON/android_packages_apps_Settings/0001-disable_apps
 sed -i 's/private int mPasswordMaxLength = 16;/private int mPasswordMaxLength = 64;/' src/com/android/settings/password/ChooseLockPassword.java; #Increase default max password length to 64 (GrapheneOS)
 sed -i 's/if (isFullDiskEncrypted()) {/if (false) {/' src/com/android/settings/accessibility/*AccessibilityService*.java; #Never disable secure start-up when enabling an accessibility service
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/SetupWizard"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_SetupWizard/0001-Remove_Analytics.patch"; #Remove analytics (DivestOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Traceur"; then
@@ -589,6 +637,7 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Traceur/359418.patch"; #Q_asb_202
 applyPatch "$DOS_PATCHES/android_packages_apps_Traceur/359419.patch"; #Q_asb_2023-06 Initialize developer options ContentObserver at app start
 applyPatch "$DOS_PATCHES/android_packages_apps_Traceur/378119.patch"; #Q_asb_2023-06 Update Traceur to check admin user status
 applyPatch "$DOS_PATCHES/android_packages_apps_Traceur/359421.patch"; #Q_asb_2023-06 Add DISALLOW_DEBUGGING_FEATURES check
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Trebuchet"; then
@@ -596,10 +645,12 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Trebuchet/368013.patch"; #Q_asb_2
 applyPatch "$DOS_PATCHES/android_packages_apps_Trebuchet/378063.patch"; #Q_asb_2023-12 Fix permission bypass in legacy shortcut
 cp $DOS_BUILD_BASE/vendor/divested/overlay/common/packages/apps/Trebuchet/res/xml/default_workspace_*.xml res/xml/; #XXX: Likely no longer needed
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/TvSettings"; then
 applyPatch "$DOS_PATCHES/android_packages_apps_TvSettings/359422.patch"; #Q_asb_2023-06 Convert argument to intent in addAccount TvSettings.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Updater"; then
@@ -607,11 +658,13 @@ applyPatch "$DOS_PATCHES/android_packages_apps_Updater/0001-Server.patch"; #Swit
 applyPatch "$DOS_PATCHES/android_packages_apps_Updater/0002-Tor_Support.patch"; #Add Tor support (DivestOS)
 sed -i 's/PROP_BUILD_VERSION_INCREMENTAL);/PROP_BUILD_VERSION_INCREMENTAL).replaceAll("\\\\.", "");/' src/org/lineageos/updater/misc/Utils.java; #Remove periods from incremental version
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/inputmethods/LatinIME"; then
 applyPatch "$DOS_PATCHES_COMMON/android_packages_inputmethods_LatinIME/0001-Voice.patch"; #Remove voice input key (DivestOS)
 applyPatch "$DOS_PATCHES_COMMON/android_packages_inputmethods_LatinIME/0002-Disable_Personalization.patch"; #Disable personalization dictionary by default (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 #if enterAndClear "packages/modules/NetworkStack"; then
@@ -620,6 +673,7 @@ fi;
 
 if enterAndClear "packages/providers/DownloadProvider"; then
 applyPatch "$DOS_PATCHES/android_packages_providers_DownloadProvider/0001-Network_Permission.patch"; #Expose the NETWORK permission (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/providers/MediaProvider"; then
@@ -628,15 +682,18 @@ applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/378137.patch";
 applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/378138.patch"; #Q_asb_2023-10 Fix path traversal vulnerabilities in MediaProvider
 applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/399090.patch"; #Q_asb_2024-07 Prevent insertion in other users storage volumes
 applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/410996.patch"; #Q_asb_2024-11 Prevent apps from renaming files they don't own
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/providers/TelephonyProvider"; then
 applyPatch "$DOS_PATCHES/android_packages_providers_TelephonyProvider/365458.patch"; #Q_asb_2023-08 Update file permissions using canonical path
 applyPatch "$DOS_PATCHES/android_packages_providers_TelephonyProvider/376605.patch"; #Q_asb_2023-11 Block access to sms/mms db from work profile.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/services/BuiltInPrintService"; then
 applyPatch "$DOS_PATCHES/android_packages_services_BuiltInPrintService/376606.patch"; #Q_asb_2023-11 Adjust APIs for CUPS 2.3.3
+MSG="DOS patching" commitChanges
 fi
 
 if enterAndClear "packages/services/Telecomm"; then
@@ -649,15 +706,18 @@ applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/369703.patch"; #Q_as
 applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/378123.patch"; #Q_asb_2023-12 Support for API cleanups.
 applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/378065.patch"; #Q_asb_2023-12 Resolve account image icon profile boundary exploit.
 applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403307.patch"; #Q_asb_2024-09 Unbind CallScreeningService when timeout reached.
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/services/Telephony"; then
 applyPatch "$DOS_PATCHES/android_packages_services_Telephony/368015.patch"; #Q_asb_2023-09 Grant carrier privileges if package has carrier config access.
 applyPatch "$DOS_PATCHES/android_packages_services_Telephony/378161.patch"; #Q_asb_2023-09 Fixed leak of cross user data in multiple settings.
+MSG="DOS patching" commitChanges
 fi
 
 if enterAndClear "prebuilts/abi-dumps/vndk"; then
 applyPatch "$DOS_PATCHES/android_prebuilts_abi-dumps_vndk/0001-protobuf-avi.patch"; #Work around ABI changes from compiler hardening (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/bt"; then
@@ -710,12 +770,14 @@ applyPatch "$DOS_PATCHES_COMMON/android_system_bt/0001-alloc_size.patch"; #Add a
 #applyPatch "$DOS_PATCHES/android_system_bt/272648.patch"; #ten-bt-sbc-hd-dualchannel: Increase maximum Bluetooth SBC codec bitrate for SBC HD (ValdikSS)
 #applyPatch "$DOS_PATCHES/android_system_bt/272649.patch"; #ten-bt-sbc-hd-dualchannel: Explicit SBC Dual Channel (SBC HD) support (ValdikSS)
 #applyPatch "$DOS_PATCHES/android_system_bt/272650.patch"; #ten-bt-sbc-hd-dualchannel: Allow using alternative (higher) SBC HD bitrates with a property (ValdikSS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/ca-certificates"; then
 rm -rf files; #Remove old certs
 cp -r "$DOS_PATCHES_COMMON/android_system_ca-certificates/files" .; #Copy the new ones into place
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/core"; then
@@ -728,14 +790,17 @@ applyPatch "$DOS_PATCHES/android_system_core/0002-HM-Increase_vm_mmc.patch"; #(G
 applyPatch "$DOS_PATCHES/android_system_core/0003-Zero_Sensitive_Info.patch"; #Zero sensitive information with explicit_bzero (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_core/0004-ptrace_scope.patch"; #Add a property for controlling ptrace_scope (GrapheneOS)
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/extras"; then
 applyPatch "$DOS_PATCHES/android_system_extras/0001-ext4_pad_filenames.patch"; #FBE: pad filenames more (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/libfmq"; then
 applyPatch "$DOS_PATCHES_COMMON/android_system_libfmq/399071.patch"; #Q_asb_2024-06 Use the values of the ptrs that we check
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/netd"; then
@@ -745,11 +810,13 @@ applyPatch "$DOS_PATCHES/android_system_netd/0001-Network_Permission.patch"; #Ex
 applyPatch "$DOS_PATCHES/android_system_netd/0002-hosts_toggle.patch"; #Add a toggle to disable /etc/hosts lookup (DivestOS)
 #applyPatch "$DOS_PATCHES/android_system_netd/0003-Fix_DNS_leaks.patch"; #Fix DNS leak in VPN lockdown mode when VPN is down (GrapheneOS)
 #applyPatch "$DOS_PATCHES/android_system_netd/0003-Fix_DNS_leaks-relaxed.patch"; #Relax VPN DNS leak prevention for incompatible apps (GrapheneOS)
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/nfc"; then
 applyPatch "$DOS_PATCHES/android_system_nfc/355367.patch"; #Q_asb_2023-04 OOBW in nci_snd_set_routing_cmd()
 applyPatch "$DOS_PATCHES/android_system_nfc/365420.patch"; #Q_asb_2023-07 OOBW in rw_i93_send_to_upper()
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/sepolicy"; then
@@ -763,34 +830,41 @@ patch -p1 < "$DOS_PATCHES/android_system_sepolicy/0001-LGE_Fixes.patch" --direct
 patch -p1 < "$DOS_PATCHES/android_system_sepolicy/0001-LGE_Fixes.patch" --directory="prebuilts/api/26.0";
 awk -i inplace '!/true cannot be used in user builds/' Android.mk; #Allow ignoring neverallows under -user
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/update_engine"; then
 git revert --no-edit c68499e3ff10f2a31f913e14f66aafb4ed94d42d; #Do not skip payload signature verification
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "tools/apksig"; then
 applyPatch "$DOS_PATCHES/android_tools_apksig/376559.patch"; #Q_asb_2023-07 Limit the number of supported v1 and v2 signers
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/nxp/opensource/commonsys/external/libnfc-nci"; then
 applyPatch "$DOS_PATCHES/android_vendor_nxp_opensource_external_libnfc-nci/355368.patch"; #Q_asb_2023-04 OOBW in nci_snd_set_routing_cmd()
 applyPatch "$DOS_PATCHES/android_vendor_nxp_opensource_external_libnfc-nci/378160.patch"; #Q_asb_2023-07 OOBW in rw_i93_send_to_upper()
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/nxp/opensource/pn5xx/halimpl"; then
 applyPatch "$DOS_PATCHES/android_vendor_nxp_opensource_halimpl/355369.patch"; #Q_asb_2023-04 OOBW in nci_snd_set_routing_cmd()
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/nxp/opensource/commonsys/packages/apps/Nfc"; then
 applyPatch "$DOS_PATCHES/android_vendor_nxp_opensource_packages_apps_Nfc/378163.patch"; #Q_asb_2023-09 Ensure that SecureNFC setting cannot be bypassed
 applyPatch "$DOS_PATCHES/android_vendor_nxp_opensource_packages_apps_Nfc/380571.patch"; #Q_asb_2024-01 Possible deadlock on the NfcService object
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/qcom/opensource/commonsys/packages/apps/Bluetooth"; then
 applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_packages_apps_Bluetooth/378136.patch"; #Q_asb_2023-12 Fix UAF in ~CallbackEnv
 applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_packages_apps_Bluetooth/408533.patch"; #Q_asb_2024-10 Disallow unexpected incoming HID connections 2/2
 
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/qcom/opensource/commonsys/system/bt"; then
@@ -839,6 +913,7 @@ applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/408536.patch";
 applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411491.patch"; #R_asb_2024-12 Fix OOB write in build_read_multi_rsp of gatt_sr.cc
 applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411492.patch"; #R_asb_2024-12 Fix an integer underflow in build_read_multi_rsp
 applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411493.patch"; #R_asb_2024-12 Fix "GATT Read Multiple Variable Response" builder
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/lineage"; then
@@ -861,12 +936,14 @@ awk -i inplace '!/Exchange2/' config/common_mobile.mk;
 awk -i inplace '!/com.android.vending/' overlay/common/frameworks/base/core/res/res/values/vendor_required_apps*.xml; #Remove unwanted apps
 awk -i inplace '!/com.google.android/' overlay/common/frameworks/base/core/res/res/values/vendor_required_apps*.xml;
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enter "vendor/divested"; then
 echo "PRODUCT_PACKAGES += vendor.lineage.trust@1.0-service" >> packages.mk; #Add deny usb service, all of our kernels have the necessary patch
 awk -i inplace '!/speed-profile/' build/target/product/lowram.mk; #breaks compile on some dexpreopt devices
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 #
 #END OF ROM CHANGES
@@ -877,6 +954,7 @@ fi;
 #
 if enterAndClear "device/cyanogen/msm8916-common"; then
 awk -i inplace '!/TARGET_RELEASETOOLS_EXTENSIONS/' BoardConfigCommon.mk; #broken releasetools
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/motorola/clark"; then
@@ -890,6 +968,7 @@ echo "  allow recovery firmware_file:dir rw_dir_perms;" >> sepolicy/recovery.te;
 echo "  allow recovery firmware_file:file create_file_perms;" >> sepolicy/recovery.te;
 echo "')" >> sepolicy/recovery.te;
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/motorola/msm8916-common"; then
@@ -900,6 +979,7 @@ echo "  allow recovery firmware_file:dir rw_dir_perms;" >> sepolicy/recovery.te;
 echo "  allow recovery firmware_file:file create_file_perms;" >> sepolicy/recovery.te;
 echo "')" >> sepolicy/recovery.te;
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/oneplus/oneplus2"; then
@@ -912,19 +992,23 @@ echo "allow mm-qcamerad self:tcp_socket { bind create setopt };" >> sepolicy/mm-
 echo "allow mm-qcamerad camera_prop:file read;" >> sepolicy/mm-qcamerad.te;
 echo "set_prop(mm-qcamerad, camera_prop)" >> sepolicy/mm-qcamerad.te;
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/oppo/common"; then
 awk -i inplace '!/TARGET_RELEASETOOLS_EXTENSIONS/' BoardConfigCommon.mk; #disable releasetools to fix delta ota generation
 commitChanges
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/xiaomi/davinci"; then
 smallerSystem;
+MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "device/xiaomi/sm6150-common"; then
 smallerSystem;
+MSG="DOS patching" commitChanges
 fi;
 
 #Make changes to all devices
