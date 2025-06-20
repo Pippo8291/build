@@ -1139,7 +1139,7 @@ hardenDefconfig() {
 	#unsafe
 	optionsNo+=("GCC_PLUGIN_RANDSTRUCT_PERFORMANCE");
 	optionsNo+=("HARDENED_USERCOPY_FALLBACK");
-	optionsNo+=("SECURITY_SELINUX_DISABLE" "SECURITY_WRITABLE_HOOKS");
+        ### DISABLED by AXP to allow the usage of setenforce: 	optionsNo+=("SECURITY_SELINUX_DISABLE" "SECURITY_WRITABLE_HOOKS");
 	if [ "$DOS_USE_KSM" = false ]; then optionsNo+=("SLAB_MERGE_DEFAULT"); fi;
 	if [[ "$DOS_VERSION" != "LineageOS-20.0" ]] && [[ "$DOS_VERSION" != "LineageOS-21.0" ]]; then optionsNo+=("USERFAULTFD"); fi;
 	#optionsNo+=("CFI_PERMISSIVE");
