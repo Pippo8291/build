@@ -162,7 +162,7 @@ do
 done
 
 #4.14
-# CVE-2025-38034 causes boot hang (tested on sunfish)
+# CVE-2025-38034 + CVE-2022-49980 cause boot hang (tested on sunfish)
 declare -a fourDotFourteen=("${fourDotNine[@]}" "android_kernel_google_msm-4.14.sh" "android_kernel_xiaomi_sm6150.sh" "android_kernel_oneplus_sm8150.sh" "android_kernel_xiaomi_sm8150.sh" "android_kernel_xiaomi_vayu.sh");
 for script in "${fourDotFourteen[@]}"
 do
