@@ -253,7 +253,807 @@ commentPatches android_kernel_google_gs201_private_gs-google.sh \
     "CVE-2025-38034" \
     "CVE-2022-49980"
 
-# ...and so on for every single commentPatches invocation and all in loops...
+commentPatches android_kernel_google_marlin.sh \
+    "0001-LinuxIncrementals/3.18/3.18.0098-0099.patch" \
+    "0006-AndroidHardening-Kernel_Hardening/3.18/0048.patch" \
+    "0006-AndroidHardening-Kernel_Hardening/3.18/0049.patch" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2017-13162/3.18/0001.patch" \
+    "CVE-2017-14883" \
+    "CVE-2017-15951" \
+    "CVE-2018-17972" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_msm.sh \
+    "CVE-2017-11015/prima" \
+    "CVE-2021-Misc2/ANY/0031.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_msm-4.9.sh \
+    "CVE-2019-19319" \
+    "CVE-2020-0067" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2021-30324" \
+    "CVE-2021-45469" \
+    "CVE-2021-30319" \
+    "CVE-2023-53103/ANY/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49552/ANY/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2022-49801/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_msm-4.14.sh \
+    "CVE-2024-56554/ANY/0001.patch" \
+    "CVE-2024-56780/ANY/0001.patch" \
+    "CVE-2024-56692/ANY/0001.patch" \
+    "CVE-2024-56553/ANY/0001.patch" \
+    "CVE-2025-21653/ANY/0001.patch" \
+    "CVE-2025-21859/ANY/0001.patch" \
+    "CVE-2025-21954/ANY/0001.patch" \
+    "CVE-2023-53103/ANY/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49552/ANY/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2022-49801/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"    
+
+commentPatches android_kernel_google_redbull.sh \
+    "CVE-2018-5873" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_sunfish.sh \
+    "CVE-2021-30324" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_wahoo.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-14047/ANY/0002.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2021-30324" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_google_yellowstone.sh \
+    "0001-LinuxIncrementals/3.10/3.10.0098-0099.patch" \
+    "CVE-2018-9514" \
+    "CVE-2021-47122" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_huawei_angler.sh \
+    "CVE-2014-8559" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_htc_flounder.sh \
+    "CVE-2018-9514" \
+    "CVE-2018-14614/3.4" \
+    "CVE-2021-47122" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_htc_msm8960.sh \
+    "CVE-2018-10876" \
+    "CVE-2021-0695" \
+    "CVE-2021-Misc2/3.4/0055.patch" \
+    "CVE-2021-Misc2/3.4/0056.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_htc_msm8974.sh \
+    "CVE-2016-8393" \
+    "CVE-2022-22058" \
+    "CVE-2016-10284/3.18/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_htc_msm8994.sh \
+    "CVE-2016-8394/ANY/0001.patch" \
+    "CVE-2017-13166" \
+    "CVE-2018-3585" \
+    "CVE-2018-9514" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_lge_bullhead.sh \
+    "CVE-2014-8559" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_lge_msm8992.sh \
+    "CVE-2018-5897" \
+    "CVE-2018-11266" \
+    "CVE-2018-5849" \
+    "CVE-2017-9704/ANY/0003.patch" \
+    "CVE-2021-47277/3.18/0001.patch" \
+    "CVE-2024-47709/^6.11/0001.patch" \
+    "CVE-2025-21653/ANY/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2022-49111/4.4/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_lge_msm8996.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_moto_shamu.sh \
+    "CVE-2014-8559" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_motorola_msm8916.sh \
+    "0001-LinuxIncrementals/3.10/3.10.0050-0051.patch" \
+    "CVE-2014-8559" \
+    "CVE-2017-15817" \
+    "CVE-2018-9514" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_motorola_msm8952.sh \
+    "0006-AndroidHardening-Kernel_Hardening/3.10/0009.patch" \
+    "CVE-2017-9704" \
+    "CVE-2017-14880" \
+    "CVE-2021-Misc2/3.4/0049.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_motorola_msm8974.sh \
+    "CVE-2016-5696" \
+    "CVE-2017-7373" \
+    "CVE-2017-17770/3.4/0002.patch" \
+    "CVE-2019-11599" \
+    "CVE-2022-22058" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_motorola_msm8992.sh \
+    "CVE-2017-5551/3.10/0002.patch" \
+    "CVE-2017-14880/3.10/0001.patch" \
+    "CVE-2017-17770/3.4" \
+    "CVE-2018-3585/3.10/0001.patch" \
+    "CVE-2019-2297/qcacld-2.0/0001.patch" \
+    "0002-Misc_Fixes-uid/3.10/0002-alt1.patch" \
+    "CVE-2017-17712/3.10/0010.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_motorola_msm8996.sh \
+    "0001-LinuxIncrementals/3.18/3.18.0098-0099.patch" \
+    "CVE-2017-8266" \
+    "CVE-2017-13162/3.18/0001.patch" \
+    "CVE-2017-15951" \
+    "CVE-2018-17972" \
+    "CVE-2019-2214" \
+    "CVE-2019-14070/ANY/0006.patch" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_nextbit_msm8992.sh \
+    "CVE-2018-3585/3.10/0001.patch" \
+    "CVE-2018-9514" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_msm8994.sh \
+    "CVE-2018-3585/3.10/0001.patch" \
+    "CVE-2018-9514" \
+    "0002-Misc_Fixes-uid/3.10/0002-alt1.patch" \
+    "CVE-2017-17712/3.10/0010.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_msm8996.sh \
+    "CVE-2017-13162/3.18/0001.patch" \
+    "CVE-2017-15951" \
+    "CVE-2017-16939" \
+    "CVE-2018-17972" \
+    "CVE-2019-2214" \
+    "CVE-2019-14070/ANY/0006.patch" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2024-39467" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_msm8998.sh \
+    "0008-Graphene-Kernel_Hardening-slab" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-11599" \
+    "CVE-2019-19319" \
+    "CVE-2020-0305" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sdm845.sh \
+    "CVE-2024-0607/4.14/0008.patch" \
+    "CVE-2024-42247/^6.10/0001.patch" \
+    "CVE-2024-56692" \
+    "CVE-2024-56553/ANY/0001.patch" \
+    "CVE-2024-47709" \
+    "CVE-2024-56554/ANY/0001.patch" \
+    "CVE-2023-53103/ANY/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49801/ANY/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sm7250.sh \
+    "CVE-2018-5873" \
+    "CVE-2020-1749" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2021-30324" \
+    "CVE-2021-45469" \
+    "CVE-2022-42703/4.19/0003.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sm8150.sh \
+    "CVE-2019-16746" \
+    "CVE-2019-19319" \
+    "CVE-2020-0067" \
+    "CVE-2020-8992" \
+    "CVE-2020-24588/4.14/0018.patch" \
+    "CVE-2021-30324" \
+    "CVE-2021-45469" \
+    "CVE-2022-1184/^5.18/0001.patch" \
+    "CVE-2022-42703/4.14/0002.patch" \
+    "CVE-2021-47237/4.14/0002.patch" \
+    "CVE-2023-52901" \
+    "CVE-2022-1195" \
+    "CVE-2024-56553/ANY/0001.patch" \
+    "CVE-2024-56780/ANY/0001.patch" \
+    "CVE-2024-56554/ANY/0001.patch" \
+    "CVE-2025-21653/ANY/0001.patch" \
+    "CVE-2025-21859/ANY/0001.patch" \
+    "CVE-2025-21954/ANY/0001.patch" \
+    "CVE-2022-49513/ANY/0001.patch" \
+    "CVE-2022-49552/ANY/0001.patch" \
+    "CVE-2022-49801/ANY/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2023-53103/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+commentPatches android_kernel_oneplus_sm8250.sh \
+    "CVE-2018-5873" \
+    "CVE-2020-1749" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2022-1184/^5.18/0001.patch" \
+    "CVE-2022-42703/4.19/0003.patch" \
+    "CVE-2024-56554/ANY/0001.patch" \
+    "CVE-2024-56590/ANY/0001.patch" \
+    "CVE-2024-56692/ANY/0001.patch" \
+    "CVE-2024-53237/ANY/0001.patch" \
+    "CVE-2025-21653/ANY/0001.patch" \
+    "CVE-2025-21762/ANY/0001.patch" \
+    "CVE-2025-21764/ANY/0001.patch" \
+    "CVE-2025-21765/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sm8350.sh \
+    "CVE-2018-5873" \
+    "CVE-2022-1184/^5.18/0001.patch" \
+    "CVE-2023-52879/5.4" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_razer_msm8998.sh \
+    "0008-Graphene-Kernel_Hardening-slab" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-14070/ANY/0005.patch" \
+    "CVE-2020-16166" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_apq8084.sh \
+    "0006-AndroidHardening-Kernel_Hardening/3.10/0009.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_d2.sh \
+    "CVE-2021-Misc2/3.4/0055.patch" \
+    "CVE-2021-Misc2/3.4/0056.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos5420.sh \
+    "CVE-2021-Misc2/3.4/0061.patch" \
+    "CVE-2021-Misc2/3.4/0062.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos7870.sh \
+    "CVE-2019-16746/3.18/0006.patch" \
+    "CVE-2020-16166/3.18/0002.patch" \
+    "0006-AndroidHardening-Kernel_Hardening/3.18/0030.patch" \
+    "CVE-2020-0427/3.18/0007.patch" \
+    "CVE-2021-47277/3.18/0001.patch" \
+    "CVE-2024-39467" \
+    "CVE-2024-42265" \
+    "CVE-2022-42896/4.9/0008.patch" \
+    "CVE-2024-56692/ANY/0001.patch" \
+    "CVE-2022-49122/4.4/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2022-49363/ANY/0001.patch" \
+    "CVE-2022-49171/4.4/0001.patch" \
+    "CVE-2024-39499/4.4/0008.patch" \
+    "CVE-2024-41015/4.4/0008.patch" \
+    "CVE-2022-49111" \
+    "CVE-2022-49364" \
+    "CVE-2023-53117/4.4/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_jf.sh \
+    "CVE-2019-11599" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_manta.sh \
+    "CVE-2021-Misc2/3.4/0055.patch" \
+    "CVE-2021-Misc2/3.4/0056.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_msm8930-common.sh \
+    "CVE-2017-11015/prima" \
+    "CVE-2019-11599" \
+    "CVE-2021-Misc2/ANY/0031.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_msm8974.sh \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_smdk4412.sh \
+    "CVE-2012-2127" \
+    "CVE-2016-8463/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_tuna.sh \
+    "CVE-2012-2127" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_universal8890.sh \
+    "0008-Graphene-Kernel_Hardening-ro" \
+    "CVE-2016-7917" \
+    "CVE-2018-1092" \
+    "CVE-2018-17972" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos9810.sh \
+    "CVE-2020-1749" \
+    "CVE-2019-ctnl-addr-leak" \
+    "CVE-2019-18282" \
+    "CVE-2019-11599" \
+    "CVE-2022-20566" \
+    "CVE-2019-16746" \
+    "CVE-2021-45469" \
+    "CVE-2020-0305" \
+    "CVE-2021-3506/4.19" \
+    "CVE-2024-26934/4.19" \
+    "CVE-2024-26934" \
+    "CVE-2024-44944" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_universal9810.sh \
+    "CVE-2020-1749" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_sony_sdm660.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-0305" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2021-30319" \
+    "CVE-2024-47709" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_sony_sdm845.sh \
+    "CVE-2019-19319" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_msm8937.sh \
+    "CVE-2017-13162" \
+    "CVE-2019-14070" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-25715" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sdm660.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2023-28542" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm8150.sh \
+    "CVE-2020-24588/4.14/0018.patch" \
+    "CVE-2023-52901" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_vayu.sh \
+    "CVE-2020-24588/4.14/0018.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm6150.sh \
+    "CVE-2023-43550" \
+    "CVE-2023-52901" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm8250.sh \
+    "CVE-2018-5873" \
+    "CVE-2020-1749" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2022-22075" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_yandex_sdm660.sh \
+    "CVE-2019-11599" \
+    "CVE-2019-14070/ANY/0005.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2024-35954" \
+    "CVE-2023-28542" \
+    "CVE-2021-30319" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zte_msm8930.sh \
+    "CVE-2015-2922" \
+    "CVE-2017-11015/prima" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zte_msm8996.sh \
+    "0001-LinuxIncrementals/3.18/3.18.0098-0099.patch" \
+    "CVE-2017-13162" \
+    "CVE-2017-15951" \
+    "CVE-2017-16939" \
+    "CVE-2018-17972" \
+    "CVE-2019-2214" \
+    "CVE-2019-14070" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zuk_msm8996.sh \
+    "0008-Graphene-Kernel_Hardening-slab" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-0305" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2020-1616" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sm8250.sh \
+    "CVE-2018-5873" \
+    "CVE-2020-1749" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2022-1184/^5.18/0001.patch" \
+    "CVE-2022-42703/4.19/0003.patch" \
+    "CVE-2024-56554/ANY/0001.patch" \
+    "CVE-2024-56590/ANY/0001.patch" \
+    "CVE-2024-56692/ANY/0001.patch" \
+    "CVE-2024-53237/ANY/0001.patch" \
+    "CVE-2025-21653/ANY/0001.patch" \
+    "CVE-2025-21762/ANY/0001.patch" \
+    "CVE-2025-21764/ANY/0001.patch" \
+    "CVE-2025-21765/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_oneplus_sm8350.sh \
+    "CVE-2018-5873" \
+    "CVE-2022-1184/^5.18/0001.patch" \
+    "CVE-2023-52879/5.4" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_razer_msm8998.sh \
+    "0008-Graphene-Kernel_Hardening-slab" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-14070/ANY/0005.patch" \
+    "CVE-2020-16166" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_apq8084.sh \
+    "0006-AndroidHardening-Kernel_Hardening/3.10/0009.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_d2.sh \
+    "CVE-2021-Misc2/3.4/0055.patch" \
+    "CVE-2021-Misc2/3.4/0056.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos5420.sh \
+    "CVE-2021-Misc2/3.4/0061.patch" \
+    "CVE-2021-Misc2/3.4/0062.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos7870.sh \
+    "CVE-2019-16746/3.18/0006.patch" \
+    "CVE-2020-16166/3.18/0002.patch" \
+    "0006-AndroidHardening-Kernel_Hardening/3.18/0030.patch" \
+    "CVE-2020-0427/3.18/0007.patch" \
+    "CVE-2021-47277/3.18/0001.patch" \
+    "CVE-2024-39467" \
+    "CVE-2024-42265" \
+    "CVE-2022-42896/4.9/0008.patch" \
+    "CVE-2024-56692/ANY/0001.patch" \
+    "CVE-2022-49122/4.4/0001.patch" \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2022-49363/ANY/0001.patch" \
+    "CVE-2022-49171/4.4/0001.patch" \
+    "CVE-2024-39499/4.4/0008.patch" \
+    "CVE-2024-41015/4.4/0008.patch" \
+    "CVE-2022-49111" \
+    "CVE-2022-49364" \
+    "CVE-2023-53117/4.4/0001.patch" \
+    "CVE-2025-37960/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_jf.sh \
+    "CVE-2019-11599" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_manta.sh \
+    "CVE-2021-Misc2/3.4/0055.patch" \
+    "CVE-2021-Misc2/3.4/0056.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_msm8930-common.sh \
+    "CVE-2017-11015/prima" \
+    "CVE-2019-11599" \
+    "CVE-2021-Misc2/ANY/0031.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_msm8974.sh \
+    "CVE-2025-37785/ANY/0001.patch" \
+    "CVE-2022-49545/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_smdk4412.sh \
+    "CVE-2012-2127" \
+    "CVE-2016-8463/ANY/0001.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_tuna.sh \
+    "CVE-2012-2127" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_universal8890.sh \
+    "0008-Graphene-Kernel_Hardening-ro" \
+    "CVE-2016-7917" \
+    "CVE-2018-1092" \
+    "CVE-2018-17972" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_exynos9810.sh \
+    "CVE-2020-1749" \
+    "CVE-2019-ctnl-addr-leak" \
+    "CVE-2019-18282" \
+    "CVE-2019-11599" \
+    "CVE-2022-20566" \
+    "CVE-2019-16746" \
+    "CVE-2021-45469" \
+    "CVE-2020-0305" \
+    "CVE-2021-3506/4.19" \
+    "CVE-2024-26934/4.19" \
+    "CVE-2024-26934" \
+    "CVE-2024-44944" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_samsung_universal9810.sh \
+    "CVE-2020-1749" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_sony_sdm660.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-0305" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2021-30319" \
+    "CVE-2024-47709" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_sony_sdm845.sh \
+    "CVE-2019-19319" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_msm8937.sh \
+    "CVE-2017-13162" \
+    "CVE-2019-14070" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-25715" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sdm660.sh \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2023-28542" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm8150.sh \
+    "CVE-2020-24588/4.14/0018.patch" \
+    "CVE-2023-52901" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_vayu.sh \
+    "CVE-2020-24588/4.14/0018.patch" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm6150.sh \
+    "CVE-2023-43550" \
+    "CVE-2023-52901" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_xiaomi_sm8250.sh \
+    "CVE-2018-5873" \
+    "CVE-2020-1749" \
+    "CVE-2021-3444" \
+    "CVE-2021-3600" \
+    "CVE-2022-22075" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_yandex_sdm660.sh \
+    "CVE-2019-11599" \
+    "CVE-2019-14070/ANY/0005.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2020-16166" \
+    "CVE-2024-35954" \
+    "CVE-2023-28542" \
+    "CVE-2021-30319" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zte_msm8930.sh \
+    "CVE-2015-2922" \
+    "CVE-2017-11015/prima" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zte_msm8996.sh \
+    "0001-LinuxIncrementals/3.18/3.18.0098-0099.patch" \
+    "CVE-2017-13162" \
+    "CVE-2017-15951" \
+    "CVE-2017-16939" \
+    "CVE-2018-17972" \
+    "CVE-2019-2214" \
+    "CVE-2019-14070" \
+    "CVE-2019-16746" \
+    "CVE-2020-0427" \
+    "CVE-2020-14381" \
+    "CVE-2020-16166" \
+    "CVE-2021-39715/ANY/0001.patch" \
+    "CVE-2022-42896/4.9" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
+
+commentPatches android_kernel_zuk_msm8996.sh \
+    "0008-Graphene-Kernel_Hardening-slab" \
+    "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
+    "CVE-2019-19319" \
+    "CVE-2020-0305" \
+    "CVE-2020-1749" \
+    "CVE-2020-8992" \
+    "CVE-2020-1616" \
+    "CVE-2025-38034" \
+    "CVE-2022-49980"
 
 #Loose versioning hacks
 #3.0
