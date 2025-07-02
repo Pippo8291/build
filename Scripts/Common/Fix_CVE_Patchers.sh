@@ -99,6 +99,7 @@ commentPatches android_kernel_fairphone_msm8974.sh \
     "CVE-2025-38034" \
     "CVE-2022-49980"
 
+# Fairphone 3
 commentPatches android_kernel_fairphone_sdm632.sh \
     "CVE-2019-19319" \
     "CVE-2020-1749" \
@@ -112,6 +113,7 @@ commentPatches android_kernel_fairphone_sdm632.sh \
     "CVE-2025-38034" \
     "CVE-2022-49980"
 
+# Fairphone 4
 commentPatches android_kernel_fairphone_sm7225.sh \
     "CVE-2018-5873" \
     "CVE-2021-3444" \
@@ -137,7 +139,8 @@ commentPatches android_kernel_fairphone_sm7225.sh \
     "CVE-2022-49801/ANY/0001.patch" \
     "CVE-2025-21859/ANY/0001.patch" \
     "CVE-2025-38034" \
-    "CVE-2022-49980"
+    "CVE-2022-49980" \
+    "CVE-2022-49988/ANY/0001.patch"
 
 commentPatches android_kernel_fxtec_msm8998.sh \
     "0008-Graphene-Kernel_Hardening-slab" \
