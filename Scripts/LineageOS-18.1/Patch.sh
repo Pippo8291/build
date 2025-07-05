@@ -203,7 +203,8 @@ applyPatch "$DOS_PATCHES/android_frameworks_base/408446.patch"; #R_asb_2024-11 D
 applyPatch "$DOS_PATCHES/android_frameworks_base/408447.patch"; #R_asb_2024-11 Clear app-provided shortcut icons
 applyPatch "$DOS_PATCHES/android_frameworks_base/408448.patch"; #R_asb_2024-11 Restrict access to directories
 applyPatch "$DOS_PATCHES/android_frameworks_base/411487.patch"; #R_asb_2024-12 Properly handle onNullBinding() in appwidget service.
-git revert --no-edit 438d9feacfcad73d3ee918541574132928a93644; #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
+git revert --no-edit ecb003c33be4655c3e40a074d44265b1c0e77081 #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
+git revert --no-edit 438d9feacfcad73d3ee918541574132928a93644 #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
 applyPatch "$DOS_PATCHES/android_frameworks_base/0007-Always_Restict_Serial.patch"; #Always restrict access to Build.SERIAL (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0008-Browser_No_Location.patch"; #Don't grant location permission to system browsers (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0009-SystemUI_No_Permission_Review.patch"; #Allow SystemUI to directly manage Bluetooth/WiFi (GrapheneOS)
