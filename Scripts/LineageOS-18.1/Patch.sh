@@ -141,10 +141,10 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/skia"; then
-applyPatch "$DOS_PATCHES/android_external_skia/408442.patch"; #R_asb_2024-11 Avoid potential overflow when allocating 3D mask from emboss filter
-applyPatch "$DOS_PATCHES/android_external_skia/411484.patch"; #R_asb_2024-12 [pdf] Bounds check in skia_alloc_func
-applyPatch "$DOS_PATCHES/android_external_skia/411485.patch"; #R_asb_2024-12 Check for size overflow before allocating SkMask data
-applyPatch "$DOS_PATCHES/android_external_skia/411486.patch"; #R_asb_2024-12 Prevent overflow when growing an SkRegion's RunArray
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_external_skia/408442.patch"; #R_asb_2024-11 Avoid potential overflow when allocating 3D mask from emboss filter
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_external_skia/411484.patch"; #R_asb_2024-12 [pdf] Bounds check in skia_alloc_func
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_external_skia/411485.patch"; #R_asb_2024-12 Check for size overflow before allocating SkMask data
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_external_skia/411486.patch"; #R_asb_2024-12 Prevent overflow when growing an SkRegion's RunArray
 MSG="DOS patching" commitChanges
 fi;
 
@@ -154,55 +154,55 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/av"; then
-applyPatch "$DOS_PATCHES/android_frameworks_av/385529.patch"; #R_asb_2024-03 Validate OMX Params for VPx encoders
-applyPatch "$DOS_PATCHES/android_frameworks_av/385530.patch"; #R_asb_2024-03 SoftVideoDecodeOMXComponent: validate OMX params for dynamic HDR
-applyPatch "$DOS_PATCHES/android_frameworks_av/385531.patch"; #R_asb_2024-03 Fix out of bounds read and write in onQueueFilled in outQueue
-applyPatch "$DOS_PATCHES/android_frameworks_av/399741.patch"; #R_asb_2024-08 StagefrightRecoder: Disabling B-frame support
-applyPatch "$DOS_PATCHES/android_frameworks_av/403217.patch"; #R_asb_2024-09 omx: check HDR10+ info param size
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_av/385529.patch"; #R_asb_2024-03 Validate OMX Params for VPx encoders
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_av/385530.patch"; #R_asb_2024-03 SoftVideoDecodeOMXComponent: validate OMX params for dynamic HDR
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_av/385531.patch"; #R_asb_2024-03 Fix out of bounds read and write in onQueueFilled in outQueue
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_av/399741.patch"; #R_asb_2024-08 StagefrightRecoder: Disabling B-frame support
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_av/403217.patch"; #R_asb_2024-09 omx: check HDR10+ info param size
 MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/base"; then
-applyPatch "$DOS_PATCHES/android_frameworks_base/385536.patch"; #R_asb_2024-03 Resolve custom printer icon boundary exploit.
-applyPatch "$DOS_PATCHES/android_frameworks_base/385537.patch"; #R_asb_2024-03 Validate package names passed to the installer.
-applyPatch "$DOS_PATCHES/android_frameworks_base/385538.patch"; #R_asb_2024-03 Disallow system apps to be installed/updated as instant.
-applyPatch "$DOS_PATCHES/android_frameworks_base/385539.patch"; #R_asb_2024-03 Close AccountManagerService.session after timeout.
-applyPatch "$DOS_PATCHES/android_frameworks_base/389131.patch"; #R_asb_2024-04 Added limitations for attributions to handle invalid cases
-applyPatch "$DOS_PATCHES/android_frameworks_base/389132.patch"; #R_asb_2024-04 isUserInLockDown can be true when there are other strong auth requirements
-applyPatch "$DOS_PATCHES/android_frameworks_base/389133.patch"; #R_asb_2024-04 Fix security vulnerability that creates user with no restrictions when accountOptions are too long.
-applyPatch "$DOS_PATCHES/android_frameworks_base/392206.patch"; #R_asb_2024-05 Don't try to show the current toast again while it's showing.
-applyPatch "$DOS_PATCHES/android_frameworks_base/392207.patch"; #R_asb_2024-05 Prioritize system toasts
-applyPatch "$DOS_PATCHES/android_frameworks_base/394553.patch"; #R_asb_2024-06 ActivityManager#killBackgroundProcesses can kill caller's own app only
-applyPatch "$DOS_PATCHES/android_frameworks_base/394554.patch"; #R_asb_2024-06 Fix ActivityManager#killBackgroundProcesses permissions
-applyPatch "$DOS_PATCHES/android_frameworks_base/394555.patch"; #R_asb_2024-06 Verify URI permission for channel sound update from NotificationListenerService
-applyPatch "$DOS_PATCHES/android_frameworks_base/399737.patch"; #R_asb_2024-06 Added throttle when reporting shortcut usage
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/385536.patch"; #R_asb_2024-03 Resolve custom printer icon boundary exploit.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/385537.patch"; #R_asb_2024-03 Validate package names passed to the installer.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/385538.patch"; #R_asb_2024-03 Disallow system apps to be installed/updated as instant.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/385539.patch"; #R_asb_2024-03 Close AccountManagerService.session after timeout.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/389131.patch"; #R_asb_2024-04 Added limitations for attributions to handle invalid cases
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/389132.patch"; #R_asb_2024-04 isUserInLockDown can be true when there are other strong auth requirements
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/389133.patch"; #R_asb_2024-04 Fix security vulnerability that creates user with no restrictions when accountOptions are too long.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/392206.patch"; #R_asb_2024-05 Don't try to show the current toast again while it's showing.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/392207.patch"; #R_asb_2024-05 Prioritize system toasts
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394553.patch"; #R_asb_2024-06 ActivityManager#killBackgroundProcesses can kill caller's own app only
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394554.patch"; #R_asb_2024-06 Fix ActivityManager#killBackgroundProcesses permissions
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394555.patch"; #R_asb_2024-06 Verify URI permission for channel sound update from NotificationListenerService
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/399737.patch"; #R_asb_2024-06 Added throttle when reporting shortcut usage
 applyPatch "$DOS_PATCHES/android_frameworks_base/399076.patch"; #Q_asb_2024-06 Prevend user spoofing in isRequestPinItemSupported
-applyPatch "$DOS_PATCHES/android_frameworks_base/394556.patch"; #R_asb_2024-06 Check for NLS bind permission when rebinding services
-applyPatch "$DOS_PATCHES/android_frameworks_base/394557.patch"; #R_asb_2024-06 Hide window immediately if itself doesn't run hide animation
-applyPatch "$DOS_PATCHES/android_frameworks_base/394558.patch"; #R_asb_2024-06 Fix error handling for non-dynamic permissions
-applyPatch "$DOS_PATCHES/android_frameworks_base/394559.patch"; #R_asb_2024-06 Add more checkKeyIntent checks to AccountManagerService.
-applyPatch "$DOS_PATCHES/android_frameworks_base/394560.patch"; #R_asb_2024-06 Add in check for intent filter when setting/updating service
-applyPatch "$DOS_PATCHES/android_frameworks_base/394561.patch"; #R_asb_2024-06 Check hidden API exemptions
-applyPatch "$DOS_PATCHES/android_frameworks_base/394562.patch"; #R_asb_2024-06 AccessibilityManagerService: remove uninstalled services from enabled list after service update.
-applyPatch "$DOS_PATCHES/android_frameworks_base/394563.patch"; #R_asb_2024-06 Check permissions for CDM shell commands
-applyPatch "$DOS_PATCHES/android_frameworks_base/397541.patch"; #R_asb_2024-07 [PM] Send ACTION_PACKAGE_CHANGED when mimeGroups are changed
-applyPatch "$DOS_PATCHES/android_frameworks_base/397542.patch"; #R_asb_2024-07 Verify UID of incoming Zygote connections.
-applyPatch "$DOS_PATCHES/android_frameworks_base/397543.patch"; #R_asb_2024-07 Fix security vulnerability of non-dynamic permission removal
-applyPatch "$DOS_PATCHES/android_frameworks_base/399738.patch"; #R_asb_2024-08 Backport preventing BAL bypass via bound service
-applyPatch "$DOS_PATCHES/android_frameworks_base/399739.patch"; #R_asb_2024-08 Restrict USB poups while setup is in progress
-applyPatch "$DOS_PATCHES/android_frameworks_base/399740.patch"; #R_asb_2024-08 Hide SAW subwindows
-applyPatch "$DOS_PATCHES/android_frameworks_base/403218.patch"; #R_asb_2024-09 Sanitized uri scheme by removing scheme delimiter
-applyPatch "$DOS_PATCHES/android_frameworks_base/405515.patch"; #R_asb_2024-10 Update AccountManagerService checkKeyIntent.
-applyPatch "$DOS_PATCHES/android_frameworks_base/405516.patch"; #R_asb_2024-10 Fail parseUri if end is missing
-applyPatch "$DOS_PATCHES/android_frameworks_base/405517.patch"; #R_asb_2024-10 Prevent Sharing when FRP enforcement is in effect
-applyPatch "$DOS_PATCHES/android_frameworks_base/405518.patch"; #R_asb_2024-10 Check whether installerPackageName contains only valid characters
-applyPatch "$DOS_PATCHES/android_frameworks_base/408443.patch"; #R_asb_2024-11 Remove authenticator data if it was disabled.
-applyPatch "$DOS_PATCHES/android_frameworks_base/408444.patch"; #R_asb_2024-11 RingtoneManager: allow video ringtone URI
-applyPatch "$DOS_PATCHES/android_frameworks_base/408445.patch"; #R_asb_2024-11 Set no data transfer on function switch timeout for accessory mode
-applyPatch "$DOS_PATCHES/android_frameworks_base/408446.patch"; #R_asb_2024-11 Disallow device admin package and protected packages to be reinstalled as instant.
-applyPatch "$DOS_PATCHES/android_frameworks_base/408447.patch"; #R_asb_2024-11 Clear app-provided shortcut icons
-applyPatch "$DOS_PATCHES/android_frameworks_base/408448.patch"; #R_asb_2024-11 Restrict access to directories
-applyPatch "$DOS_PATCHES/android_frameworks_base/411487.patch"; #R_asb_2024-12 Properly handle onNullBinding() in appwidget service.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394556.patch"; #R_asb_2024-06 Check for NLS bind permission when rebinding services
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394557.patch"; #R_asb_2024-06 Hide window immediately if itself doesn't run hide animation
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394558.patch"; #R_asb_2024-06 Fix error handling for non-dynamic permissions
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394559.patch"; #R_asb_2024-06 Add more checkKeyIntent checks to AccountManagerService.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394560.patch"; #R_asb_2024-06 Add in check for intent filter when setting/updating service
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394561.patch"; #R_asb_2024-06 Check hidden API exemptions
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394562.patch"; #R_asb_2024-06 AccessibilityManagerService: remove uninstalled services from enabled list after service update.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/394563.patch"; #R_asb_2024-06 Check permissions for CDM shell commands
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/397541.patch"; #R_asb_2024-07 [PM] Send ACTION_PACKAGE_CHANGED when mimeGroups are changed
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/397542.patch"; #R_asb_2024-07 Verify UID of incoming Zygote connections.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/397543.patch"; #R_asb_2024-07 Fix security vulnerability of non-dynamic permission removal
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/399738.patch"; #R_asb_2024-08 Backport preventing BAL bypass via bound service
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/399739.patch"; #R_asb_2024-08 Restrict USB poups while setup is in progress
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/399740.patch"; #R_asb_2024-08 Hide SAW subwindows
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/403218.patch"; #R_asb_2024-09 Sanitized uri scheme by removing scheme delimiter
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/405515.patch"; #R_asb_2024-10 Update AccountManagerService checkKeyIntent.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/405516.patch"; #R_asb_2024-10 Fail parseUri if end is missing
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/405517.patch"; #R_asb_2024-10 Prevent Sharing when FRP enforcement is in effect
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/405518.patch"; #R_asb_2024-10 Check whether installerPackageName contains only valid characters
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408443.patch"; #R_asb_2024-11 Remove authenticator data if it was disabled.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408444.patch"; #R_asb_2024-11 RingtoneManager: allow video ringtone URI
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408445.patch"; #R_asb_2024-11 Set no data transfer on function switch timeout for accessory mode
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408446.patch"; #R_asb_2024-11 Disallow device admin package and protected packages to be reinstalled as instant.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408447.patch"; #R_asb_2024-11 Clear app-provided shortcut icons
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/408448.patch"; #R_asb_2024-11 Restrict access to directories
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_base/411487.patch"; #R_asb_2024-12 Properly handle onNullBinding() in appwidget service.
 git revert --no-edit ecb003c33be4655c3e40a074d44265b1c0e77081 #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
 git revert --no-edit 438d9feacfcad73d3ee918541574132928a93644 #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
 applyPatch "$DOS_PATCHES/android_frameworks_base/0007-Always_Restict_Serial.patch"; #Always restrict access to Build.SERIAL (GrapheneOS)
@@ -285,7 +285,7 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/opt/net/wifi"; then
-applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/408452.patch"; #R_asb_2024-11 Fix security issue by change the field in WifiConfig
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/408452.patch"; #R_asb_2024-11 Fix security issue by change the field in WifiConfig
 applyPatch "$DOS_PATCHES/android_frameworks_opt_net_wifi/0001-Random_MAC.patch"; #Add support for always generating new random MAC (GrapheneOS)
 MSG="DOS patching" commitChanges
 fi;
@@ -371,7 +371,7 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Bluetooth"; then
-applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/405540.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/405540.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections
 applyPatch "$DOS_PATCHES/android_packages_apps_Bluetooth/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
 MSG="DOS patching" commitChanges
 fi;
@@ -429,14 +429,14 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Settings"; then
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403219.patch"; #R_asb_2024-09 Limit wifi item edit content's max length to 500
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403220.patch"; #R_asb_2024-09 Replace getCallingActivity() with getLaunchedFromPackage()
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403221.patch"; #R_asb_2024-09 Ignore fragment attr from ext authenticator resource
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403222.patch"; #R_asb_2024-09 Restrict Settings Homepage prior to provisioning
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/405534.patch"; #R_asb_2024-10 FRP bypass defense in App battery usage page
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408449.patch"; #R_asb_2024-11 Stops hiding a11y services with the same package+label as an activity.
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408450.patch"; #R_asb_2024-11 startActivityForResult with new Intent
-applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408451.patch"; #R_asb_2024-11 Checks cross user permission before handling intent
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403219.patch"; #R_asb_2024-09 Limit wifi item edit content's max length to 500
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403220.patch"; #R_asb_2024-09 Replace getCallingActivity() with getLaunchedFromPackage()
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403221.patch"; #R_asb_2024-09 Ignore fragment attr from ext authenticator resource
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/403222.patch"; #R_asb_2024-09 Restrict Settings Homepage prior to provisioning
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/405534.patch"; #R_asb_2024-10 FRP bypass defense in App battery usage page
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408449.patch"; #R_asb_2024-11 Stops hiding a11y services with the same package+label as an activity.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408450.patch"; #R_asb_2024-11 startActivityForResult with new Intent
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_apps_Settings/408451.patch"; #R_asb_2024-11 Checks cross user permission before handling intent
 applyPatch "$DOS_PATCHES/android_packages_apps_Settings/410993.patch"; #Q_asb_2024-11 fix: Security Report - Reveal images across users via EditUserPhotoController
 #applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0001-Captive_Portal_Toggle.patch"; #Add option to disable captive portal checks (MSe1969)
 applyPatch "$DOS_PATCHES/android_packages_apps_Settings/0001-Captive_Portal_Toggle-gos.patch"; #Add option to disable captive portal checks (GrapheneOS)
@@ -504,8 +504,8 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/providers/MediaProvider"; then
-applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/397544.patch"; #R_asb_2024-07 Prevent insertion in other users storage volumes
-applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/408453.patch"; #R_asb_2024-11 Prevent apps from renaming files they don't own
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/397544.patch"; #R_asb_2024-07 Prevent insertion in other users storage volumes
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_providers_MediaProvider/408453.patch"; #R_asb_2024-11 Prevent apps from renaming files they don't own
 MSG="DOS patching" commitChanges
 fi;
 
@@ -516,9 +516,9 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/services/Telecomm"; then
-applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403223.patch"; #R_asb_2024-09 Unbind CS if connection is not created within 15 seconds.
-applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403224.patch"; #R_asb_2024-09 Unbind CallScreeningService when timeout reached.
-applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403225.patch"; #R_asb_2024-09 Resolve cross-user image exploit for conference status hints
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403223.patch"; #R_asb_2024-09 Unbind CS if connection is not created within 15 seconds.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403224.patch"; #R_asb_2024-09 Unbind CallScreeningService when timeout reached.
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_packages_services_Telecomm/403225.patch"; #R_asb_2024-09 Resolve cross-user image exploit for conference status hints
 MSG="DOS patching" commitChanges
 fi;
 
@@ -528,17 +528,17 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/bt"; then
-applyPatch "$DOS_PATCHES/android_system_bt/385557.patch"; #R_asb_2024-03 Fix an OOB bug in smp_proc_sec_req
-applyPatch "$DOS_PATCHES/android_system_bt/385558.patch"; #R_asb_2024-03 Reland: Fix an OOB write bug in attp_build_value_cmd
-applyPatch "$DOS_PATCHES/android_system_bt/385559.patch"; #R_asb_2024-03 Fix a security bypass issue in access_secure_service_from_temp_bond
-applyPatch "$DOS_PATCHES/android_system_bt/397545.patch"; #R_asb_2024-07 Fix an authentication bypass bug in SMP
-applyPatch "$DOS_PATCHES/android_system_bt/399742.patch"; #R_asb_2024-08 Fix heap-buffer overflow in sdp_utils.cc
-applyPatch "$DOS_PATCHES/android_system_bt/405535.patch"; #R_asb_2024-10 Add privatize option for bluetooth addresses for logging
-applyPatch "$DOS_PATCHES/android_system_bt/405536.patch"; #R_asb_2024-10 Add btif/include/btif_hh::btif_hh_status_text
-applyPatch "$DOS_PATCHES/android_system_bt/405537.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 1/2
-applyPatch "$DOS_PATCHES/android_system_bt/411488.patch"; #R_asb_2024-12 Fix OOB write in build_read_multi_rsp of gatt_sr.cc
-applyPatch "$DOS_PATCHES/android_system_bt/411489.patch"; #R_asb_2024-12 Fix an integer underflow in build_read_multi_rsp
-applyPatch "$DOS_PATCHES/android_system_bt/411490.patch"; #R_asb_2024-12 Fix "GATT Read Multiple Variable Response" builder
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/385557.patch"; #R_asb_2024-03 Fix an OOB bug in smp_proc_sec_req
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/385558.patch"; #R_asb_2024-03 Reland: Fix an OOB write bug in attp_build_value_cmd
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/385559.patch"; #R_asb_2024-03 Fix a security bypass issue in access_secure_service_from_temp_bond
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/397545.patch"; #R_asb_2024-07 Fix an authentication bypass bug in SMP
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/399742.patch"; #R_asb_2024-08 Fix heap-buffer overflow in sdp_utils.cc
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/405535.patch"; #R_asb_2024-10 Add privatize option for bluetooth addresses for logging
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/405536.patch"; #R_asb_2024-10 Add btif/include/btif_hh::btif_hh_status_text
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/405537.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 1/2
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/411488.patch"; #R_asb_2024-12 Fix OOB write in build_read_multi_rsp of gatt_sr.cc
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/411489.patch"; #R_asb_2024-12 Fix an integer underflow in build_read_multi_rsp
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_system_bt/411490.patch"; #R_asb_2024-12 Fix "GATT Read Multiple Variable Response" builder
 git am "$DOS_PATCHES/android_system_bt/a2dp-master-fixes.patch"; #topic (AOSP)
 applyPatch "$DOS_PATCHES_COMMON/android_system_bt/0001-alloc_size.patch"; #Add alloc_size attributes to the allocator (GrapheneOS)
 MSG="DOS patching" commitChanges
@@ -603,21 +603,21 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/qcom/opensource/commonsys/packages/apps/Bluetooth"; then
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_packages_apps_Bluetooth/405585.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 2/2
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_packages_apps_Bluetooth/405585.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 2/2
 MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "vendor/qcom/opensource/commonsys/system/bt"; then
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385591.patch"; #R_asb_2024-03 Fix an OOB bug in smp_proc_sec_req
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385592.patch"; #R_asb_2024-03 Reland: Fix an OOB write bug in attp_build_value_cmd
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385593.patch"; #R_asb_2024-03 Fix a security bypass issue in access_secure_service_from_temp_bond
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/397546.patch"; #R_asb_2024-07 Fix an authentication bypass bug in SMP
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/399743.patch"; #R_asb_2024-08 Fix heap-buffer overflow in sdp_utils.cc
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/405583.patch"; #R_asb_2024-10 Add btif/include/btif_hh::btif_hh_status_text
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/405584.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 1/2
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411491.patch"; #R_asb_2024-12 Fix OOB write in build_read_multi_rsp of gatt_sr.cc
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411492.patch"; #R_asb_2024-12 Fix an integer underflow in build_read_multi_rsp
-applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411493.patch"; #R_asb_2024-12 Fix "GATT Read Multiple Variable Response" builder
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385591.patch"; #R_asb_2024-03 Fix an OOB bug in smp_proc_sec_req
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385592.patch"; #R_asb_2024-03 Reland: Fix an OOB write bug in attp_build_value_cmd
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/385593.patch"; #R_asb_2024-03 Fix a security bypass issue in access_secure_service_from_temp_bond
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/397546.patch"; #R_asb_2024-07 Fix an authentication bypass bug in SMP
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/399743.patch"; #R_asb_2024-08 Fix heap-buffer overflow in sdp_utils.cc
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/405583.patch"; #R_asb_2024-10 Add btif/include/btif_hh::btif_hh_status_text
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/405584.patch"; #R_asb_2024-10 Disallow unexpected incoming HID connections 1/2
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411491.patch"; #R_asb_2024-12 Fix OOB write in build_read_multi_rsp of gatt_sr.cc
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411492.patch"; #R_asb_2024-12 Fix an integer underflow in build_read_multi_rsp
+#APPLIED BY ANSIBLE: applyPatch "$DOS_PATCHES/android_vendor_qcom_opensource_system_bt/411493.patch"; #R_asb_2024-12 Fix "GATT Read Multiple Variable Response" builder
 MSG="DOS patching" commitChanges
 fi;
 
