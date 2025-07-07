@@ -147,8 +147,8 @@ applyPatch() {
 			applyPatchReal "$@";
 		else
                         local psubj=$(grep Subject: "$currentWorkingPatch" | cut -d ':' -f2 | sed 's/\[PATCH\]//g' | sed -E 's/^\s+'//g)
-			git log --grep="$psubj" &>/dev/null | grep -q "$psubj"
-                        if [ $? -eq 0 ];then
+			match=$(git log --grep="$psubj" &>/dev/null | grep -c "$psubj" || true)
+                        if [ $match -gt 0 ];then
                             echo "Already applied (subject match found): $currentWorkingPatch / $psubj"
                         else
 			    if git apply --reverse --check "$@" &> /dev/null; then
