@@ -92,7 +92,8 @@ commentPatches android_kernel_essential_msm8998.sh \
     "CVE-2017-13218" \
     "CVE-2019-14047/ANY/0002.patch" \
     "CVE-2025-38034" \
-    "CVE-2022-49980"
+    "CVE-2022-49980" \
+    "CVE-2024-47709"
 
 commentPatches android_kernel_fairphone_msm8974.sh \
     "CVE-2018-20169" \
