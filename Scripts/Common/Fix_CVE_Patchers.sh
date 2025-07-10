@@ -503,7 +503,8 @@ commentPatches android_kernel_oneplus_msm8998.sh \
     "CVE-2020-8992" \
     "CVE-2020-16166" \
     "CVE-2025-38034" \
-    "CVE-2022-49980"
+    "CVE-2022-49980" \
+    "CVE-2024-47709"
 
 commentPatches android_kernel_oneplus_sdm845.sh \
     "CVE-2024-0607/4.14/0008.patch" \
