@@ -147,7 +147,6 @@ echo "Deblobbing...";
 	blobs=$blobs"|libDxHdcp.so|libDxModularPluginNv.so|libDxDrmServer.so";
 	blobs=$blobs"|DxHDCP.cfg|DxDrmConfig.txt";
 	blobs=$blobs"|dxhdcp.*|dxcpr.*";
-	#blobs=$blobs"|libhdcpsrm.so|libcpion.so";
 	makes=$makes"|DxHDCP.cfg";
 
 	#Display Color Tuning [Qualcomm] #XXX: still breaks boot on some devices
@@ -179,6 +178,7 @@ echo "Deblobbing...";
 
 	#DRM
 	if [ "$DOS_DEBLOBBER_REMOVE_WIDEVINE_DRM" != "false" ]; then
+	        blobs=$blobs"|libhdcpsrm.so|libcpion.so"
 		blobs=$blobs"|liboemcrypto.so|libtzdrmgenprov.so";
 		blobs=$blobs"|libpvr.so|librmp.so|libsi.so|libSSEPKCS11.so";
 		blobs=$blobs"|libdrmctaplugin.so|libdrmmtkplugin.so|libdrmmtkwhitelist.so|libmockdrmcryptoplugin.so";
