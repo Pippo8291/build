@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Sun, 17 Mar 2019 20:58:37 -0400
+Subject: [PATCH] constify JNINativeMethod tables
+
+---
+ nci/jni/NativeNfcManager.cpp | 2 +-
+ nci/jni/NativeNfcTag.cpp     | 2 +-
+ nci/jni/NativeP2pDevice.cpp  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/nci/jni/NativeNfcManager.cpp b/nci/jni/NativeNfcManager.cpp
+index 2c6e7aa0..a746f101 100644
+--- a/nci/jni/NativeNfcManager.cpp
++++ b/nci/jni/NativeNfcManager.cpp
+@@ -2273,7 +2273,7 @@ static void sendRawVsCmdCallback(uint8_t event, uint16_t param_len,
+ ** JNI functions for android-4.0.1_r1
+ **
+ *****************************************************************************/
+-static JNINativeMethod gMethods[] = {
++static const JNINativeMethod gMethods[] = {
+     {"doDownload", "()Z", (void*)nfcManager_doDownload},
+ 
+     {"initializeNativeStructure", "()Z", (void*)nfcManager_initNativeStruc},
+diff --git a/nci/jni/NativeNfcTag.cpp b/nci/jni/NativeNfcTag.cpp
+index 53e1fb41..f846c4af 100644
+--- a/nci/jni/NativeNfcTag.cpp
++++ b/nci/jni/NativeNfcTag.cpp
+@@ -1699,7 +1699,7 @@ void nativeNfcTag_releaseRfInterfaceMutexLock() {
+ ** JNI functions for Android 4.0.3
+ **
+ *****************************************************************************/
+-static JNINativeMethod gMethods[] = {
++static const JNINativeMethod gMethods[] = {
+     {"doConnect", "(I)I", (void*)nativeNfcTag_doConnect},
+     {"doDisconnect", "()Z", (void*)nativeNfcTag_doDisconnect},
+     {"doReconnect", "()I", (void*)nativeNfcTag_doReconnect},
+diff --git a/nci/jni/NativeP2pDevice.cpp b/nci/jni/NativeP2pDevice.cpp
+index efb82526..a2215870 100644
+--- a/nci/jni/NativeP2pDevice.cpp
++++ b/nci/jni/NativeP2pDevice.cpp
+@@ -56,7 +56,7 @@ static jboolean nativeP2pDeviceDoSend(JNIEnv*, jobject, jbyteArray) {
+ ** Description:     JNI functions
+ **
+ *****************************************************************************/
+-static JNINativeMethod gMethods[] = {
++static const JNINativeMethod gMethods[] = {
+     {"doConnect", "()Z", (void*)nativeP2pDeviceDoConnect},
+     {"doDisconnect", "()Z", (void*)nativeP2pDeviceDoDisconnect},
+     {"doTransceive", "([B)[B", (void*)nativeP2pDeviceDoTransceive},

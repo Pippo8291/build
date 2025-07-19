@@ -279,9 +279,10 @@ processRelease() {
 	local OUT_DIR="$DOS_BUILD_BASE/out/target/product/$DEVICE/";
 
 	local RELEASETOOLS_PREFIX="build/tools/releasetools/";
-	if [[ "$DOS_VERSION" == "LineageOS-18.1" ]] || [[ "$DOS_VERSION" == "LineageOS-19.1" ]] || [[ "$DOS_VERSION" == "LineageOS-20.0" ]] || [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
-		local RELEASETOOLS_PREFIX="";
-	fi;
+        case $DOS_VERSION in
+            LineageOS-1[89].1|LineageOS-2*)
+		local RELEASETOOLS_PREFIX="";;
+        esac
 
 	umask 0022;
 
@@ -311,10 +312,15 @@ processRelease() {
 		--extra_apks ServiceUwbResources.apk="$KEY_DIR/releasekey" \
 		--extra_apks ServiceWifiResources.apk="$KEY_DIR/releasekey" \
 		--extra_apks WifiDialog.apk="$KEY_DIR/releasekey");
-	if [[ "$DOS_VERSION" == "LineageOS-20.0" ]] || [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
-		local APK_SWITCHES_EXTRA=(--extra_apks Bluetooth.apk="$KEY_DIR/bluetooth");
-	fi;
-	if [[ "$DOS_VERSION" == "LineageOS-17.1" ]] || [[ "$DOS_VERSION" == "LineageOS-18.1" ]] || [[ "$DOS_VERSION" == "LineageOS-19.1" ]] || [[ "$DOS_VERSION" == "LineageOS-20.0" ]] || [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
+
+        case $DOS_VERSION in
+            LineageOS-2*)
+		local APK_SWITCHES_EXTRA=(--extra_apks Bluetooth.apk="$KEY_DIR/bluetooth")
+            ;;
+        esac
+
+        case $DOS_VERSION in
+            LineageOS-1[789].1|LineageOS-2*)
 		local APEX_SWITCHES=(--extra_apks com.android.adbd.apex="$KEY_DIR/releasekey" \
 			--extra_apex_payload_key com.android.adbd.apex="$KEY_DIR/avb.pem" \
 			--extra_apks com.android.adservices.apex="$KEY_DIR/releasekey" \
@@ -429,7 +435,8 @@ processRelease() {
 			--extra_apex_payload_key com.google.pixel.vibrator.hal.apex="$KEY_DIR/avb.pem" \
 			--extra_apks com.qorvo.uwb.apex="$KEY_DIR/releasekey" \
 			--extra_apex_payload_key com.qorvo.uwb.apex="$KEY_DIR/avb.pem");
-	fi;
+	    ;;
+        esac
 
 	#Malware Scan
 	if [ "$DOS_MALWARE_SCAN_BEFORE_SIGN" = true ]; then
@@ -634,10 +641,13 @@ hardenLocationSerials() {
 	#Prevent Qualcomm location stack from sending chipset serial number
 
 	#Devices using blob xtra-daemon (which Deblob.sh removes)
-	if [[ "$DOS_VERSION" != "LineageOS-20.0" ]] && [[ "$DOS_VERSION" != "LineageOS-21.0" ]]; then #20.0+ has sysfs_soc_sensitive label
+        case $DOS_VERSION in
+            LineageOS-1*)
+	        #20.0+ has sysfs_soc_sensitive label
 		find device -name "hal_gnss*.te" -type f -exec sh -c "awk -i inplace '!/sysfs_soc/' {}" \;
 		find device -name "location.te" -type f -exec sh -c "awk -i inplace '!/sysfs_soc/' {}" \;
-	fi;
+            ;;
+        esac
 
 	#Devices using source built libloc, these ones typically have broad /sys access
 	## Null out the User-Agent header
@@ -733,7 +743,13 @@ hardenUserdata() {
 
 	#TODO: Ensure: noatime,nosuid,nodev
 	sed -i '/\/data/{/discard/!s|nosuid|discard,nosuid|}' *fstab* */*fstab* */*/*fstab* &>/dev/null || true;
-	if [ "$1" != "device/samsung/tuna" ] && [ "$1" != "device/amazon/hdx-common" ] && [ "$1" != "device/motorola/athene" ] && [[ "$DOS_VERSION" != "LineageOS-20.0" ]] && [[ "$DOS_VERSION" != "LineageOS-21.0" ]]; then #tuna needs first boot to init, hdx-c has broken encryption
+        #tuna needs first boot to init, hdx-c has broken encryption
+	if [ "$1" != "device/samsung/tuna" ] \
+            && [ "$1" != "device/amazon/hdx-common" ] \
+            && [ "$1" != "device/motorola/athene" ] \
+            && [[ "$DOS_VERSION" != "LineageOS-20.0" ]] \
+            && [[ "$DOS_VERSION" != "LineageOS-21.0" ]] \
+            && [[ "$DOS_VERSION" != "LineageOS-22.2" ]]; then
 		sed -i 's|encryptable=/|forceencrypt=/|' *fstab* */*fstab* */*/*fstab* &>/dev/null || true;
 	fi;
  	if [ "$1" == "device/samsung/klte-common" ];then	# AXP.OS supports forceencrypt on klte, leaves ext. sdcard on encryptable though
@@ -751,11 +767,14 @@ enableAutoVarInit() {
 	local DOS_AUTOVARINIT_KERNELS=('essential/msm8998' 'fairphone/sdm632' 'fxtec/msm8998' 'google/coral' 'google/msm-4.9' 'google/sunfish' 'google/wahoo' 'oneplus/msm8996' 'oneplus/msm8998' 'oneplus/sdm845' 'oneplus/sm7250' 'oneplus/sm8150' 'razer/msm8998' 'razer/sdm845' 'samsung/exynos9810' 'samsung/universal9810' 'sony/sdm660' 'sony/sdm845' 'xiaomi/msm8937' 'xiaomi/sdm660' 'xiaomi/sdm845' 'xiaomi/sm6150' 'xiaomi/sm8150' 'xiaomi/vayu' 'xiaomi/sm8250' 'zuk/msm8996');
 	cd "$DOS_BUILD_BASE";
 	echo "auto-var-init: Starting!";
-	if [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
-		local patch_suffix="-modern";
-	else
-		local patch_suffix="-deprecated";
-	fi;
+        case $DOS_VERSION in
+            LineageOS-2[123456789].*)
+		local patch_suffix="-modern"
+            ;;
+            *)
+		local patch_suffix="-deprecated"
+            ;;
+        esac
 	for kernel in "${DOS_AUTOVARINIT_KERNELS[@]}"
 	do
 		if [ -d "$DOS_BUILD_BASE/kernel/$kernel" ]; then
@@ -769,11 +788,14 @@ enableAutoVarInit() {
 			elif git apply --check --reverse "$DOS_PATCHES_COMMON/android_kernel_common/0001-auto_var_init$patch_suffix.patch" &> /dev/null; then
 				echo "auto-var-init: Already enabled for $kernel";
 			elif grep -q "trivial-auto-var-init=pattern" Makefile; then
-				if [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
-					sed -i 's/ftrivial-auto-var-init=pattern/ftrivial-auto-var-init=zero/' Makefile; #(GrapheneOS)
-				else
-					sed -i 's/ftrivial-auto-var-init=pattern/ftrivial-auto-var-init=zero -enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang/' Makefile; #(GrapheneOS)
-				fi;
+                                case $DOS_VERSION in
+                                    LineageOS-2*)
+                                        sed -i 's/ftrivial-auto-var-init=pattern/ftrivial-auto-var-init=zero/' Makefile; #(GrapheneOS)
+                                    ;;
+                                    *)
+                                        sed -i 's/ftrivial-auto-var-init=pattern/ftrivial-auto-var-init=zero -enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang/' Makefile; #(GrapheneOS)
+                                    ;;
+                                esac
 				grep -q "trivial-auto-var-init=pattern" Makefile;
 				if [ $? -eq 0 ]; then
 					echo "auto-var-init: Failed to switch from pattern to zero on $kernel";
@@ -1143,7 +1165,9 @@ hardenDefconfig() {
 	optionsNo+=("HARDENED_USERCOPY_FALLBACK");
         ### DISABLED by AXP to allow the usage of setenforce: 	optionsNo+=("SECURITY_SELINUX_DISABLE" "SECURITY_WRITABLE_HOOKS");
 	if [ "$DOS_USE_KSM" = false ]; then optionsNo+=("SLAB_MERGE_DEFAULT"); fi;
-	if [[ "$DOS_VERSION" != "LineageOS-20.0" ]] && [[ "$DOS_VERSION" != "LineageOS-21.0" ]]; then optionsNo+=("USERFAULTFD"); fi;
+        case $DOS_VERSION in
+            LineageOS-1*) optionsNo+=("USERFAULTFD") ;;
+        esac
 	#optionsNo+=("CFI_PERMISSIVE");
 	#misc
 	optionsNo+=("FB_MSM_MDSS_XLOG_DEBUG" "MSM_BUSPM_DEV" "MSMB_CAMERA_DEBUG" "MSM_CAMERA_DEBUG" "MSM_SMD_DEBUG");

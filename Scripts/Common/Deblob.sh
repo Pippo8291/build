@@ -210,10 +210,12 @@ echo "Deblobbing...";
 	#External Accessories
 	if [ "$DOS_DEBLOBBER_REMOVE_ACCESSORIES" = true ]; then
 		#tangorpro
-		if [[ "$DOS_VERSION" == "LineageOS-20.0" ]] || [[ "$DOS_VERSION" == "LineageOS-21.0" ]]; then
-			blobs=$blobs"|AndroidMediaShell.apk|CastAuthPrebuilt.apk|UsoniaPrebuilt.apk|HomegraphPrebuilt.apk|SmartDisplayPrebuilt.apk|DockManagerPrebuilt.apk|DockSetup.apk";
-			blobs=$blobs"|default-permissions_SmartDisplayPrebuilt.xml|com.google.android.apps.mediashell.xml|com.google.android.apps.nest.castauth.xml|pixel_docking_experience_2022.xml|appcompat[/]compat_framework_overrides.xml|com.google.assistant.hubui.xml|sysconfig[/]communal.xml|com.google.android.apps.nest.dockmanager.app.xml|google-nest-hiddenapi-package-whitelist.xml";
-		fi;
+                case $DOS_VERSION in
+                    LineageOS-2*)
+                        blobs=$blobs"|AndroidMediaShell.apk|CastAuthPrebuilt.apk|UsoniaPrebuilt.apk|HomegraphPrebuilt.apk|SmartDisplayPrebuilt.apk|DockManagerPrebuilt.apk|DockSetup.apk";
+                        blobs=$blobs"|default-permissions_SmartDisplayPrebuilt.xml|com.google.android.apps.mediashell.xml|com.google.android.apps.nest.castauth.xml|pixel_docking_experience_2022.xml|appcompat[/]compat_framework_overrides.xml|com.google.assistant.hubui.xml|sysconfig[/]communal.xml|com.google.android.apps.nest.dockmanager.app.xml|google-nest-hiddenapi-package-whitelist.xml";
+                    ;;
+                esac
 		#dragon
 		blobs=$blobs"|DragonKeyboardFirmwareUpdater.apk";
 		#griffin

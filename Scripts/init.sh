@@ -265,7 +265,9 @@ fi;
 export LC_ALL=C;
 export LANG=C.UTF-8;
 
-if [[ "$DOS_VERSION" != "LineageOS-20.0" ]] && [[ "$DOS_VERSION" != "LineageOS-21.0" ]]; then export DOS_DEBLOBBER_REMOVE_EUICC_FULL=true; fi;
+case $DOS_VERSION in
+    LineageOS-1*) export DOS_DEBLOBBER_REMOVE_EUICC_FULL=true ;;
+esac
 
 #START OF VERIFICATION
 gpgVerifyGitHead "$DOS_WORKSPACE_ROOT";
