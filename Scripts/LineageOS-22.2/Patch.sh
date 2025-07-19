@@ -60,7 +60,6 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "bionic"; then
-git revert --no-edit 7126ad39da09905c7096e85a30bf71ebf1016127; #Add ability to build scudo-free 32-bit libc variant.
 applyPatch "$DOS_PATCHES/android_bionic/0001-HM-Use_HM.patch"; #Use Scudo on 32-bit and hardened_malloc on 64-bit (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_bionic/0001-HM-Runtime_Control-1.patch"; #Add a runtime option to disable hardened_malloc (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_bionic/0001-HM-Runtime_Control-2.patch"; #Support assigning ID to path of current executable (GrapheneOS)
@@ -552,4 +551,11 @@ awk -i inplace '!/BOARD_AVB_ENABLE := false/' device/*/*/*.mk; #revert Lineage's
 #
 #END OF DEVICE CHANGES
 #
+
+#convert missing blueprints (requires androidmk, which gets build by mka blueprint_tools)
+if enterAndClear "system/qcom/softap/sdk"; then
+androidmk Android.mk > Android.bp && rm Android.mk
+MSG="AXP.OS patching" commitChanges
+fi
+
 echo -e "\e[0;32m[SCRIPT COMPLETE] Primary patching finished\e[0m";
