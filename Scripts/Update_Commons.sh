@@ -1,6 +1,7 @@
 #!/bin/sh
 #DivestOS: A mobile operating system divested from the norm.
 #Copyright (c) 2022-2024 Divested Computing Group
+#Copyright (c) 2024-2025 AXP.OS <project |AT| axpos #dot# org>
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU Affero General Public License as published by
