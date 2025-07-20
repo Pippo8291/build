@@ -41,11 +41,11 @@ sed -i 's|Lineage |'"$DOS_BRANDING_NAME"' |' recovery.cpp; #not used (yet)
 MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
 fi;
 
-if enter "build/make"; then
-sed -i 's|echo "ro.build.user=$BUILD_USERNAME"|echo "ro.build.user=emy"|' tools/buildinfo.sh; #Override build user
-sed -i 's|echo "ro.build.host=$BUILD_HOSTNAME"|echo "ro.build.host=dosbm"|' tools/buildinfo.sh; #Override build host
-MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
-fi;
+#if enter "build/make"; then
+#sed -i 's|echo "ro.build.user=$BUILD_USERNAME"|echo "ro.build.user=emy"|' tools/buildinfo.sh; #Override build user
+#sed -i 's|echo "ro.build.host=$BUILD_HOSTNAME"|echo "ro.build.host=dosbm"|' tools/buildinfo.sh; #Override build host
+#MSG="rebranding to $DOS_BRANDING_NAME" commitChanges
+#fi;
 
 if enter "frameworks/base"; then
 generateBootAnimationMask "$DOS_BRANDING_NAME" "$DOS_BRANDING_BOOTANIMATION_FONT" core/res/assets/images/android-logo-mask.png;
