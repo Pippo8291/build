@@ -25,7 +25,7 @@ source "$DOS_SCRIPTS_COMMON/Shell.sh";
 echo "Rebranding...";
 
 if enter "bootable/recovery"; then
-git revert --no-edit f921b383fc1781bdb1b28088c530de81e12cfeff; #use standard animation
+git revert --no-edit 9c6922055054addd21f078a9eb679beda8997e7d #use standard animation
 awk -i inplace '!/DrawSurface\(logo.get\(\)/' recovery_ui/screen_ui.cpp; #Hide logo
 mogrify -format png -fill "#FF5722" -opaque "#167C80" -fuzz 10% res-*/images/*sel.png; #Recolor icons
 mogrify -format png -fill "#FF5722" -opaque "#7c4dff" -fuzz 10% res-*/images/ic_back_sel.png;
