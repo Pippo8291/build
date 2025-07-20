@@ -381,7 +381,7 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "system/update_engine"; then
-git revert --no-edit 94e1a11f391d5d742e9e6aec4e333c14e7501e33; #Do not skip payload signature verification
+git revert --no-edit 2b50813dfda68325d8aec33c00346de9195bff0e #Do not skip payload signature verification
 MSG="DOS patching" commitChanges
 fi;
 
@@ -416,7 +416,7 @@ sed -i 's/OpenCamera/Aperture/' packages.mk; #Use the LineageOS camera app
 awk -i inplace '!/speed-profile/' build/target/product/lowram.mk; #breaks compile on some dexpreopt devices
 sed -i 's/wifi,cell/internet/' overlay/common/frameworks/base/packages/SystemUI/res/values/config.xml; #Use the modern quick tile
 sed -i 's|system/etc|$(TARGET_COPY_OUT_PRODUCT)/etc|' divestos.mk;
-MSG="DOS patching" commitChanges
+if [ -d .git ];then MSG="DOS patching" commitChanges; fi
 fi;
 #
 #END OF ROM CHANGES
@@ -535,7 +535,7 @@ awk -i inplace '!/BOARD_AVB_ENABLE := false/' device/*/*/*.mk; #revert Lineage's
 
 #convert missing blueprints (requires androidmk, which gets build by mka blueprint_tools)
 if enterAndClear "system/qcom/softap/sdk"; then
-androidmk Android.mk > Android.bp && rm Android.mk
+if [ -f Android.mk ]; then androidmk Android.mk > Android.bp && rm Android.mk; fi
 MSG="AXP.OS patching" commitChanges
 fi
 
