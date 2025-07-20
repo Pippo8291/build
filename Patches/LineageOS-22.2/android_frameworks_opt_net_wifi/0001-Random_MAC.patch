@@ -14,10 +14,10 @@ based on https://github.com/GrapheneOS/platform_frameworks_opt_net_wifi/commit/a
  2 files changed, 25 insertions(+), 8 deletions(-)
 
 diff --git a/libs/WifiTrackerLib/src/com/android/wifitrackerlib/StandardWifiEntry.java b/libs/WifiTrackerLib/src/com/android/wifitrackerlib/StandardWifiEntry.java
-index 246c7b36a..86e17c570 100644
+index 7b8459dca..7064358fe 100644
 --- a/libs/WifiTrackerLib/src/com/android/wifitrackerlib/StandardWifiEntry.java
 +++ b/libs/WifiTrackerLib/src/com/android/wifitrackerlib/StandardWifiEntry.java
-@@ -260,7 +260,7 @@ public class StandardWifiEntry extends WifiEntry {
+@@ -261,7 +261,7 @@ public class StandardWifiEntry extends WifiEntry {
                  return wifiInfoMac;
              }
          }
@@ -26,7 +26,7 @@ index 246c7b36a..86e17c570 100644
              final String[] factoryMacs = mWifiManager.getFactoryMacAddresses();
              if (factoryMacs.length > 0) {
                  return factoryMacs[0];
-@@ -553,12 +553,18 @@ public class StandardWifiEntry extends WifiEntry {
+@@ -554,12 +554,18 @@ public class StandardWifiEntry extends WifiEntry {
      @Override
      @Privacy
      public synchronized int getPrivacy() {
@@ -50,7 +50,7 @@ index 246c7b36a..86e17c570 100644
          }
      }
  
-@@ -570,11 +576,21 @@ public class StandardWifiEntry extends WifiEntry {
+@@ -571,11 +577,21 @@ public class StandardWifiEntry extends WifiEntry {
          // Refresh the current config so we don't overwrite any changes that we haven't gotten
          // the CONFIGURED_NETWORKS_CHANGED broadcast for yet.
          refreshTargetWifiConfig();
@@ -75,10 +75,10 @@ index 246c7b36a..86e17c570 100644
      public synchronized boolean isAutoJoinEnabled() {
          if (mTargetWifiConfig == null) {
 diff --git a/libs/WifiTrackerLib/src/com/android/wifitrackerlib/WifiEntry.java b/libs/WifiTrackerLib/src/com/android/wifitrackerlib/WifiEntry.java
-index 6843d5a75..495fa7959 100644
+index d3525d81c..8a212683c 100644
 --- a/libs/WifiTrackerLib/src/com/android/wifitrackerlib/WifiEntry.java
 +++ b/libs/WifiTrackerLib/src/com/android/wifitrackerlib/WifiEntry.java
-@@ -142,6 +142,7 @@ public class WifiEntry {
+@@ -148,6 +148,7 @@ public class WifiEntry {
      public static final int PRIVACY_DEVICE_MAC = 0;
      public static final int PRIVACY_RANDOMIZED_MAC = 1;
      public static final int PRIVACY_UNKNOWN = 2;

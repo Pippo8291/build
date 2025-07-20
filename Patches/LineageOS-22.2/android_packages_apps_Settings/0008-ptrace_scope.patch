@@ -12,10 +12,10 @@ Subject: [PATCH] add native debugging setting
  create mode 100644 src/com/android/settings/security/NativeDebugPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 9f0e7336f1d..d9a023e091f 100644
+index 1c3f864c956..2e949efd5cd 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -665,6 +665,9 @@
+@@ -716,6 +716,9 @@
      <string name="auto_reboot_title">Auto reboot</string>
      <string name="auto_reboot_summary">Automatically reboot the device, if the phone hasn\'t been unlocked within the selected number of hours.</string>
  
@@ -155,10 +155,10 @@ index 00000000000..9271e6e21cf
 +    }
 +}
 diff --git a/src/com/android/settings/security/SecuritySettings.java b/src/com/android/settings/security/SecuritySettings.java
-index 7aaa1b1e58f..d29325d0fbc 100644
+index 3f0645f7dd8..3dd83552c9b 100644
 --- a/src/com/android/settings/security/SecuritySettings.java
 +++ b/src/com/android/settings/security/SecuritySettings.java
-@@ -106,6 +106,7 @@ public class SecuritySettings extends DashboardFragment {
+@@ -115,6 +115,7 @@ public class SecuritySettings extends DashboardFragment {
                  context, lifecycle));
          securityPreferenceControllers.add(new ChangeScreenLockPreferenceController(context, host));
          securityPreferenceControllers.add(new AutoRebootPreferenceController(context));

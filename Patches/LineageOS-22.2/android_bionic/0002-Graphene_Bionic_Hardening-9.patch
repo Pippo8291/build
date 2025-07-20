@@ -12,12 +12,12 @@ Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/libc/bionic/__libc_init_main_thread.cpp b/libc/bionic/__libc_init_main_thread.cpp
-index a6ddc64d5..c03a8b79d 100644
+index 78ae90146..310413685 100644
 --- a/libc/bionic/__libc_init_main_thread.cpp
 +++ b/libc/bionic/__libc_init_main_thread.cpp
 @@ -49,6 +49,12 @@ uintptr_t __stack_chk_guard[PAGE_SIZE / sizeof(uintptr_t)] = {0};
  
- static pthread_internal_t main_thread;
+ BIONIC_USED_BEFORE_LINKER_RELOCATES static pthread_internal_t main_thread;
  
 +#if __LP64__
 +static const uintptr_t canary_mask = __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ ?

@@ -18,14 +18,14 @@ API. Also, apps that are not installed in primary user are visible in Settings -
 See commit 0d1fd8d09163566d2c7eb72037f63b6404ada642 and issue report
 https://github.com/GrapheneOS/os-issue-tracker/issues/1634 for more details.
 ---
- .../java/com/android/server/pm/ComputerEngine.java   | 12 ------------
- 1 file changed, 12 deletions(-)
+ .../java/com/android/server/pm/ComputerEngine.java  | 13 -------------
+ 1 file changed, 13 deletions(-)
 
 diff --git a/services/core/java/com/android/server/pm/ComputerEngine.java b/services/core/java/com/android/server/pm/ComputerEngine.java
-index 06b16becd3fe..b76683e29e42 100644
+index be2f58dc276c..768b7ec381cb 100644
 --- a/services/core/java/com/android/server/pm/ComputerEngine.java
 +++ b/services/core/java/com/android/server/pm/ComputerEngine.java
-@@ -2721,24 +2721,12 @@ public class ComputerEngine implements Computer {
+@@ -2762,25 +2762,12 @@ public class ComputerEngine implements Computer {
       * Update given flags when being used to request {@link PackageInfo}.
       */
      public final long updateFlagsForPackage(long flags, int userId) {
@@ -37,7 +37,8 @@ index 06b16becd3fe..b76683e29e42 100644
              enforceCrossUserPermission(Binder.getCallingUid(), userId, false, false,
                      !isRecentsAccessingChildProfiles(Binder.getCallingUid(), userId),
                      "MATCH_ANY_USER flag requires INTERACT_ACROSS_USERS permission");
--        } else if ((flags & PackageManager.MATCH_UNINSTALLED_PACKAGES) != 0
+-        } else if (!Flags.removeCrossUserPermissionHack()
+-                && (flags & PackageManager.MATCH_UNINSTALLED_PACKAGES) != 0
 -                && isCallerSystemUser
 -                && mUserManager.hasProfile(UserHandle.USER_SYSTEM)) {
 -            // If the caller wants all packages and has a profile associated with it,

@@ -10,10 +10,10 @@ Subject: [PATCH] disable hardened_malloc for Pixel camera provider service
  3 files changed, 7 insertions(+)
 
 diff --git a/libc/bionic/libc_init_dynamic.cpp b/libc/bionic/libc_init_dynamic.cpp
-index 1135b805c..042d037a3 100644
+index 04296b92b..1d34dd2f1 100644
 --- a/libc/bionic/libc_init_dynamic.cpp
 +++ b/libc/bionic/libc_init_dynamic.cpp
-@@ -90,6 +90,9 @@ static void init_prog_id(libc_globals* globals) {
+@@ -91,6 +91,9 @@ static void init_prog_id(libc_globals* globals) {
  
  #define IS(prog) (!strcmp(exe_path, prog))
  
@@ -24,10 +24,10 @@ index 1135b805c..042d037a3 100644
  
    // libc_globals struct is write-protected
 diff --git a/libc/bionic/malloc_common.cpp b/libc/bionic/malloc_common.cpp
-index 3d3e8ef61..9b7310347 100644
+index a156edb19..d0bc46bec 100644
 --- a/libc/bionic/malloc_common.cpp
 +++ b/libc/bionic/malloc_common.cpp
-@@ -425,6 +425,9 @@ static const MallocDispatch* native_allocator_dispatch;
+@@ -387,6 +387,9 @@ static const MallocDispatch* native_allocator_dispatch;
  void InitNativeAllocatorDispatch(libc_globals* globals) {
    bool hardened_impl = true;
    switch (get_prog_id()) {
@@ -38,10 +38,10 @@ index 3d3e8ef61..9b7310347 100644
          hardened_impl = getenv("DISABLE_HARDENED_MALLOC") == nullptr;
    }
 diff --git a/libc/include/stdlib.h b/libc/include/stdlib.h
-index 5ce8f9103..cb8d3d3b2 100644
+index f68200508..e10b5eeac 100644
 --- a/libc/include/stdlib.h
 +++ b/libc/include/stdlib.h
-@@ -213,6 +213,7 @@ long strtol_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, i
+@@ -373,6 +373,7 @@ float strtof_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr,
  int get_prog_id();
  #define is_prog(id) (get_prog_id() == id)
  

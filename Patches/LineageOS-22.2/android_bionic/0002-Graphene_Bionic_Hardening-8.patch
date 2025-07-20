@@ -9,7 +9,7 @@ Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
  1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/libc/bionic/__libc_init_main_thread.cpp b/libc/bionic/__libc_init_main_thread.cpp
-index 1b539f274..a6ddc64d5 100644
+index 0d557f128..78ae90146 100644
 --- a/libc/bionic/__libc_init_main_thread.cpp
 +++ b/libc/bionic/__libc_init_main_thread.cpp
 @@ -28,6 +28,9 @@
@@ -37,7 +37,7 @@ index 1b539f274..a6ddc64d5 100644
 +__attribute__((aligned(PAGE_SIZE)))
 +uintptr_t __stack_chk_guard[PAGE_SIZE / sizeof(uintptr_t)] = {0};
  
- static pthread_internal_t main_thread;
+ BIONIC_USED_BEFORE_LINKER_RELOCATES static pthread_internal_t main_thread;
  
 @@ -107,10 +110,16 @@ void __init_tcb_dtv(bionic_tcb* tcb) {
  // Note in particular that it is not possible to return from any existing

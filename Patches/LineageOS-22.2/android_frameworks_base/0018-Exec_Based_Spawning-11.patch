@@ -8,10 +8,10 @@ Subject: [PATCH] disable preloading HALs for exec spawning
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/core/java/com/android/internal/os/ZygoteInit.java b/core/java/com/android/internal/os/ZygoteInit.java
-index 699899e02f85..da2f93d4539c 100644
+index 268668cfdc41..454577d1fc1f 100644
 --- a/core/java/com/android/internal/os/ZygoteInit.java
 +++ b/core/java/com/android/internal/os/ZygoteInit.java
-@@ -142,9 +142,11 @@ public class ZygoteInit {
+@@ -145,9 +145,11 @@ public class ZygoteInit {
              Resources.preloadResources();
              bootTimingsTraceLog.traceEnd(); // PreloadResources
          }

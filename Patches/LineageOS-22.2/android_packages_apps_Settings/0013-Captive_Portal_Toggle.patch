@@ -25,7 +25,7 @@ Change-Id: I8a762d0f29ac42fce3dcfc7189e8ff216a8f8d1a
  create mode 100644 src/com/android/settings/network/ConnectivityCheckPreferenceController.java
 
 diff --git a/res/values/arrays.xml b/res/values/arrays.xml
-index a0030084801..7aa5fec4487 100644
+index 3bda00e86c7..c44f1e2c0ce 100644
 --- a/res/values/arrays.xml
 +++ b/res/values/arrays.xml
 @@ -157,6 +157,36 @@
@@ -66,10 +66,10 @@ index a0030084801..7aa5fec4487 100644
           These are shown in a list dialog. -->
      <string-array name="lock_after_timeout_entries">
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 9afe2bd2a30..70ea886db71 100644
+index 573be3736e1..e92e9ded27b 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -12834,6 +12834,9 @@
+@@ -13472,6 +13472,9 @@
      <!-- [CHAR LIMIT=NONE] Hint for QR code process failure -->
      <string name="bt_le_audio_qr_code_is_not_valid_format">QR code isn\u0027t a valid format</string>
  
@@ -496,17 +496,17 @@ index 00000000000..72d61defc30
 +    private boolean isDisabledByAdmin() { return getEnforcedAdmin() != null; }
 +}
 diff --git a/src/com/android/settings/network/NetworkDashboardFragment.java b/src/com/android/settings/network/NetworkDashboardFragment.java
-index 323d9354bd2..f74edd807e6 100644
+index 60689ce0260..c9453ec7612 100644
 --- a/src/com/android/settings/network/NetworkDashboardFragment.java
 +++ b/src/com/android/settings/network/NetworkDashboardFragment.java
-@@ -97,6 +97,10 @@ public class NetworkDashboardFragment extends DashboardFragment implements
-         }
+@@ -92,6 +92,10 @@ public class NetworkDashboardFragment extends DashboardFragment implements
+         controllers.add(vpnPreferenceController);
          controllers.add(privateDnsPreferenceController);
  
-+        ConnectivityCheckPreferenceController connectivityCheck =
++	ConnectivityCheckPreferenceController connectivityCheck =
 +                new ConnectivityCheckPreferenceController(context);
 +        controllers.add(connectivityCheck);
 +
-         // Start SettingsDumpService after the MobileNetworkRepository is created.
-         Intent intent = new Intent(context, SettingsDumpService.class);
-         intent.putExtra(SettingsDumpService.EXTRA_KEY_SHOW_NETWORK_DUMP, true);
+         return controllers;
+     }
+ 

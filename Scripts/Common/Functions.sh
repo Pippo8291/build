@@ -113,7 +113,7 @@ export -f commitChanges
 
 applyPatchReal() {
 	currentWorkingPatch=$1;
- 	short_patch=$(echo "$currentWorkingPatch" | sed -E 's#(\$DOS_PATCHES/+)(.*)#\2#g')
+ 	short_patch=${currentWorkingPatch##*/}
 	firstLine=$(head -n1 "$currentWorkingPatch");
  
 	if [[ "$firstLine" = *"Mon Sep 17 00:00:00 2001"* ]] || [[ "$firstLine" = *"Thu Jan  1 00:00:00 1970"* ]]; then
@@ -129,13 +129,17 @@ applyPatchReal() {
 		    echo "Applying (am - patch fallback): $currentWorkingPatch"
 		    patch -r - --no-backup-if-mismatch --forward --ignore-whitespace --verbose -p1 < $currentWorkingPatch \
       			&& git add -A \
-      		    	&& git commit --author="${DOS_GIT_AUTHOR} <${DOS_GIT_MAIL}>" -m "$short_patch\n\nsource: ${DOS_PATCHER_URI_ANDROID}/$short_patch"
+      		    	&& git commit --author="${DOS_GIT_AUTHOR} <${DOS_GIT_MAIL}>" -m "$short_patch
+
+source: ${DOS_PATCHER_URI_ANDROID}/$short_patch"
 		fi;
 	else
 		echo "Applying (no-am - patch fallback): $currentWorkingPatch"
   		patch -r - --no-backup-if-mismatch --forward --ignore-whitespace --verbose -p1 < $currentWorkingPatch \
     		    && git add -A \
-	  	    && git commit --author="${DOS_GIT_AUTHOR} <${DOS_GIT_MAIL}>" -m "$short_patch\n\nsource: ${DOS_PATCHER_URI_ANDROID}/$short_patch"
+	  	    && git commit --author="${DOS_GIT_AUTHOR} <${DOS_GIT_MAIL}>" -m "$short_patch
+
+source: ${DOS_PATCHER_URI_ANDROID}/$short_patch"
 	fi;
 }
 export -f applyPatchReal;
@@ -159,7 +163,7 @@ applyPatch() {
     					echo "Applying (as 3way): $currentWorkingPatch";
 					applyPatchReal "$@" --3way;
 				else
-	 				echo "Applying (last resort): $currentWorkingPatch"
+	 				echo "Applying: $currentWorkingPatch"
     					applyPatchReal "$@"
 	 			fi
      				if [ $? -ne 0 ];then

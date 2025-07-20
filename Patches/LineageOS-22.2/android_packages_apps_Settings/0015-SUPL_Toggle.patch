@@ -11,10 +11,10 @@ Subject: [PATCH] add a toggle for forcibly disabling SUPL
  create mode 100644 src/com/android/settings/location/ForceDisableSuplPrefController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 58e02007982..aed5ad9020f 100644
+index 113aeb61de5..24b0dd98087 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -12843,6 +12843,9 @@
+@@ -13481,6 +13481,9 @@
      <string name="connectivity_check_title">Internet connectivity check</string>
      <string name="connectivity_check_summary">HTTP endpoints to use for performing internet connectivity checks.</string>
  
@@ -25,10 +25,10 @@ index 58e02007982..aed5ad9020f 100644
  
      <!-- [CHAR LIMIT=NONE] Title for Accessibility Software Cursor setting for trigger hints. -->
 diff --git a/res/xml/location_settings.xml b/res/xml/location_settings.xml
-index 6e105046582..85a64098ea7 100644
+index 0ba5da8fc97..217061e5653 100644
 --- a/res/xml/location_settings.xml
 +++ b/res/xml/location_settings.xml
-@@ -72,6 +72,13 @@
+@@ -75,6 +75,13 @@
              android:title="@string/location_services_preference_title"
              settings:controller="com.android.settings.location.LocationServicesPreferenceController"/>
  

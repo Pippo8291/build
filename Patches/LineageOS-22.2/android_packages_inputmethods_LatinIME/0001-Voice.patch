@@ -65,7 +65,7 @@ index aba14ee7a..867259309 100644
              removePreference(Settings.PREF_VOICE_INPUT_KEY);
          }
 diff --git a/java/src/com/android/inputmethod/latin/settings/SettingsValues.java b/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
-index 6eb8e98b8..8eec5b0f3 100644
+index c4219b9d5..a5f08759e 100644
 --- a/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
 +++ b/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
 @@ -140,9 +140,7 @@ public class SettingsValues {
@@ -79,7 +79,7 @@ index 6eb8e98b8..8eec5b0f3 100644
          mShowNumberRow = prefs.getBoolean(Settings.PREF_SHOW_NUMBER_ROW, false);
          mShowLongpressHints = prefs.getBoolean(Settings.PREF_SHOW_LONGPRESS_HINTS, true);
          mIncludesOtherImesInLanguageSwitchList = Settings.ENABLE_SHOW_LANGUAGE_SWITCH_KEY_SETTINGS
-@@ -374,7 +372,7 @@ public class SettingsValues {
+@@ -377,7 +375,7 @@ public class SettingsValues {
                      .remove(Settings.PREF_VOICE_MODE_OBSOLETE)
                      .apply();
          }

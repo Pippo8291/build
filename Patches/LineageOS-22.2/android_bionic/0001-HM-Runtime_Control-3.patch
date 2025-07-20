@@ -8,10 +8,10 @@ Subject: [PATCH] support disabling hardened_malloc for specific program IDs
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/libc/bionic/malloc_common.cpp b/libc/bionic/malloc_common.cpp
-index 86e6fdcf9..3d3e8ef61 100644
+index 837f72ca9..a156edb19 100644
 --- a/libc/bionic/malloc_common.cpp
 +++ b/libc/bionic/malloc_common.cpp
-@@ -423,7 +423,11 @@ static constexpr MallocDispatch __scudo_malloc_dispatch __attribute__((unused))
+@@ -385,7 +385,11 @@ static constexpr MallocDispatch __scudo_malloc_dispatch __attribute__((unused))
  static const MallocDispatch* native_allocator_dispatch;
  
  void InitNativeAllocatorDispatch(libc_globals* globals) {

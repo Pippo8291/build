@@ -12,10 +12,10 @@ Subject: [PATCH] add exec spawning toggle
  create mode 100644 src/com/android/settings/security/ExecSpawnPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index d9a023e091f..0b0f47c2ba3 100644
+index 2e949efd5cd..5db9a38e209 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -665,6 +665,9 @@
+@@ -716,6 +716,9 @@
      <string name="auto_reboot_title">Auto reboot</string>
      <string name="auto_reboot_summary">Automatically reboot the device, if the phone hasn\'t been unlocked within the selected number of hours.</string>
  
@@ -155,10 +155,10 @@ index 00000000000..98cc3c29e12
 +    }
 +}
 diff --git a/src/com/android/settings/security/SecuritySettings.java b/src/com/android/settings/security/SecuritySettings.java
-index d29325d0fbc..4c6e1c99815 100644
+index 3dd83552c9b..cd6d457bbd1 100644
 --- a/src/com/android/settings/security/SecuritySettings.java
 +++ b/src/com/android/settings/security/SecuritySettings.java
-@@ -106,6 +106,7 @@ public class SecuritySettings extends DashboardFragment {
+@@ -115,6 +115,7 @@ public class SecuritySettings extends DashboardFragment {
                  context, lifecycle));
          securityPreferenceControllers.add(new ChangeScreenLockPreferenceController(context, host));
          securityPreferenceControllers.add(new AutoRebootPreferenceController(context));

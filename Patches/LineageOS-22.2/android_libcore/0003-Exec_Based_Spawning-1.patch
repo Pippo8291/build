@@ -9,10 +9,10 @@ Subject: [PATCH] add parameter for avoiding full preload with exec
  2 files changed, 24 insertions(+), 2 deletions(-)
 
 diff --git a/api/module-lib-current.txt b/api/module-lib-current.txt
-index ad36b7d6f93..a0589f3d6dd 100644
+index 951e0f5df26..da0d5973c71 100644
 --- a/api/module-lib-current.txt
 +++ b/api/module-lib-current.txt
-@@ -365,7 +365,9 @@ package dalvik.system {
+@@ -388,7 +388,9 @@ package dalvik.system {
    public final class ZygoteHooks {
      method public static void gcAndFinalize();
      method public static boolean isIndefiniteThreadSuspensionSafe();

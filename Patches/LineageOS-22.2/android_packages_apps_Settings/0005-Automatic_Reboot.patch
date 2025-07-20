@@ -13,7 +13,7 @@ Subject: [PATCH] add auto-reboot setting
  create mode 100644 src/com/android/settings/security/AutoRebootPreferenceController.java
 
 diff --git a/res/values/arrays.xml b/res/values/arrays.xml
-index 0e35fed6a11..b6fe89a9bce 100644
+index febdb0412a4..c5df677975d 100644
 --- a/res/values/arrays.xml
 +++ b/res/values/arrays.xml
 @@ -105,6 +105,37 @@
@@ -55,10 +55,10 @@ index 0e35fed6a11..b6fe89a9bce 100644
  
      <!-- Match this with the order of NetworkInfo.DetailedState. --> <skip />
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 61aa1b265e6..bf2c65eefec 100644
+index 2e44c013a96..b7105938345 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -624,6 +624,9 @@
+@@ -675,6 +675,9 @@
      <!-- Text shown for title of owner info setting [CHAR LIMIT=30]-->
      <string name="owner_info_settings_title">Add text on lock screen</string>
  
@@ -183,10 +183,10 @@ index 00000000000..c7a75219a5e
 +    }
 +}
 diff --git a/src/com/android/settings/security/SecuritySettings.java b/src/com/android/settings/security/SecuritySettings.java
-index 6d987f34c1f..7aaa1b1e58f 100644
+index 797d3ec621e..3f0645f7dd8 100644
 --- a/src/com/android/settings/security/SecuritySettings.java
 +++ b/src/com/android/settings/security/SecuritySettings.java
-@@ -105,6 +105,7 @@ public class SecuritySettings extends DashboardFragment {
+@@ -114,6 +114,7 @@ public class SecuritySettings extends DashboardFragment {
          securityPreferenceControllers.add(new CombinedBiometricStatusPreferenceController(
                  context, lifecycle));
          securityPreferenceControllers.add(new ChangeScreenLockPreferenceController(context, host));

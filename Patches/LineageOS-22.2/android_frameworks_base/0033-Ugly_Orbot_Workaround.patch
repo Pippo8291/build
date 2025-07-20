@@ -13,7 +13,7 @@ Change-Id: I62c2553c8877b946d7e7e1ca4ef113f963d3f8eb
  1 file changed, 46 insertions(+)
 
 diff --git a/services/core/java/com/android/server/connectivity/Vpn.java b/services/core/java/com/android/server/connectivity/Vpn.java
-index b7ece2ea65b1..33e2c3d9195b 100644
+index 4c5f65285a9e..e3c54b643185 100644
 --- a/services/core/java/com/android/server/connectivity/Vpn.java
 +++ b/services/core/java/com/android/server/connectivity/Vpn.java
 @@ -50,9 +50,11 @@ import android.content.Context;
@@ -28,7 +28,7 @@ index b7ece2ea65b1..33e2c3d9195b 100644
  import android.content.pm.UserInfo;
  import android.net.ConnectivityDiagnosticsManager;
  import android.net.ConnectivityManager;
-@@ -133,6 +135,7 @@ import android.util.ArraySet;
+@@ -135,6 +137,7 @@ import android.util.ArraySet;
  import android.util.IndentingPrintWriter;
  import android.util.LocalLog;
  import android.util.Log;
@@ -36,7 +36,7 @@ index b7ece2ea65b1..33e2c3d9195b 100644
  import android.util.Range;
  import android.util.SparseArray;
  
-@@ -155,6 +158,7 @@ import com.android.server.vcn.util.PersistableBundleUtils;
+@@ -155,6 +158,7 @@ import com.android.server.net.BaseNetworkObserver;
  
  import libcore.io.IoUtils;
  
@@ -44,7 +44,7 @@ index b7ece2ea65b1..33e2c3d9195b 100644
  import java.io.FileDescriptor;
  import java.io.IOException;
  import java.net.Inet4Address;
-@@ -979,6 +983,48 @@ public class Vpn {
+@@ -981,6 +985,48 @@ public class Vpn {
              return false;
          }
  

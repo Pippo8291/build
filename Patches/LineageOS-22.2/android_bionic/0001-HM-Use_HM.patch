@@ -9,17 +9,17 @@ Squashed with 6562b94dfc6dec13e1df79a1b029e6c78f4aa9ad
 
 Co-authored-by: anupritaisno1 <www.anuprita804@gmail.com>
 ---
- libc/Android.bp                  | 45 ++++++++++++++++++++++------
- libc/bionic/h_malloc_wrapper.cpp | 51 ++++++++++++++++++++++++++++++++
- libc/bionic/malloc_common.h      | 25 +++++++++-------
- 3 files changed, 102 insertions(+), 19 deletions(-)
+ libc/Android.bp                  | 68 +++++++++++++++-----------------
+ libc/bionic/h_malloc_wrapper.cpp | 51 ++++++++++++++++++++++++
+ libc/bionic/malloc_common.h      | 25 +++++++-----
+ 3 files changed, 98 insertions(+), 46 deletions(-)
  create mode 100644 libc/bionic/h_malloc_wrapper.cpp
 
 diff --git a/libc/Android.bp b/libc/Android.bp
-index 68155b1db..a5f87c3a2 100644
+index 74e29aa48..1c2bc6d9d 100644
 --- a/libc/Android.bp
 +++ b/libc/Android.bp
-@@ -48,6 +48,8 @@ libc_common_flags = [
+@@ -46,6 +46,8 @@ libc_common_flags = [
      // ever touch 0, 1, or 2 bytes into a call to memset, which was never going
      // to amortize.)
      "-fno-builtin",
@@ -28,21 +28,41 @@ index 68155b1db..a5f87c3a2 100644
  ]
  
  // Define some common cflags
-@@ -131,13 +133,30 @@ libc_scudo_product_variables = {
- // ========================================================
+@@ -190,42 +192,28 @@ cc_defaults {
  cc_defaults {
      name: "libc_native_allocator_defaults",
-+    whole_static_libs: ["libc_jemalloc_wrapper"],
-+    multilib: {
+ 
+-    whole_static_libs: [
+-        "libscudo",
+-    ],
+-    cflags: [
+-        "-DUSE_SCUDO",
+-    ],
+     header_libs: ["gwp_asan_headers"],
++    whole_static_libs: ["libscudo"],
++
+     multilib: {
 +        lib32: {
 +            cflags: ["-DUSE_SCUDO"],
-+            whole_static_libs: ["libscudo"],
 +            exclude_static_libs: [
 +                "libjemalloc5",
 +                "libc_jemalloc_wrapper",
 +            ],
 +        },
-+        lib64: {
+         lib64: {
+-            product_variables: {
+-                malloc_low_memory: {
+-                    cflags: ["-UUSE_SCUDO"],
+-                    whole_static_libs: [
+-                        "libjemalloc5",
+-                        "libc_jemalloc_wrapper",
+-                    ],
+-                    exclude_static_libs: [
+-                        "libscudo",
+-                    ],
+-                },
+-            },
++            srcs: ["bionic/h_malloc_wrapper.cpp"],
 +            cflags: [
 +                "-DH_MALLOC_PREFIX",
 +                "-DUSE_H_MALLOC",
@@ -50,21 +70,26 @@ index 68155b1db..a5f87c3a2 100644
 +            ],
 +            whole_static_libs: [
 +                "libhardened_malloc",
-+                "libscudo",
 +            ],
-+        },
-+    },
- 
--    whole_static_libs: [
--        "libjemalloc5",
--        "libc_jemalloc_wrapper",
--    ],
-     header_libs: ["gwp_asan_headers"],
--    product_variables: libc_scudo_product_variables,
+         },
+-        lib32: {
+-            product_variables: {
+-                malloc_low_memory_libc32: {
+-                    cflags: ["-UUSE_SCUDO"],
+-                    whole_static_libs: [
+-                        "libjemalloc5",
+-                        "libc_jemalloc_wrapper",
+-                    ],
+-                    exclude_static_libs: [
+-                        "libscudo",
+-                    ],
+-                },
+-            },
+-        }
+     },
  }
  
- // Functions not implemented by jemalloc directly, or that need to
-@@ -145,12 +164,20 @@ cc_defaults {
+@@ -234,12 +222,20 @@ cc_defaults {
  cc_library_static {
      name: "libc_jemalloc_wrapper",
      defaults: ["libc_defaults"],

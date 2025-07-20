@@ -14,7 +14,7 @@ Subject: [PATCH] allow toggling presidential alerts
  7 files changed, 27 insertions(+), 9 deletions(-)
 
 diff --git a/res/values/config.xml b/res/values/config.xml
-index d678715e7..1e866e3ca 100644
+index 02f780419..c11e9563d 100644
 --- a/res/values/config.xml
 +++ b/res/values/config.xml
 @@ -22,7 +22,7 @@
@@ -27,13 +27,13 @@ index d678715e7..1e866e3ca 100644
      <bool name="show_extreme_alert_settings">true</bool>
      <!-- Whether to show severe alert settings -->
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index c234c924c..647d9e3d6 100644
+index eed229cc9..9426f2c73 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -392,4 +392,6 @@
+@@ -395,4 +395,6 @@
      <!-- Notification title and text when alerting user that their CB settings have changed -->
-     <string name="notification_cb_settings_changed_title">Settings changed by carrier</string>
-     <string name="notification_cb_settings_changed_text">Tap to see wireless emergency alert settings</string>
+     <string name="notification_cb_settings_changed_title">Your settings changed</string>
+     <string name="notification_cb_settings_changed_text">Wireless emergency alert settings were reset because your SIM changed</string>
 +
 +    <string name="enable_cmas_presidential_alerts_summary_override">National warning messages.</string>
  </resources>
@@ -53,10 +53,10 @@ index fc0649e24..08c1ccf30 100644
  
          <!-- Enable CMAS Extreme Threat alerts -->
 diff --git a/src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java b/src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java
-index 2ac1402bf..3e8f3b65d 100644
+index fa754b569..6e4d0140a 100644
 --- a/src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java
 +++ b/src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java
-@@ -580,8 +580,8 @@ public class CellBroadcastAlertService extends Service {
+@@ -599,8 +599,8 @@ public class CellBroadcastAlertService extends Service {
          }
          // CMAS warning types
          if (resourcesKey == R.array.cmas_presidential_alerts_channels_range_strings) {
@@ -85,7 +85,7 @@ index eaca6d741..e4cf7a509 100644
                              case KEY_SCREEN_ON_DURATION:
                                  mScreenOnDuration = Integer.parseInt(value);
 diff --git a/src/com/android/cellbroadcastreceiver/CellBroadcastReceiver.java b/src/com/android/cellbroadcastreceiver/CellBroadcastReceiver.java
-index 642cfd85a..0e088e662 100644
+index 7169117c1..997d5c6d0 100644
 --- a/src/com/android/cellbroadcastreceiver/CellBroadcastReceiver.java
 +++ b/src/com/android/cellbroadcastreceiver/CellBroadcastReceiver.java
 @@ -672,6 +672,8 @@ public class CellBroadcastReceiver extends BroadcastReceiver {
@@ -111,7 +111,7 @@ index 642cfd85a..0e088e662 100644
                  sharedPrefs.edit().putBoolean(
                                  CellBroadcastSettings.KEY_ENABLE_CMAS_EXTREME_THREAT_ALERTS, enable)
 diff --git a/src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java b/src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java
-index f5484e24c..7e94aab04 100644
+index 116f9a8f1..038df7cfa 100644
 --- a/src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java
 +++ b/src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java
 @@ -505,6 +505,9 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
@@ -135,9 +135,9 @@ index f5484e24c..7e94aab04 100644
                  if (isWatch && !mPresidentialCheckBox.isVisible()) {
                      preferenceScreen.removePreference(mPresidentialCheckBox);
                  }
-@@ -826,6 +831,10 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
-         private void setAlertsEnabled(boolean alertsEnabled) {
-             Resources res = CellBroadcastSettings.getResourcesForDefaultSubId(getContext());
+@@ -813,6 +818,10 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
+             boolean resetCarrierDefault = res.getBoolean(
+                     R.bool.restore_sub_toggle_to_carrier_default);
  
 +            if (mPresidentialCheckBox != null) {
 +                mPresidentialCheckBox.setEnabled(alertsEnabled);
@@ -145,4 +145,4 @@ index f5484e24c..7e94aab04 100644
 +            }
              if (mSevereCheckBox != null) {
                  mSevereCheckBox.setEnabled(alertsEnabled);
-                 mSevereCheckBox.setChecked(alertsEnabled);
+                 mSevereCheckBox.setChecked(resetCarrierDefault ? alertsEnabled && res.getBoolean(

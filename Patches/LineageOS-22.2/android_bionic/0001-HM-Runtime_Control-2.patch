@@ -11,10 +11,10 @@ Subject: [PATCH] support assigning ID to path of current executable
  4 files changed, 31 insertions(+), 1 deletion(-)
 
 diff --git a/libc/bionic/libc_init_dynamic.cpp b/libc/bionic/libc_init_dynamic.cpp
-index 1180a513e..1135b805c 100644
+index 541e71c3f..04296b92b 100644
 --- a/libc/bionic/libc_init_dynamic.cpp
 +++ b/libc/bionic/libc_init_dynamic.cpp
-@@ -78,6 +78,28 @@ extern "C" __attribute__((weak)) void __hwasan_library_unloaded(ElfW(Addr) base,
+@@ -79,6 +79,28 @@ extern "C" __attribute__((weak)) void __hwasan_library_unloaded(ElfW(Addr) base,
                                                                  const ElfW(Phdr)* phdr,
                                                                  ElfW(Half) phnum);
  
@@ -43,7 +43,7 @@ index 1180a513e..1135b805c 100644
  // We need a helper function for __libc_preinit because compiling with LTO may
  // inline functions requiring a stack protector check, but __stack_chk_guard is
  // not initialized at the start of __libc_preinit. __libc_preinit_impl will run
-@@ -109,7 +131,10 @@ static void __libc_preinit_impl() {
+@@ -110,7 +132,10 @@ static void __libc_preinit_impl() {
  #endif
  
    // Hooks for various libraries to let them know that we're starting up.
@@ -56,10 +56,10 @@ index 1180a513e..1135b805c 100644
    // Install reserved signal handlers for assisting the platform's profilers.
    __libc_init_profiling_handlers();
 diff --git a/libc/include/stdlib.h b/libc/include/stdlib.h
-index 2830a493d..5ce8f9103 100644
+index 7081d7ccb..f68200508 100644
 --- a/libc/include/stdlib.h
 +++ b/libc/include/stdlib.h
-@@ -210,6 +210,9 @@ long strtol_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, i
+@@ -370,6 +370,9 @@ float strtof_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr,
  // Implemented as static inlines before 26.
  #endif
  
@@ -70,7 +70,7 @@ index 2830a493d..5ce8f9103 100644
  
  #include <android/legacy_stdlib_inlines.h>
 diff --git a/libc/libc.map.txt b/libc/libc.map.txt
-index 2c8ec0796..f5340c172 100644
+index 86dcc3975..8483afbc0 100644
 --- a/libc/libc.map.txt
 +++ b/libc/libc.map.txt
 @@ -420,6 +420,7 @@ LIBC {
@@ -79,13 +79,13 @@ index 2c8ec0796..f5340c172 100644
      get_phys_pages; # introduced=23
 +    get_prog_id;
      getaddrinfo;
-     getauxval; # introduced-arm=18 introduced-arm64=21 introduced-x86=18 introduced-x86_64=21
+     getauxval;
      getc;
 diff --git a/libc/private/bionic_globals.h b/libc/private/bionic_globals.h
-index 6f1e3895e..598918f09 100644
+index cd6dca977..6672d0e03 100644
 --- a/libc/private/bionic_globals.h
 +++ b/libc/private/bionic_globals.h
-@@ -66,6 +66,7 @@ struct libc_globals {
+@@ -64,6 +64,7 @@ struct libc_globals {
    // limit is enabled and some other hook is enabled at the same time.
    _Atomic(const MallocDispatch*) default_dispatch_table;
    MallocDispatch malloc_dispatch_table;

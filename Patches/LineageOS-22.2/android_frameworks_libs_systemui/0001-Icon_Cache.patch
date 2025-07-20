@@ -4,19 +4,19 @@ Date: Tue, 2 Nov 2021 14:44:13 -0400
 Subject: [PATCH] invalidate icon cache between OS releases
 
 ---
- .../src/com/android/launcher3/icons/cache/BaseIconCache.java    | 2 +-
+ iconloaderlib/src/com/android/launcher3/icons/IconProvider.java | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/iconloaderlib/src/com/android/launcher3/icons/cache/BaseIconCache.java b/iconloaderlib/src/com/android/launcher3/icons/cache/BaseIconCache.java
-index 072bcbf..873735d 100644
---- a/iconloaderlib/src/com/android/launcher3/icons/cache/BaseIconCache.java
-+++ b/iconloaderlib/src/com/android/launcher3/icons/cache/BaseIconCache.java
-@@ -273,7 +273,7 @@ public abstract class BaseIconCache {
+diff --git a/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java b/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
+index 594db35..3768208 100644
+--- a/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
++++ b/iconloaderlib/src/com/android/launcher3/icons/IconProvider.java
+@@ -275,7 +275,7 @@ public class IconProvider {
       */
-     private void updateSystemState() {
-         mLocaleList = mContext.getResources().getConfiguration().getLocales();
--        mSystemState = mLocaleList.toLanguageTags() + "," + Build.VERSION.SDK_INT;
-+        mSystemState = mLocaleList.toLanguageTags() + "," + Build.VERSION.INCREMENTAL;
-         mUserFormatString.clear();
+     public void updateSystemState() {
+         mSystemState = mContext.getResources().getConfiguration().getLocales().toLanguageTags()
+-                + "," + Build.VERSION.SDK_INT;
++                + "," + Build.VERSION.INCREMENTAL;
      }
  
+     /**

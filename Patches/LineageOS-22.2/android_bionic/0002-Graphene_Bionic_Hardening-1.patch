@@ -12,10 +12,6 @@ defines it as memset so nothing prevents it from being optimized away.
 This implementation uses a memory read constraint via empty inline
 assembly rather than something that may be broken via link-time
 optimization in the future.
-
-Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
-Change-Id: Ia021e30f86ee4b998d541fbf7262110f9d1d6fbf
-Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
 ---
  libc/Android.bp                                        | 1 +
  libc/bionic/explicit_bzero.cpp                         | 7 +++++++
@@ -26,17 +22,17 @@ Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
  create mode 100644 libc/bionic/explicit_bzero.cpp
 
 diff --git a/libc/Android.bp b/libc/Android.bp
-index a5f87c3a2..bc5b16a22 100644
+index 1c2bc6d9d..0db8b63ee 100644
 --- a/libc/Android.bp
 +++ b/libc/Android.bp
-@@ -850,6 +850,7 @@ cc_library_static {
-         "bionic/eventfd.cpp",
+@@ -881,6 +881,7 @@ cc_library_static {
          "bionic/exec.cpp",
          "bionic/execinfo.cpp",
-+        "bionic/explicit_bzero.cpp",
          "bionic/exit.cpp",
++        "bionic/explicit_bzero.cpp",
          "bionic/faccessat.cpp",
          "bionic/fchmod.cpp",
+         "bionic/fchmodat.cpp",
 diff --git a/libc/bionic/explicit_bzero.cpp b/libc/bionic/explicit_bzero.cpp
 new file mode 100644
 index 000000000..dd43f9c00
@@ -51,40 +47,40 @@ index 000000000..dd43f9c00
 +  return ptr;
 +}
 diff --git a/libc/include/string.h b/libc/include/string.h
-index 47bdd7271..e601ea022 100644
+index 79aac91b2..bb760dcd6 100644
 --- a/libc/include/string.h
 +++ b/libc/include/string.h
-@@ -64,6 +64,8 @@ void* _Nonnull memmove(void* _Nonnull __dst, const void* _Nonnull __src, size_t
+@@ -68,6 +68,8 @@ void* _Nonnull memmove(void* _Nonnull __dst, const void* _Nonnull __src, size_t
   */
  void* _Nonnull memset(void* _Nonnull __dst, int __ch, size_t __n);
  
 +void* _Nonnull explicit_bzero(void* _Nonnull s, size_t n);
 +
  /**
-  * [memset_explicit(3)](http://man7.org/linux/man-pages/man3/memset_explicit.3.html)
+  * [memset_explicit(3)](https://man7.org/linux/man-pages/man3/memset_explicit.3.html)
   * writes the bottom 8 bits of the given int to the next `n` bytes of `dst`,
 diff --git a/libc/libc.map.txt b/libc/libc.map.txt
-index f5340c172..9a0e7fb99 100644
+index 8483afbc0..f0a18e190 100644
 --- a/libc/libc.map.txt
 +++ b/libc/libc.map.txt
 @@ -332,6 +332,7 @@ LIBC {
      execvp;
-     execvpe; # introduced=21
+     execvpe;
      exit;
 +    explicit_bzero; # introduced=33
      faccessat;
-     fallocate; # introduced=21
-     fallocate64; # introduced=21
+     fallocate;
+     fallocate64;
 diff --git a/libc/upstream-openbsd/android/include/openbsd-compat.h b/libc/upstream-openbsd/android/include/openbsd-compat.h
-index 8e6f87da8..26dc01863 100644
+index ac6840ac9..07b139a56 100644
 --- a/libc/upstream-openbsd/android/include/openbsd-compat.h
 +++ b/libc/upstream-openbsd/android/include/openbsd-compat.h
-@@ -57,10 +57,6 @@ extern const char* __progname;
- /* OpenBSD has this, but we can't really implement it correctly on Linux. */
- #define issetugid() 0
+@@ -40,10 +40,6 @@ extern const char* __progname;
+ 
+ #define PROTO_NORMAL(x)
  
 -#if !defined(ANDROID_HOST_MUSL)
--#define explicit_bzero(p, s) memset(p, 0, s)
+-#define explicit_bzero(p, s) memset_explicit(p, 0, s)
 -#endif
 -
  #if defined(ANDROID_HOST_MUSL)

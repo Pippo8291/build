@@ -21,7 +21,7 @@ index a943dc1a3..6f6b3666c 100644
      <CheckBoxPreference
          android:key="pref_key_use_contacts_dict"
 diff --git a/java/src/com/android/inputmethod/latin/settings/SettingsValues.java b/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
-index 8eec5b0f3..76fcbdb3a 100644
+index a5f08759e..3bca08d31 100644
 --- a/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
 +++ b/java/src/com/android/inputmethod/latin/settings/SettingsValues.java
 @@ -150,7 +150,7 @@ public class SettingsValues {

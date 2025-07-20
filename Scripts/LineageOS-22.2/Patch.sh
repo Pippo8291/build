@@ -94,7 +94,7 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "build/make"; then
-git revert --no-edit aedf4a33fe4796e100ca1529fb2fcaa042f14f3b; #Re-enable the downgrade check
+git revert --no-edit 9f6fa1b5448ec1a295c13664aa64c0a45575f3f9 #Re-enable the downgrade check
 applyPatch "$DOS_PATCHES/android_build/0001-Enable_fwrapv.patch"; #Use -fwrapv at a minimum (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_build/0003-Exec_Based_Spawning.patch"; #Add exec-based spawning support (GrapheneOS) #XXX: most devices override this
 applyPatch "$DOS_PATCHES/android_build/0004-Selective_APEX.patch"; #Only enable APEX on 6th/7th gen Pixel devices (GrapheneOS)
@@ -107,23 +107,8 @@ applyPatch "$DOS_PATCHES/android_build_soong/0001-Enable_fwrapv.patch"; #Use -fw
 MSG="DOS patching" commitChanges
 fi;
 
-if enterAndClear "external/chromium-webview"; then
-git lfs pull; #Ensure the objects are available
-MSG="DOS patching" commitChanges
-fi;
-
 if enterAndClear "external/conscrypt"; then
 applyPatch "$DOS_PATCHES/android_external_conscrypt/0001-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
-MSG="DOS patching" commitChanges
-fi;
-
-if enterAndClear "external/expat"; then
-applyPatch "$DOS_PATCHES/android_external_expat/0001-lib-Detect-integer-overflow-in-function-nextScaffold.patch";
-applyPatch "$DOS_PATCHES/android_external_expat/0002-lib-Reject-negative-len-for-XML_ParseBuffer.patch";
-applyPatch "$DOS_PATCHES/android_external_expat/0003-tests-Cover-len-0-for-both-XML_Parse-and-XML_ParseBu.patch";
-applyPatch "$DOS_PATCHES/android_external_expat/0004-doc-Document-that-XML_Parse-XML_ParseBuffer-reject-l.patch";
-applyPatch "$DOS_PATCHES/android_external_expat/0005-lib-Detect-integer-overflow-in-dtdCopy.patch";
-applyPatch "$DOS_PATCHES/android_external_expat/0006-lib-xmlparse.c-Detect-billion-laughs-attack-with-iso.patch";
 MSG="DOS patching" commitChanges
 fi;
 
@@ -137,10 +122,9 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "frameworks/base"; then 
-git revert --no-edit f9b5586a3887e70aa5580f8073611826eed2b88f; #Reverts "Remove sensitive info from SUPL requests" in favor of below patch
-git revert --no-edit a2b52bdf99f03afe2e36d49fa2b30ffe5bf58a5c; #Reverts "Allow spoofing signingInfo for microG Companion/Services" in favor of below patch
-git revert --no-edit 18f3b5a2615efe61636ff952b500b19d891bdc80; #Reverts "fixup! Allow signature spoofing for microG Companion/Services" in favor of below patch
-applyPatch "$DOS_PATCHES/android_frameworks_base/revert-6b793fa9.patch"; #Reverts "Allow signature spoofing for microG Companion/Services" in favor of below patch
+git revert --no-edit c174e1c42975c140c63ecac9c022665ab5e0b1b2 #Reverts "Remove sensitive info from SUPL requests" in favor of below patch
+git revert --no-edit c60ecdffedf5ec9e05bd92dc022cbb763f49a104 #Reverts "Allow spoofing signingInfo for microG Companion/Services" in favor of below patch
+git revert --no-edit e41076c6ef0b00e5dcfc4aaff3df53f9841098a8 #Reverts "fixup! Allow signature spoofing for microG Companion/Services" in favor of below patch
 applyPatch "$DOS_PATCHES/android_frameworks_base/0007-Always_Restict_Serial.patch"; #Always restrict access to Build.SERIAL (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0008-Browser_No_Location.patch"; #Don't grant location permission to system browsers (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0003-SUPL_No_IMSI.patch"; #Don't send IMSI to SUPL (MSe1969)
@@ -152,7 +136,6 @@ applyPatch "$DOS_PATCHES/android_frameworks_base/0015-System_Server_Extensions.p
 applyPatch "$DOS_PATCHES/android_frameworks_base/0015-WiFi_Timeout.patch"; #Timeout for Wi-Fi (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0015-Bluetooth_Timeout.patch"; #Timeout for Bluetooth (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0015-Bluetooth_Timeout-Fix.patch"; #bugfix: Bluetooth auto turn off ignored connected BLE devices (GrapheneOS)
-applyPatch "$DOS_PATCHES/android_frameworks_base/0017-constify_JNINativeMethod.patch"; #Constify JNINativeMethod tables (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0018-Exec_Based_Spawning-1.patch"; #Add exec-based spawning support (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0018-Exec_Based_Spawning-2.patch"; #Disable exec spawning when using debugging options (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0018-Exec_Based_Spawning-3.patch"; #Add parameter for avoiding full preload with exec (GrapheneOS)
@@ -170,7 +153,6 @@ applyPatch "$DOS_PATCHES/android_frameworks_base/0018-Exec_Based_Spawning-15.pat
 sed -i 's/sys.spawn.exec/persist.security.exec_spawn_new/' core/java/com/android/internal/os/ZygoteConnection.java;
 applyPatch "$DOS_PATCHES/android_frameworks_base/0020-Location_Indicators.patch"; #SystemUI: Use new privacy indicators for location (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0022-Ignore_StatementService_ANR.patch"; #Don't report statementservice crashes (GrapheneOS)
-applyPatch "$DOS_PATCHES/android_frameworks_base/0024-Burnin_Protection.patch"; #SystemUI: add burnIn protection (arter97)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0028-Remove_Legacy_Package_Query.patch"; #Don't leak device-wide package list to apps when work profile is present (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0030-agnss.goog_override.patch"; #Replace agnss.goog with the Broadcom PSDS server (heavily based off of a GrapheneOS patch)
 applyPatch "$DOS_PATCHES/android_frameworks_base/0031-appops_reset_fix-1.patch"; #Revert "Null safe package name in AppOps writeState" (GrapheneOS)
@@ -320,7 +302,6 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "packages/apps/Trebuchet"; then
-applyPatch "$DOS_PATCHES/android_packages_apps_Trebuchet/361248.patch"; #Launcher3: Allow toggling monochrome icons for all apps
 cp $DOS_BUILD_BASE/vendor/divested/overlay/common/packages/apps/Trebuchet/res/xml/default_workspace_*.xml res/xml/; #XXX: Likely no longer needed
 MSG="DOS patching" commitChanges
 fi;
@@ -377,8 +358,8 @@ fi;
 
 if enterAndClear "system/core"; then
 if [ "$DOS_HOSTS_BLOCKING" = true ]; then cat "$DOS_HOSTS_FILE" >> rootdir/etc/hosts; fi; #Merge in our HOSTS file
-git revert --no-edit 75b64415b9dd9f0415eb9d5fd94caa5de482419f; #insanity
-git revert --no-edit 3cf503f51ee4d1b2f51a517c644a85d02ac5cfcf; #unknown impact
+git revert --no-edit 1ffcee96d7d7c20561161a6bda34c914f41a6c49 #insanity
+git revert --no-edit b3b9c454374816c86181744ad7a17d1b86607af2 #unknown impact
 applyPatch "$DOS_PATCHES/android_system_core/0001-Harden.patch"; #Harden mounts with nodev/noexec/nosuid + misc sysctl changes (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_core/0002-ptrace_scope.patch"; #Add a property for controlling ptrace_scope (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_core/0003-HM-Increase_vm_mmc.patch"; #(GrapheneOS)
@@ -394,7 +375,7 @@ if enterAndClear "system/sepolicy"; then
 applyPatch "$DOS_PATCHES/android_system_sepolicy/0002-protected_files.patch"; #Label protected_{fifos,regular} as proc_security (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_sepolicy/0003-ptrace_scope-1.patch"; #Allow init to control kernel.yama.ptrace_scope (GrapheneOS)
 applyPatch "$DOS_PATCHES/android_system_sepolicy/0003-ptrace_scope-2.patch"; #Allow system to use persist.native_debug (GrapheneOS)
-awk -i inplace '!/true cannot be used in user builds/' Android.mk; #Allow ignoring neverallows under -user
+#awk -i inplace '!/true cannot be used in user builds/' Android.mk; #Allow ignoring neverallows under -user
 awk -i inplace '!/domain=gmscore_app/' private/seapp_contexts prebuilts/api/*/private/seapp_contexts; #Disable unused gmscore_app domain (GrapheneOS)
 MSG="DOS patching" commitChanges
 fi;

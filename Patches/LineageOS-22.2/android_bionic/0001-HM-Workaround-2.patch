@@ -10,10 +10,10 @@ Subject: [PATCH] disable hardened_malloc for surfaceflinger
  3 files changed, 5 insertions(+)
 
 diff --git a/libc/bionic/libc_init_dynamic.cpp b/libc/bionic/libc_init_dynamic.cpp
-index 042d037a3..9f17fd16a 100644
+index 1d34dd2f1..7548e49a9 100644
 --- a/libc/bionic/libc_init_dynamic.cpp
 +++ b/libc/bionic/libc_init_dynamic.cpp
-@@ -93,6 +93,9 @@ static void init_prog_id(libc_globals* globals) {
+@@ -94,6 +94,9 @@ static void init_prog_id(libc_globals* globals) {
    if (IS("/apex/com.google.pixel.camera.hal/bin/hw/android.hardware.camera.provider@2.7-service-google")) {
      prog_id = PROG_PIXEL_CAMERA_PROVIDER_SERVICE;
    }
@@ -24,10 +24,10 @@ index 042d037a3..9f17fd16a 100644
  
    // libc_globals struct is write-protected
 diff --git a/libc/bionic/malloc_common.cpp b/libc/bionic/malloc_common.cpp
-index 9b7310347..1ab4861af 100644
+index d0bc46bec..ae808415d 100644
 --- a/libc/bionic/malloc_common.cpp
 +++ b/libc/bionic/malloc_common.cpp
-@@ -426,6 +426,7 @@ void InitNativeAllocatorDispatch(libc_globals* globals) {
+@@ -388,6 +388,7 @@ void InitNativeAllocatorDispatch(libc_globals* globals) {
    bool hardened_impl = true;
    switch (get_prog_id()) {
        case PROG_PIXEL_CAMERA_PROVIDER_SERVICE:
@@ -36,10 +36,10 @@ index 9b7310347..1ab4861af 100644
          break;
        default:
 diff --git a/libc/include/stdlib.h b/libc/include/stdlib.h
-index cb8d3d3b2..5dd67daa4 100644
+index e10b5eeac..a8dacbdbe 100644
 --- a/libc/include/stdlib.h
 +++ b/libc/include/stdlib.h
-@@ -214,6 +214,7 @@ int get_prog_id();
+@@ -374,6 +374,7 @@ int get_prog_id();
  #define is_prog(id) (get_prog_id() == id)
  
  #define PROG_PIXEL_CAMERA_PROVIDER_SERVICE 1

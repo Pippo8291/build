@@ -12,10 +12,10 @@ which allows the user to give it a one-time grant.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
-index 2c5b6ddc876e..eabc2e2ee63b 100644
+index 178ba556cd30..e8080b27ba0c 100644
 --- a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
 +++ b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
-@@ -1077,7 +1077,7 @@ final class DefaultPermissionGrantPolicy {
+@@ -1102,7 +1102,7 @@ final class DefaultPermissionGrantPolicy {
      public void grantDefaultPermissionsToActiveLuiApp(String packageName, int userId) {
          Log.i(TAG, "Granting permissions to active LUI app for user:" + userId);
          grantSystemFixedPermissionsToSystemPackage(NO_PM_CACHE, packageName, userId,

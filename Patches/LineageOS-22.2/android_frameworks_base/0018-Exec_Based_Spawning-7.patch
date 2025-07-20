@@ -8,10 +8,10 @@ Subject: [PATCH] disable class preloading for exec spawning
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/core/java/com/android/internal/os/ZygoteInit.java b/core/java/com/android/internal/os/ZygoteInit.java
-index 5cd919d49014..21d412a3f9ec 100644
+index 551a294db27c..b8b49c06f7b9 100644
 --- a/core/java/com/android/internal/os/ZygoteInit.java
 +++ b/core/java/com/android/internal/os/ZygoteInit.java
-@@ -127,9 +127,11 @@ public class ZygoteInit {
+@@ -130,9 +130,11 @@ public class ZygoteInit {
          bootTimingsTraceLog.traceBegin("BeginPreload");
          beginPreload(fullPreload);
          bootTimingsTraceLog.traceEnd(); // BeginPreload

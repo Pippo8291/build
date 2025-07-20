@@ -53,15 +53,14 @@ fd '.+\.(c|cpp|cc)$' --exec sed -i 's/static JNINativeMethod/static const JNINat
  ojluni/src/main/native/UNIXProcess_md.c                       | 2 +-
  ojluni/src/main/native/UnixFileSystem_md.c                    | 2 +-
  ojluni/src/main/native/UnixNativeDispatcher.c                 | 2 +-
- ojluni/src/main/native/ZipFile.c                              | 4 ++--
  ojluni/src/main/native/jdk_internal_misc_VM.cpp               | 2 +-
- 50 files changed, 52 insertions(+), 52 deletions(-)
+ 49 files changed, 50 insertions(+), 50 deletions(-)
 
 diff --git a/luni/src/main/native/android_system_OsConstants.cpp b/luni/src/main/native/android_system_OsConstants.cpp
-index 3f8ce604b20..4dc08cad77e 100644
+index c2b6848e4cd..340b8f2a05f 100644
 --- a/luni/src/main/native/android_system_OsConstants.cpp
 +++ b/luni/src/main/native/android_system_OsConstants.cpp
-@@ -737,7 +737,7 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
+@@ -738,7 +738,7 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
      initConstant(env, c, "_SC_XOPEN_XCU_VERSION", _SC_XOPEN_XCU_VERSION);
  }
  
@@ -136,7 +135,7 @@ index e99edd6c4f9..61b75bcd358 100644
  };
  void register_libcore_io_AsynchronousCloseMonitor(JNIEnv* env) {
 diff --git a/luni/src/main/native/libcore_io_Linux.cpp b/luni/src/main/native/libcore_io_Linux.cpp
-index 3c87e6328aa..532e8101e22 100644
+index 5a4de35ccb2..5aaf6c23e8b 100644
 --- a/luni/src/main/native/libcore_io_Linux.cpp
 +++ b/luni/src/main/native/libcore_io_Linux.cpp
 @@ -2761,7 +2761,7 @@ static jint Linux_writev(JNIEnv* env, jobject, jobject javaFd, jobjectArray buff
@@ -188,7 +187,7 @@ index ded578a9580..faaa5c7a7c4 100644
  };
  
 diff --git a/luni/src/main/native/org_apache_harmony_xml_ExpatParser.cpp b/luni/src/main/native/org_apache_harmony_xml_ExpatParser.cpp
-index fdabcf71591..62a2cd37b76 100644
+index ee8c182933e..8a9b2d7f60f 100644
 --- a/luni/src/main/native/org_apache_harmony_xml_ExpatParser.cpp
 +++ b/luni/src/main/native/org_apache_harmony_xml_ExpatParser.cpp
 @@ -1366,7 +1366,7 @@ static void ExpatParser_staticInitialize(JNIEnv* env, jobject classObject, jstri
@@ -236,7 +235,7 @@ index 137dc849a49..7172cfa0467 100644
    NATIVE_METHOD(Java_java_util_zip_Adler32, updateBytes, "(I[BII)I"),
    NATIVE_METHOD(Java_java_util_zip_Adler32, updateByteBuffer, "(IJII)I"),
 diff --git a/ojluni/src/main/native/CRC32.c b/ojluni/src/main/native/CRC32.c
-index adfb9f9cccf..eac9af13720 100644
+index 6a4a525af2f..23383fc8ac4 100644
 --- a/ojluni/src/main/native/CRC32.c
 +++ b/ojluni/src/main/native/CRC32.c
 @@ -74,7 +74,7 @@ Java_java_util_zip_CRC32_updateByteBuffer0(JNIEnv *env, jclass cls, jint crc,
@@ -626,10 +625,10 @@ index bc3522bee35..d72fd1108ba 100644
  };
  
 diff --git a/ojluni/src/main/native/StrictMath.c b/ojluni/src/main/native/StrictMath.c
-index 7f9bbebcdf7..24b29228a46 100644
+index eb68a9e50ba..b9694c64052 100644
 --- a/ojluni/src/main/native/StrictMath.c
 +++ b/ojluni/src/main/native/StrictMath.c
-@@ -156,7 +156,7 @@ StrictMath_expm1(JNIEnv *env, jclass unused, jdouble d)
+@@ -154,7 +154,7 @@ StrictMath_expm1(jdouble d)
      return (jdouble) ieee_expm1((double)d);
  }
  
@@ -665,17 +664,17 @@ index 8fdb6a0e0aa..9b6d4f13b1f 100644
    NATIVE_METHOD(UNIXProcess, forkAndExec, "([B[BI[BI[B[IZ)I"),
    NATIVE_METHOD(UNIXProcess, waitForProcessExit, "(I)I"),
 diff --git a/ojluni/src/main/native/UnixFileSystem_md.c b/ojluni/src/main/native/UnixFileSystem_md.c
-index 6f432fddf1d..07baef8a802 100644
+index 02dd29794bc..bce17cbd267 100644
 --- a/ojluni/src/main/native/UnixFileSystem_md.c
 +++ b/ojluni/src/main/native/UnixFileSystem_md.c
-@@ -552,7 +552,7 @@ Java_java_io_UnixFileSystem_getNameMax0(JNIEnv *env, jobject this,
+@@ -557,7 +557,7 @@ Java_java_io_UnixFileSystem_getNameMax0(JNIEnv *env, jobject this,
      return length != -1 ? length : (jlong)NAME_MAX;
  }
  
 -static JNINativeMethod gMethods[] = {
 +static const JNINativeMethod gMethods[] = {
      NATIVE_METHOD(UnixFileSystem, initIDs, "()V"),
-     NATIVE_METHOD(UnixFileSystem, canonicalize0, "(Ljava/lang/String;)Ljava/lang/String;"),
+     NATIVE_METHOD(UnixFileSystem, canonicalize0, "(Ljava/lang/String;Z)Ljava/lang/String;"),
      NATIVE_METHOD(UnixFileSystem, getBooleanAttributes0, "(Ljava/lang/String;)I"),
 diff --git a/ojluni/src/main/native/UnixNativeDispatcher.c b/ojluni/src/main/native/UnixNativeDispatcher.c
 index 6710e13be51..47dc1213422 100644
@@ -690,28 +689,6 @@ index 6710e13be51..47dc1213422 100644
    NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, getcwd, "()[B"),
    NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, dup, "(I)I"),
    NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, open0, "(JII)I"),
-diff --git a/ojluni/src/main/native/ZipFile.c b/ojluni/src/main/native/ZipFile.c
-index fcdd41c7c65..8896e62eb3e 100644
---- a/ojluni/src/main/native/ZipFile.c
-+++ b/ojluni/src/main/native/ZipFile.c
-@@ -388,7 +388,7 @@ JarFile_getMetaInfEntryNames(JNIEnv *env, jobject obj)
-     return result;
- }
- 
--static JNINativeMethod gMethods[] = {
-+static const JNINativeMethod gMethods[] = {
-   NATIVE_METHOD(ZipFile, getFileDescriptor, "(J)I"),
-   NATIVE_METHOD(ZipFile, getEntry, "(J[BZ)J"),
-   NATIVE_METHOD(ZipFile, freeEntry, "(JJ)V"),
-@@ -409,7 +409,7 @@ static JNINativeMethod gMethods[] = {
-   NATIVE_METHOD(ZipFile, getZipMessage, "(J)Ljava/lang/String;"),
- };
- 
--static JNINativeMethod gJarFileMethods[] = {
-+static const JNINativeMethod gJarFileMethods[] = {
-   NATIVE_METHOD(JarFile, getMetaInfEntryNames, "()[Ljava/lang/String;"),
- };
- 
 diff --git a/ojluni/src/main/native/jdk_internal_misc_VM.cpp b/ojluni/src/main/native/jdk_internal_misc_VM.cpp
 index 8e413286798..9791a13b84f 100644
 --- a/ojluni/src/main/native/jdk_internal_misc_VM.cpp

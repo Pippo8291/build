@@ -27,7 +27,7 @@ Change-Id: Idfbb70acab59a551bdb1f0e1a99b843d87d4362d
  prebuilts/api/34.0/public/init.te         | 3 +++
  private/domain.te                         | 1 +
  private/genfs_contexts                    | 1 +
- public/init.te                            | 3 +++
+ private/init.te                           | 3 +++
  21 files changed, 35 insertions(+)
 
 diff --git a/prebuilts/api/29.0/private/domain.te b/prebuilts/api/29.0/private/domain.te
@@ -233,7 +233,7 @@ index f98a285cb..d75be249e 100644
    userdebug_or_eng(`-llkd')
    -dumpstate
 diff --git a/prebuilts/api/34.0/private/genfs_contexts b/prebuilts/api/34.0/private/genfs_contexts
-index 26213b258..aa95387a6 100644
+index 59dd45f17..77a7ccfc6 100644
 --- a/prebuilts/api/34.0/private/genfs_contexts
 +++ b/prebuilts/api/34.0/private/genfs_contexts
 @@ -78,6 +78,7 @@ genfscon proc /sys/kernel/sched_wakeup_granularity_ns u:object_r:proc_sched:s0
@@ -259,10 +259,10 @@ index a399b3aeb..05e8443c1 100644
  allow init dev_type:blk_file r_file_perms;
  allowxperm init dev_type:blk_file ioctl BLKROSET;
 diff --git a/private/domain.te b/private/domain.te
-index 66bce05e2..7e2af14f3 100644
+index 40c60efda..700be17c8 100644
 --- a/private/domain.te
 +++ b/private/domain.te
-@@ -233,6 +233,7 @@ neverallow {
+@@ -1586,6 +1586,7 @@ neverallow {
  # with other UIDs to these allowlisted domains.
  neverallow {
    domain
@@ -271,10 +271,10 @@ index 66bce05e2..7e2af14f3 100644
    userdebug_or_eng(`-llkd')
    -dumpstate
 diff --git a/private/genfs_contexts b/private/genfs_contexts
-index c27fa76cc..421c5b748 100644
+index 90634347e..b35d31c9f 100644
 --- a/private/genfs_contexts
 +++ b/private/genfs_contexts
-@@ -79,6 +79,7 @@ genfscon proc /sys/kernel/sched_wakeup_granularity_ns u:object_r:proc_sched:s0
+@@ -80,6 +80,7 @@ genfscon proc /sys/kernel/sched_wakeup_granularity_ns u:object_r:proc_sched:s0
  genfscon proc /sys/kernel/sysrq u:object_r:proc_sysrq:s0
  genfscon proc /sys/kernel/unprivileged_bpf_ u:object_r:proc_bpf:s0
  genfscon proc /sys/kernel/usermodehelper u:object_r:usermodehelper:s0
@@ -282,11 +282,11 @@ index c27fa76cc..421c5b748 100644
  genfscon proc /sys/net u:object_r:proc_net:s0
  genfscon proc /sys/net/core/bpf_ u:object_r:proc_bpf:s0
  genfscon proc /sys/vm/dirty_background_ratio u:object_r:proc_dirty:s0
-diff --git a/public/init.te b/public/init.te
-index 47b8603b5..a10a96852 100644
---- a/public/init.te
-+++ b/public/init.te
-@@ -157,6 +157,9 @@ allow init self:global_capability_class_set sys_time;
+diff --git a/private/init.te b/private/init.te
+index 012ef0bde..db6d6abfc 100644
+--- a/private/init.te
++++ b/private/init.te
+@@ -265,6 +265,9 @@ allow init self:global_capability_class_set sys_time;
  
  allow init self:global_capability_class_set { sys_rawio mknod };
  

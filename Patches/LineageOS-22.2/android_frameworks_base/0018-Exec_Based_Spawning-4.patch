@@ -8,10 +8,10 @@ Subject: [PATCH] pass through fullPreload to libcore
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/core/java/com/android/internal/os/ZygoteInit.java b/core/java/com/android/internal/os/ZygoteInit.java
-index 1675d41580d6..87d393d97d14 100644
+index 16d82766f9e1..49ddac342561 100644
 --- a/core/java/com/android/internal/os/ZygoteInit.java
 +++ b/core/java/com/android/internal/os/ZygoteInit.java
-@@ -125,7 +125,7 @@ public class ZygoteInit {
+@@ -128,7 +128,7 @@ public class ZygoteInit {
      static void preload(TimingsTraceLog bootTimingsTraceLog, boolean fullPreload) {
          Log.d(TAG, "begin preload");
          bootTimingsTraceLog.traceBegin("BeginPreload");
@@ -20,7 +20,7 @@ index 1675d41580d6..87d393d97d14 100644
          bootTimingsTraceLog.traceEnd(); // BeginPreload
          bootTimingsTraceLog.traceBegin("PreloadClasses");
          preloadClasses();
-@@ -147,7 +147,7 @@ public class ZygoteInit {
+@@ -167,7 +167,7 @@ public class ZygoteInit {
          // Ask the WebViewFactory to do any initialization that must run in the zygote process,
          // for memory sharing purposes.
          WebViewFactory.prepareWebViewInZygote();
@@ -29,7 +29,7 @@ index 1675d41580d6..87d393d97d14 100644
          warmUpJcaProviders();
          Log.d(TAG, "end preload");
  
-@@ -165,14 +165,14 @@ public class ZygoteInit {
+@@ -185,14 +185,14 @@ public class ZygoteInit {
          preload(new TimingsTraceLog("ZygoteInitTiming_lazy", Trace.TRACE_TAG_DALVIK));
      }
  

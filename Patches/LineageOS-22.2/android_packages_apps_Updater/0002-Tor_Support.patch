@@ -18,7 +18,7 @@ Change-Id: Ibfe080c3d801af34fb64fda1b6b8f4f39a2b1ccf
  10 files changed, 134 insertions(+), 5 deletions(-)
 
 diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
-index 80fd2bc..02d2b53 100644
+index 5ecd007..40ab874 100644
 --- a/app/src/main/AndroidManifest.xml
 +++ b/app/src/main/AndroidManifest.xml
 @@ -14,6 +14,10 @@
@@ -33,10 +33,10 @@ index 80fd2bc..02d2b53 100644
          android:allowBackup="false"
          android:icon="@mipmap/ic_launcher"
 diff --git a/app/src/main/java/org/lineageos/updater/UpdatesActivity.java b/app/src/main/java/org/lineageos/updater/UpdatesActivity.java
-index 25ca0b8..4dbc077 100644
+index 5fab3f0..ce00794 100644
 --- a/app/src/main/java/org/lineageos/updater/UpdatesActivity.java
 +++ b/app/src/main/java/org/lineageos/updater/UpdatesActivity.java
-@@ -473,10 +473,14 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
+@@ -483,10 +483,14 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
  
          final DownloadClient downloadClient;
          try {
@@ -51,7 +51,7 @@ index 25ca0b8..4dbc077 100644
                      .build();
          } catch (IOException exception) {
              Log.e(TAG, "Could not build download client");
-@@ -580,6 +584,7 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
+@@ -590,6 +594,7 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
      private void showPreferencesDialog() {
          View view = LayoutInflater.from(this).inflate(R.layout.preferences_dialog, null);
          Spinner autoCheckInterval = view.findViewById(R.id.preferences_auto_updates_check_interval);
@@ -59,7 +59,7 @@ index 25ca0b8..4dbc077 100644
          SwitchCompat autoDelete = view.findViewById(R.id.preferences_auto_delete_updates);
          SwitchCompat meteredNetworkWarning = view.findViewById(
                  R.id.preferences_metered_network_warning);
-@@ -592,6 +597,7 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
+@@ -602,6 +607,7 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
  
          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
          autoCheckInterval.setSelection(Utils.getUpdateCheckSetting(this));
@@ -67,7 +67,7 @@ index 25ca0b8..4dbc077 100644
          autoDelete.setChecked(prefs.getBoolean(Constants.PREF_AUTO_DELETE_UPDATES, false));
          meteredNetworkWarning.setChecked(prefs.getBoolean(Constants.PREF_METERED_NETWORK_WARNING,
                  prefs.getBoolean(Constants.PREF_MOBILE_DATA_WARNING, true)));
-@@ -632,6 +638,8 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
+@@ -642,6 +648,8 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
                      prefs.edit()
                              .putInt(Constants.PREF_AUTO_UPDATES_CHECK_INTERVAL,
                                      autoCheckInterval.getSelectedItemPosition())
@@ -76,7 +76,7 @@ index 25ca0b8..4dbc077 100644
                              .putBoolean(Constants.PREF_AUTO_DELETE_UPDATES, autoDelete.isChecked())
                              .putBoolean(Constants.PREF_METERED_NETWORK_WARNING,
                                      meteredNetworkWarning.isChecked())
-@@ -645,6 +653,10 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
+@@ -655,6 +663,10 @@ public class UpdatesActivity extends UpdatesListActivity implements UpdateImport
                          UpdatesCheckReceiver.cancelUpdatesCheck(this);
                      }
  
@@ -107,7 +107,7 @@ index 9f45423..382fbd4 100644
              downloadClient.start();
          } catch (IOException e) {
 diff --git a/app/src/main/java/org/lineageos/updater/controller/UpdaterController.java b/app/src/main/java/org/lineageos/updater/controller/UpdaterController.java
-index daa710c..1e51c5b 100644
+index e5ac277..f677023 100644
 --- a/app/src/main/java/org/lineageos/updater/controller/UpdaterController.java
 +++ b/app/src/main/java/org/lineageos/updater/controller/UpdaterController.java
 @@ -374,12 +374,16 @@ public class UpdaterController {
@@ -257,7 +257,7 @@ index 6306761..eace948 100644
                  mClient.connect();
                  int responseCode = mClient.getResponseCode();
 diff --git a/app/src/main/java/org/lineageos/updater/misc/Constants.java b/app/src/main/java/org/lineageos/updater/misc/Constants.java
-index beb9423..a51ab15 100644
+index dfff5af..9b3f98a 100644
 --- a/app/src/main/java/org/lineageos/updater/misc/Constants.java
 +++ b/app/src/main/java/org/lineageos/updater/misc/Constants.java
 @@ -30,6 +30,7 @@ public final class Constants {
@@ -269,7 +269,7 @@ index beb9423..a51ab15 100644
      public static final String PREF_AB_PERF_MODE = "ab_perf_mode";
      public static final String PREF_METERED_NETWORK_WARNING = "pref_metered_network_warning";
 diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/main/java/org/lineageos/updater/misc/Utils.java
-index f3d334b..67ad386 100644
+index 2c096dd..3fe9744 100644
 --- a/app/src/main/java/org/lineageos/updater/misc/Utils.java
 +++ b/app/src/main/java/org/lineageos/updater/misc/Utils.java
 @@ -46,6 +46,7 @@ import java.io.BufferedReader;
@@ -280,7 +280,7 @@ index f3d334b..67ad386 100644
  import java.util.ArrayList;
  import java.util.Enumeration;
  import java.util.HashSet;
-@@ -151,11 +152,75 @@ public class Utils {
+@@ -161,11 +162,75 @@ public class Utils {
          return updates;
      }
  
@@ -376,7 +376,7 @@ index c1b4356..93f1bfc 100644
          android:id="@+id/preferences_auto_delete_updates"
          android:layout_width="match_parent"
 diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
-index 744d46f..eb80934 100644
+index 023d0b3..bdf80b7 100644
 --- a/app/src/main/res/values/strings.xml
 +++ b/app/src/main/res/values/strings.xml
 @@ -79,6 +79,7 @@

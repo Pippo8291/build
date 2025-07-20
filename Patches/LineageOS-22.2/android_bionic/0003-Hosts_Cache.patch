@@ -613,7 +613,7 @@ index 000000000..fa5488f51
 +
 +int hc_gethtbyname(const char *host, int af, struct getnamaddr *info);
 diff --git a/libc/dns/net/sethostent.c b/libc/dns/net/sethostent.c
-index 5c4bdb5ab..5e4e174fa 100644
+index 8ea4315ac..14f8f91f2 100644
 --- a/libc/dns/net/sethostent.c
 +++ b/libc/dns/net/sethostent.c
 @@ -55,6 +55,8 @@ __RCSID("$NetBSD: sethostent.c,v 1.20 2014/03/17 13:24:23 christos Exp $");

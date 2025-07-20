@@ -9,10 +9,10 @@ Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/libc/include/sched.h b/libc/include/sched.h
-index b1f18421b..20e25662f 100644
+index 7a2dcade8..8f40bbec2 100644
 --- a/libc/include/sched.h
 +++ b/libc/include/sched.h
-@@ -215,7 +215,10 @@ int sched_getcpu(void);
+@@ -216,7 +216,10 @@ int sched_getcpu(void);
   * statically-sized CPU set. See `CPU_ALLOC` for dynamically-sized CPU sets.
   */
  typedef struct {

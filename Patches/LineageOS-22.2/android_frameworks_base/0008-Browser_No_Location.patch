@@ -8,10 +8,10 @@ Subject: [PATCH] stop auto-granting location to system browsers
  1 file changed, 13 deletions(-)
 
 diff --git a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
-index f7f76aaaee16..2c5b6ddc876e 100644
+index 09feb18d07bf..178ba556cd30 100644
 --- a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
 +++ b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
-@@ -776,19 +776,6 @@ final class DefaultPermissionGrantPolicy {
+@@ -792,19 +792,6 @@ final class DefaultPermissionGrantPolicy {
                          Intent.CATEGORY_APP_EMAIL, userId),
                  userId, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS);
  

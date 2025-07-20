@@ -44,6 +44,7 @@ fd '.+\.(c|cpp|cc)$' --type file --exec sed -i 's/static JNINativeMethod/static 
  36 files changed, 39 insertions(+), 39 deletions(-)
 
 diff --git a/benchmark/micro-native/micro_native.cc b/benchmark/micro-native/micro_native.cc
+index dffbf3b11d..e70366cc48 100644
 --- a/benchmark/micro-native/micro_native.cc
 +++ b/benchmark/micro-native/micro_native.cc
 @@ -38,7 +38,7 @@
@@ -83,6 +84,7 @@ diff --git a/benchmark/micro-native/micro_native.cc b/benchmark/micro-native/mic
    { "emptyJniStaticMethod0_Critical", "()V",
          reinterpret_cast<void*>(NAME_CRITICAL_JNI_METHOD(emptyJniStaticMethod0_1Critical)) },
 diff --git a/runtime/native/dalvik_system_BaseDexClassLoader.cc b/runtime/native/dalvik_system_BaseDexClassLoader.cc
+index f9a1aba022..dc738582d1 100644
 --- a/runtime/native/dalvik_system_BaseDexClassLoader.cc
 +++ b/runtime/native/dalvik_system_BaseDexClassLoader.cc
 @@ -69,7 +69,7 @@ static jobjectArray BaseDexClassLoader_computeClassLoaderContextsNative(JNIEnv*
@@ -95,6 +97,7 @@ diff --git a/runtime/native/dalvik_system_BaseDexClassLoader.cc b/runtime/native
                  "()[Ljava/lang/String;"),
  };
 diff --git a/runtime/native/dalvik_system_DexFile.cc b/runtime/native/dalvik_system_DexFile.cc
+index a1d4f16d26..1442faf1c1 100644
 --- a/runtime/native/dalvik_system_DexFile.cc
 +++ b/runtime/native/dalvik_system_DexFile.cc
 @@ -994,7 +994,7 @@ static void DexFile_setTrusted(JNIEnv* env, jclass, jobject j_cookie) {
@@ -107,6 +110,7 @@ diff --git a/runtime/native/dalvik_system_DexFile.cc b/runtime/native/dalvik_sys
      NATIVE_METHOD(DexFile,
                    defineClassNative,
 diff --git a/runtime/native/dalvik_system_VMDebug.cc b/runtime/native/dalvik_system_VMDebug.cc
+index 9440610f36..3f8b6cd1a8 100644
 --- a/runtime/native/dalvik_system_VMDebug.cc
 +++ b/runtime/native/dalvik_system_VMDebug.cc
 @@ -665,7 +665,7 @@ static void VMDebug_setUserId(JNIEnv* env, jclass, jint user_id) {
@@ -119,6 +123,7 @@ diff --git a/runtime/native/dalvik_system_VMDebug.cc b/runtime/native/dalvik_sys
      NATIVE_METHOD(VMDebug, countInstancesOfClasses, "([Ljava/lang/Class;Z)[J"),
      NATIVE_METHOD(VMDebug, dumpHprofData, "(Ljava/lang/String;I)V"),
 diff --git a/runtime/native/dalvik_system_VMRuntime.cc b/runtime/native/dalvik_system_VMRuntime.cc
+index 0e9660aaac..a95910927c 100644
 --- a/runtime/native/dalvik_system_VMRuntime.cc
 +++ b/runtime/native/dalvik_system_VMRuntime.cc
 @@ -541,7 +541,7 @@ static jlong VMRuntime_getFullGcCount([[maybe_unused]] JNIEnv* env, [[maybe_unus
@@ -131,6 +136,7 @@ diff --git a/runtime/native/dalvik_system_VMRuntime.cc b/runtime/native/dalvik_s
    NATIVE_METHOD(VMRuntime, bootClassPath, "()Ljava/lang/String;"),
    NATIVE_METHOD(VMRuntime, clampGrowthLimit, "()V"),
 diff --git a/runtime/native/dalvik_system_VMStack.cc b/runtime/native/dalvik_system_VMStack.cc
+index f55e2b5c18..3491d38bb2 100644
 --- a/runtime/native/dalvik_system_VMStack.cc
 +++ b/runtime/native/dalvik_system_VMStack.cc
 @@ -161,7 +161,7 @@ static jobjectArray VMStack_getAnnotatedThreadStackTrace(JNIEnv* env, jclass, jo
@@ -143,6 +149,7 @@ diff --git a/runtime/native/dalvik_system_VMStack.cc b/runtime/native/dalvik_sys
    FAST_NATIVE_METHOD(VMStack, getCallingClassLoader, "()Ljava/lang/ClassLoader;"),
    FAST_NATIVE_METHOD(VMStack, getClosestUserClassLoader, "()Ljava/lang/ClassLoader;"),
 diff --git a/runtime/native/dalvik_system_ZygoteHooks.cc b/runtime/native/dalvik_system_ZygoteHooks.cc
+index 3af197866b..abf8e8a847 100644
 --- a/runtime/native/dalvik_system_ZygoteHooks.cc
 +++ b/runtime/native/dalvik_system_ZygoteHooks.cc
 @@ -466,7 +466,7 @@ static jboolean ZygoteHooks_nativeZygoteLongSuspendOk([[maybe_unused]] JNIEnv* e
@@ -155,6 +162,7 @@ diff --git a/runtime/native/dalvik_system_ZygoteHooks.cc b/runtime/native/dalvik
    NATIVE_METHOD(ZygoteHooks, nativePostZygoteFork, "()V"),
    NATIVE_METHOD(ZygoteHooks, nativePostForkSystemServer, "(I)V"),
 diff --git a/runtime/native/java_lang_Class.cc b/runtime/native/java_lang_Class.cc
+index c31c9790bd..80410b3b00 100644
 --- a/runtime/native/java_lang_Class.cc
 +++ b/runtime/native/java_lang_Class.cc
 @@ -971,7 +971,7 @@ static jobject Class_newInstance(JNIEnv* env, jobject javaThis) {
@@ -167,6 +175,7 @@ diff --git a/runtime/native/java_lang_Class.cc b/runtime/native/java_lang_Class.
                  "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;"),
    FAST_NATIVE_METHOD(Class, ensureExtDataPresent, "()Ldalvik/system/ClassExt;"),
 diff --git a/runtime/native/java_lang_Object.cc b/runtime/native/java_lang_Object.cc
+index 5649b2cc5b..d328827985 100644
 --- a/runtime/native/java_lang_Object.cc
 +++ b/runtime/native/java_lang_Object.cc
 @@ -54,7 +54,7 @@ static jint Object_identityHashCodeNative(JNIEnv* env, jclass, jobject javaObjec
@@ -179,6 +188,7 @@ diff --git a/runtime/native/java_lang_Object.cc b/runtime/native/java_lang_Objec
    FAST_NATIVE_METHOD(Object, notify, "()V"),
    FAST_NATIVE_METHOD(Object, notifyAll, "()V"),
 diff --git a/runtime/native/java_lang_StackStreamFactory.cc b/runtime/native/java_lang_StackStreamFactory.cc
+index 78e38a0914..6a90fc514f 100644
 --- a/runtime/native/java_lang_StackStreamFactory.cc
 +++ b/runtime/native/java_lang_StackStreamFactory.cc
 @@ -41,7 +41,7 @@ static jint StackStreamFactory_nativeFetchStackFrameInfo(JNIEnv* env, jclass,
@@ -191,6 +201,7 @@ diff --git a/runtime/native/java_lang_StackStreamFactory.cc b/runtime/native/jav
    FAST_NATIVE_METHOD(StackStreamFactory, nativeFetchStackFrameInfo, "(JLjava/lang/Object;III[Ljava/lang/Object;)I"),
  };
 diff --git a/runtime/native/java_lang_String.cc b/runtime/native/java_lang_String.cc
+index 1ba0028fd3..d7bf0013ab 100644
 --- a/runtime/native/java_lang_String.cc
 +++ b/runtime/native/java_lang_String.cc
 @@ -133,7 +133,7 @@ static jstring String_doRepeat(JNIEnv* env, jobject java_this, jint count) {
@@ -203,6 +214,7 @@ diff --git a/runtime/native/java_lang_String.cc b/runtime/native/java_lang_Strin
    FAST_NATIVE_METHOD(String, compareTo, "(Ljava/lang/String;)I"),
    FAST_NATIVE_METHOD(String, concat, "(Ljava/lang/String;)Ljava/lang/String;"),
 diff --git a/runtime/native/java_lang_StringFactory.cc b/runtime/native/java_lang_StringFactory.cc
+index e6c03dbcf2..efd1b0cc87 100644
 --- a/runtime/native/java_lang_StringFactory.cc
 +++ b/runtime/native/java_lang_StringFactory.cc
 @@ -294,7 +294,7 @@ static jstring StringFactory_newStringFromUtf8Bytes(JNIEnv* env, jclass, jbyteAr
@@ -215,6 +227,7 @@ diff --git a/runtime/native/java_lang_StringFactory.cc b/runtime/native/java_lan
    FAST_NATIVE_METHOD(StringFactory, newStringFromChars, "(II[C)Ljava/lang/String;"),
    FAST_NATIVE_METHOD(StringFactory, newStringFromString, "(Ljava/lang/String;)Ljava/lang/String;"),
 diff --git a/runtime/native/java_lang_System.cc b/runtime/native/java_lang_System.cc
+index 203d98dc4c..4d50b194cb 100644
 --- a/runtime/native/java_lang_System.cc
 +++ b/runtime/native/java_lang_System.cc
 @@ -239,7 +239,7 @@ static void System_arraycopyBooleanUnchecked(JNIEnv* env,
@@ -227,6 +240,7 @@ diff --git a/runtime/native/java_lang_System.cc b/runtime/native/java_lang_Syste
    FAST_NATIVE_METHOD(System, arraycopyCharUnchecked, "([CI[CII)V"),
    FAST_NATIVE_METHOD(System, arraycopyByteUnchecked, "([BI[BII)V"),
 diff --git a/runtime/native/java_lang_Thread.cc b/runtime/native/java_lang_Thread.cc
+index 2c79a38ca0..64e5bb1ab4 100644
 --- a/runtime/native/java_lang_Thread.cc
 +++ b/runtime/native/java_lang_Thread.cc
 @@ -190,7 +190,7 @@ static void Thread_yield(JNIEnv*, jobject) {
@@ -239,6 +253,7 @@ diff --git a/runtime/native/java_lang_Thread.cc b/runtime/native/java_lang_Threa
    FAST_NATIVE_METHOD(Thread, interrupted, "()Z"),
    FAST_NATIVE_METHOD(Thread, isInterrupted, "()Z"),
 diff --git a/runtime/native/java_lang_Throwable.cc b/runtime/native/java_lang_Throwable.cc
+index 45496b1a3c..f46b99c2d6 100644
 --- a/runtime/native/java_lang_Throwable.cc
 +++ b/runtime/native/java_lang_Throwable.cc
 @@ -38,7 +38,7 @@ static jobjectArray Throwable_nativeGetStackTrace(JNIEnv* env, jclass, jobject j
@@ -251,6 +266,7 @@ diff --git a/runtime/native/java_lang_Throwable.cc b/runtime/native/java_lang_Th
    FAST_NATIVE_METHOD(Throwable, nativeGetStackTrace, "(Ljava/lang/Object;)[Ljava/lang/StackTraceElement;"),
  };
 diff --git a/runtime/native/java_lang_VMClassLoader.cc b/runtime/native/java_lang_VMClassLoader.cc
+index eeae51c5e7..aa879dc7bd 100644
 --- a/runtime/native/java_lang_VMClassLoader.cc
 +++ b/runtime/native/java_lang_VMClassLoader.cc
 @@ -167,7 +167,7 @@ static jobjectArray VMClassLoader_getBootClassPathEntries(JNIEnv* env, jclass) {
@@ -263,6 +279,7 @@ diff --git a/runtime/native/java_lang_VMClassLoader.cc b/runtime/native/java_lan
    NATIVE_METHOD(VMClassLoader, getBootClassPathEntries, "()[Ljava/lang/String;"),
  };
 diff --git a/runtime/native/java_lang_invoke_MethodHandle.cc b/runtime/native/java_lang_invoke_MethodHandle.cc
+index 819656fd05..80f2d04ef0 100644
 --- a/runtime/native/java_lang_invoke_MethodHandle.cc
 +++ b/runtime/native/java_lang_invoke_MethodHandle.cc
 @@ -37,7 +37,7 @@ static void MethodHandle_invokeExactWithFrame(JNIEnv* env, jobject thiz, jobject
@@ -275,6 +292,7 @@ diff --git a/runtime/native/java_lang_invoke_MethodHandle.cc b/runtime/native/ja
  };
  
 diff --git a/runtime/native/java_lang_invoke_MethodHandleImpl.cc b/runtime/native/java_lang_invoke_MethodHandleImpl.cc
+index ccd3370ff7..87af32488e 100644
 --- a/runtime/native/java_lang_invoke_MethodHandleImpl.cc
 +++ b/runtime/native/java_lang_invoke_MethodHandleImpl.cc
 @@ -63,7 +63,7 @@ static jobject MethodHandleImpl_getMemberInternal(JNIEnv* env, jobject thiz) {
@@ -287,6 +305,7 @@ diff --git a/runtime/native/java_lang_invoke_MethodHandleImpl.cc b/runtime/nativ
  };
  
 diff --git a/runtime/native/java_lang_ref_FinalizerReference.cc b/runtime/native/java_lang_ref_FinalizerReference.cc
+index 52f6f734d9..5dfd542b33 100644
 --- a/runtime/native/java_lang_ref_FinalizerReference.cc
 +++ b/runtime/native/java_lang_ref_FinalizerReference.cc
 @@ -42,7 +42,7 @@ static jobject FinalizerReference_getReferent(JNIEnv* env, jobject javaThis) {
@@ -299,6 +318,7 @@ diff --git a/runtime/native/java_lang_ref_FinalizerReference.cc b/runtime/native
    FAST_NATIVE_METHOD(FinalizerReference, getReferent, "()Ljava/lang/Object;"),
  };
 diff --git a/runtime/native/java_lang_ref_Reference.cc b/runtime/native/java_lang_ref_Reference.cc
+index 4c411c8db4..190fe2babe 100644
 --- a/runtime/native/java_lang_ref_Reference.cc
 +++ b/runtime/native/java_lang_ref_Reference.cc
 @@ -76,7 +76,7 @@ static void Reference_clearReferent(JNIEnv* env, jobject javaThis) {
@@ -311,6 +331,7 @@ diff --git a/runtime/native/java_lang_ref_Reference.cc b/runtime/native/java_lan
    FAST_NATIVE_METHOD(Reference, clearReferent, "()V"),
    FAST_NATIVE_METHOD(Reference, refersTo0, "(Ljava/lang/Object;)Z"),
 diff --git a/runtime/native/java_lang_reflect_Array.cc b/runtime/native/java_lang_reflect_Array.cc
+index 9ac6e614b6..f832c134ec 100644
 --- a/runtime/native/java_lang_reflect_Array.cc
 +++ b/runtime/native/java_lang_reflect_Array.cc
 @@ -74,7 +74,7 @@ static jobject Array_createObjectArray(JNIEnv* env, jclass, jclass javaElementCl
@@ -323,6 +344,7 @@ diff --git a/runtime/native/java_lang_reflect_Array.cc b/runtime/native/java_lan
    FAST_NATIVE_METHOD(Array, createObjectArray, "(Ljava/lang/Class;I)Ljava/lang/Object;"),
  };
 diff --git a/runtime/native/java_lang_reflect_Constructor.cc b/runtime/native/java_lang_reflect_Constructor.cc
+index bff5126b82..2e1696f999 100644
 --- a/runtime/native/java_lang_reflect_Constructor.cc
 +++ b/runtime/native/java_lang_reflect_Constructor.cc
 @@ -129,7 +129,7 @@ static jobject Constructor_newInstanceFromSerialization(JNIEnv* env,
@@ -335,6 +357,7 @@ diff --git a/runtime/native/java_lang_reflect_Constructor.cc b/runtime/native/ja
    FAST_NATIVE_METHOD(Constructor, newInstance0, "([Ljava/lang/Object;)Ljava/lang/Object;"),
    FAST_NATIVE_METHOD(Constructor, newInstanceFromSerialization, "(Ljava/lang/Class;Ljava/lang/Class;)Ljava/lang/Object;"),
 diff --git a/runtime/native/java_lang_reflect_Executable.cc b/runtime/native/java_lang_reflect_Executable.cc
+index 1440909032..7833c25bc1 100644
 --- a/runtime/native/java_lang_reflect_Executable.cc
 +++ b/runtime/native/java_lang_reflect_Executable.cc
 @@ -359,7 +359,7 @@ static jint Executable_getParameterCountInternal(JNIEnv* env, jobject javaMethod
@@ -347,6 +370,7 @@ diff --git a/runtime/native/java_lang_reflect_Executable.cc b/runtime/native/jav
                       "(Ljava/lang/reflect/Method;)I"),
    FAST_NATIVE_METHOD(Executable, getAnnotationNative,
 diff --git a/runtime/native/java_lang_reflect_Field.cc b/runtime/native/java_lang_reflect_Field.cc
+index 622b514ea3..49cbaed6c4 100644
 --- a/runtime/native/java_lang_reflect_Field.cc
 +++ b/runtime/native/java_lang_reflect_Field.cc
 @@ -549,7 +549,7 @@ static jboolean Field_isAnnotationPresentNative(JNIEnv* env,
@@ -359,6 +383,7 @@ diff --git a/runtime/native/java_lang_reflect_Field.cc b/runtime/native/java_lan
    FAST_NATIVE_METHOD(Field, getBoolean, "(Ljava/lang/Object;)Z"),
    FAST_NATIVE_METHOD(Field, getByte,    "(Ljava/lang/Object;)B"),
 diff --git a/runtime/native/java_lang_reflect_Method.cc b/runtime/native/java_lang_reflect_Method.cc
+index 64b4b17d4c..48e8c2bb0f 100644
 --- a/runtime/native/java_lang_reflect_Method.cc
 +++ b/runtime/native/java_lang_reflect_Method.cc
 @@ -86,7 +86,7 @@ static jobject Method_invoke(JNIEnv* env, jobject javaMethod, jobject javaReceiv
@@ -371,6 +396,7 @@ diff --git a/runtime/native/java_lang_reflect_Method.cc b/runtime/native/java_la
    FAST_NATIVE_METHOD(Method, getExceptionTypes, "()[Ljava/lang/Class;"),
    FAST_NATIVE_METHOD(Method, invoke, "(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;"),
 diff --git a/runtime/native/java_lang_reflect_Parameter.cc b/runtime/native/java_lang_reflect_Parameter.cc
+index fe9e4e3cbf..716024d93b 100644
 --- a/runtime/native/java_lang_reflect_Parameter.cc
 +++ b/runtime/native/java_lang_reflect_Parameter.cc
 @@ -98,7 +98,7 @@ static jobject Parameter_getAnnotationNative(JNIEnv* env,
@@ -383,6 +409,7 @@ diff --git a/runtime/native/java_lang_reflect_Parameter.cc b/runtime/native/java
        Parameter,
        getAnnotationNative,
 diff --git a/runtime/native/java_lang_reflect_Proxy.cc b/runtime/native/java_lang_reflect_Proxy.cc
+index a89f8274f8..2ba1d8b6ac 100644
 --- a/runtime/native/java_lang_reflect_Proxy.cc
 +++ b/runtime/native/java_lang_reflect_Proxy.cc
 @@ -37,7 +37,7 @@ static jclass Proxy_generateProxy(JNIEnv* env, jclass, jstring name, jobjectArra
@@ -395,6 +422,7 @@ diff --git a/runtime/native/java_lang_reflect_Proxy.cc b/runtime/native/java_lan
  };
  
 diff --git a/runtime/native/java_util_concurrent_atomic_AtomicLong.cc b/runtime/native/java_util_concurrent_atomic_AtomicLong.cc
+index 3f4c609432..e9f3a89bb1 100644
 --- a/runtime/native/java_util_concurrent_atomic_AtomicLong.cc
 +++ b/runtime/native/java_util_concurrent_atomic_AtomicLong.cc
 @@ -30,7 +30,7 @@ static jboolean AtomicLong_VMSupportsCS8(JNIEnv*, jclass) {
@@ -407,6 +435,7 @@ diff --git a/runtime/native/java_util_concurrent_atomic_AtomicLong.cc b/runtime/
  };
  
 diff --git a/runtime/native/jdk_internal_misc_Unsafe.cc b/runtime/native/jdk_internal_misc_Unsafe.cc
+index e9d6f3a83f..d42c92c86d 100644
 --- a/runtime/native/jdk_internal_misc_Unsafe.cc
 +++ b/runtime/native/jdk_internal_misc_Unsafe.cc
 @@ -607,7 +607,7 @@ static void Unsafe_unpark(JNIEnv* env, jobject, jobject jthread) {
@@ -419,6 +448,7 @@ diff --git a/runtime/native/jdk_internal_misc_Unsafe.cc b/runtime/native/jdk_int
      FAST_NATIVE_METHOD(Unsafe, compareAndSwapLong, "(Ljava/lang/Object;JJJ)Z"),
      FAST_NATIVE_METHOD(
 diff --git a/runtime/native/libcore_io_Memory.cc b/runtime/native/libcore_io_Memory.cc
+index 66a16ed0ad..697c0500df 100644
 --- a/runtime/native/libcore_io_Memory.cc
 +++ b/runtime/native/libcore_io_Memory.cc
 @@ -181,7 +181,7 @@ static void Memory_peekShortArray(JNIEnv* env,
@@ -431,6 +461,7 @@ diff --git a/runtime/native/libcore_io_Memory.cc b/runtime/native/libcore_io_Mem
      FAST_NATIVE_METHOD(Memory, peekCharArray, "(J[CIIZ)V"),
      FAST_NATIVE_METHOD(Memory, peekDoubleArray, "(J[DIIZ)V"),
 diff --git a/runtime/native/libcore_util_CharsetUtils.cc b/runtime/native/libcore_util_CharsetUtils.cc
+index b497f1092d..d70e55760e 100644
 --- a/runtime/native/libcore_util_CharsetUtils.cc
 +++ b/runtime/native/libcore_util_CharsetUtils.cc
 @@ -137,7 +137,7 @@ static jbyteArray CharsetUtils_toUtf8Bytes(JNIEnv* env, jclass, jstring java_str
@@ -443,6 +474,7 @@ diff --git a/runtime/native/libcore_util_CharsetUtils.cc b/runtime/native/libcor
    FAST_NATIVE_METHOD(CharsetUtils, toAsciiBytes, "(Ljava/lang/String;II)[B"),
    FAST_NATIVE_METHOD(CharsetUtils, toIsoLatin1Bytes, "(Ljava/lang/String;II)[B"),
 diff --git a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmServer.cc b/runtime/native/org_apache_harmony_dalvik_ddmc_DdmServer.cc
+index b2e94f90cc..bfa2c394a6 100644
 --- a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmServer.cc
 +++ b/runtime/native/org_apache_harmony_dalvik_ddmc_DdmServer.cc
 @@ -38,7 +38,7 @@ static void DdmServer_nativeSendChunk(JNIEnv* env, jclass, jint type,
@@ -455,6 +487,7 @@ diff --git a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmServer.cc b/runtim
  };
  
 diff --git a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmVmInternal.cc b/runtime/native/org_apache_harmony_dalvik_ddmc_DdmVmInternal.cc
+index e26d804daa..b5df455904 100644
 --- a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmVmInternal.cc
 +++ b/runtime/native/org_apache_harmony_dalvik_ddmc_DdmVmInternal.cc
 @@ -205,7 +205,7 @@ static jbyteArray DdmVmInternal_getThreadStats(JNIEnv* env, jclass) {
@@ -467,6 +500,7 @@ diff --git a/runtime/native/org_apache_harmony_dalvik_ddmc_DdmVmInternal.cc b/ru
    NATIVE_METHOD(DdmVmInternal, setThreadNotifyEnabled, "(Z)V"),
    NATIVE_METHOD(DdmVmInternal, getStackTraceById, "(I)[Ljava/lang/StackTraceElement;"),
 diff --git a/runtime/native/sun_misc_Unsafe.cc b/runtime/native/sun_misc_Unsafe.cc
+index 38fe72555c..c4b51fa84c 100644
 --- a/runtime/native/sun_misc_Unsafe.cc
 +++ b/runtime/native/sun_misc_Unsafe.cc
 @@ -547,7 +547,7 @@ static void Unsafe_unpark(JNIEnv* env, jobject, jobject jthread) {
@@ -479,6 +513,7 @@ diff --git a/runtime/native/sun_misc_Unsafe.cc b/runtime/native/sun_misc_Unsafe.
    FAST_NATIVE_METHOD(Unsafe, compareAndSwapLong, "(Ljava/lang/Object;JJJ)Z"),
    FAST_NATIVE_METHOD(Unsafe, compareAndSwapObject, "(Ljava/lang/Object;JLjava/lang/Object;Ljava/lang/Object;)Z"),
 diff --git a/test/004-JniTest/jni_test.cc b/test/004-JniTest/jni_test.cc
+index 429bd94fe0..1518f931ab 100644
 --- a/test/004-JniTest/jni_test.cc
 +++ b/test/004-JniTest/jni_test.cc
 @@ -33,7 +33,7 @@ static JavaVM* jvm = nullptr;
@@ -491,6 +526,7 @@ diff --git a/test/004-JniTest/jni_test.cc b/test/004-JniTest/jni_test.cc
    {"intCriticalNativeMethod", "(III)I", reinterpret_cast<void*>(Java_Main_intCriticalNativeMethod) },
  };
 diff --git a/test/139-register-natives/regnative.cc b/test/139-register-natives/regnative.cc
+index d9c8b31ac7..083c14c1ec 100644
 --- a/test/139-register-natives/regnative.cc
 +++ b/test/139-register-natives/regnative.cc
 @@ -22,7 +22,7 @@ namespace art {

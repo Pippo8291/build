@@ -1,10 +1,9 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From e49ad66c29f9b08e7a9ec0d806328f58379680ea Mon Sep 17 00:00:00 2001
 From: anupritaisno1 <www.anuprita804@gmail.com>
 Date: Sat, 31 Oct 2020 00:26:09 +0200
 Subject: [PATCH] pass through runtime flags for exec spawning and implement
  them in the child
 
-Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
 ---
  .../com/android/internal/os/ExecInit.java     |  14 +-
  core/java/com/android/internal/os/Zygote.java |   9 +
@@ -13,10 +12,10 @@ Signed-off-by: anupritaisno1 <www.anuprita804@gmail.com>
  4 files changed, 107 insertions(+), 82 deletions(-)
 
 diff --git a/core/java/com/android/internal/os/ExecInit.java b/core/java/com/android/internal/os/ExecInit.java
-index 830e5b562a91..749c67abf389 100644
+index 830e5b562a919..749c67abf389d 100644
 --- a/core/java/com/android/internal/os/ExecInit.java
 +++ b/core/java/com/android/internal/os/ExecInit.java
-@@ -31,15 +31,20 @@ public class ExecInit {
+@@ -31,15 +31,20 @@ public static void main(String[] args) {
          // Parse our mandatory argument.
          int targetSdkVersion = Integer.parseInt(args[0], 10);
  
@@ -39,7 +38,7 @@ index 830e5b562a91..749c67abf389 100644
          r.run();
      }
  
-@@ -52,9 +57,9 @@ public class ExecInit {
+@@ -52,9 +57,9 @@ public static void main(String[] args) {
       * @param args Arguments for {@link RuntimeInit#main}.
       */
      public static void execApplication(String niceName, int targetSdkVersion,
@@ -51,7 +50,7 @@ index 830e5b562a91..749c67abf389 100644
          String[] argv = new String[baseArgs + args.length];
          if (VMRuntime.is64BitInstructionSet(instructionSet)) {
              argv[0] = "/system/bin/app_process64";
-@@ -68,6 +73,7 @@ public class ExecInit {
+@@ -68,6 +73,7 @@ public static void execApplication(String niceName, int targetSdkVersion,
          }
          argv[3 + niceArgs] = "com.android.internal.os.ExecInit";
          argv[4 + niceArgs] = Integer.toString(targetSdkVersion);
@@ -60,10 +59,10 @@ index 830e5b562a91..749c67abf389 100644
  
          WrapperInit.preserveCapabilities();
 diff --git a/core/java/com/android/internal/os/Zygote.java b/core/java/com/android/internal/os/Zygote.java
-index cab84bb01f70..07691fcec545 100644
+index cd17ed89058a1..65d6e0cde246b 100644
 --- a/core/java/com/android/internal/os/Zygote.java
 +++ b/core/java/com/android/internal/os/Zygote.java
-@@ -1497,4 +1497,13 @@ public final class Zygote {
+@@ -1498,4 +1498,13 @@ && isCompatChangeEnabled(
          }
          return runtimeFlags;
      }
@@ -78,11 +77,11 @@ index cab84bb01f70..07691fcec545 100644
 +    public static native void nativeHandleRuntimeFlags(int runtimeFlags);
  }
 diff --git a/core/java/com/android/internal/os/ZygoteConnection.java b/core/java/com/android/internal/os/ZygoteConnection.java
-index 703b5d12cbc2..7cff4afe93ce 100644
+index 55c4c279b3ff7..d10cc8c417c8c 100644
 --- a/core/java/com/android/internal/os/ZygoteConnection.java
 +++ b/core/java/com/android/internal/os/ZygoteConnection.java
-@@ -542,7 +542,7 @@ class ZygoteConnection {
-                 if (SystemProperties.getBoolean("sys.spawn.exec", false) &&
+@@ -529,7 +529,7 @@ private Runnable handleChildProc(ZygoteArguments parsedArgs,
+                 if (ExtSettings.EXEC_SPAWNING.get()  &&
                          (parsedArgs.mRuntimeFlags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
                      ExecInit.execApplication(parsedArgs.mNiceName, parsedArgs.mTargetSdkVersion,
 -                            VMRuntime.getCurrentInstructionSet(), parsedArgs.mRemainingArgs);
@@ -91,10 +90,10 @@ index 703b5d12cbc2..7cff4afe93ce 100644
                      // Should not get here.
                      throw new IllegalStateException("ExecInit.execApplication unexpectedly returned");
 diff --git a/core/jni/com_android_internal_os_Zygote.cpp b/core/jni/com_android_internal_os_Zygote.cpp
-index 3ed9f49ede26..236f34e7239f 100644
+index c0c146ec8d367..75c08b1aa718f 100644
 --- a/core/jni/com_android_internal_os_Zygote.cpp
 +++ b/core/jni/com_android_internal_os_Zygote.cpp
-@@ -1894,6 +1894,86 @@ static void BindMountStorageDirs(JNIEnv* env, jobjectArray pkg_data_info_list,
+@@ -1887,6 +1887,86 @@ static void BindMountStorageDirs(JNIEnv* env, jobjectArray pkg_data_info_list,
    }
  }
  
@@ -155,21 +154,21 @@ index 3ed9f49ede26..236f34e7239f 100644
 +    switch (runtime_flags & RuntimeFlags::GWP_ASAN_LEVEL_MASK) {
 +        default:
 +        case RuntimeFlags::GWP_ASAN_LEVEL_DEFAULT:
-+            gwp_asan_options.desire = GetBoolProperty(kGwpAsanAppRecoverableSysprop, true)
-+                    ? Action::TURN_ON_FOR_APP_SAMPLED_NON_CRASHING
-+                    : Action::DONT_TURN_ON_UNLESS_OVERRIDDEN;
++            gwp_asan_options.mode = GetBoolProperty(kGwpAsanAppRecoverableSysprop, true)
++                    ? Mode::APP_MANIFEST_DEFAULT
++                    : Mode::APP_MANIFEST_NEVER;
 +            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 +            break;
 +        case RuntimeFlags::GWP_ASAN_LEVEL_NEVER:
-+            gwp_asan_options.desire = Action::DONT_TURN_ON_UNLESS_OVERRIDDEN;
++            gwp_asan_options.mode = Mode::APP_MANIFEST_NEVER;
 +            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 +            break;
 +        case RuntimeFlags::GWP_ASAN_LEVEL_ALWAYS:
-+            gwp_asan_options.desire = Action::TURN_ON_FOR_APP;
++            gwp_asan_options.mode = Mode::APP_MANIFEST_ALWAYS;
 +            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 +            break;
 +        case RuntimeFlags::GWP_ASAN_LEVEL_LOTTERY:
-+            gwp_asan_options.desire = Action::TURN_ON_WITH_SAMPLING;
++            gwp_asan_options.mode = Mode::APP_MANIFEST_DEFAULT;
 +            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 +            break;
 +    }
@@ -181,7 +180,7 @@ index 3ed9f49ede26..236f34e7239f 100644
  // Utility routine to specialize a zygote child process.
  static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, jint runtime_flags,
                               jobjectArray rlimits, jlong permitted_capabilities,
-@@ -2044,84 +2124,9 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids,
+@@ -2050,84 +2130,9 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids,
          }
      }
  
@@ -242,21 +241,21 @@ index 3ed9f49ede26..236f34e7239f 100644
 -    switch (runtime_flags & RuntimeFlags::GWP_ASAN_LEVEL_MASK) {
 -        default:
 -        case RuntimeFlags::GWP_ASAN_LEVEL_DEFAULT:
--            gwp_asan_options.desire = GetBoolProperty(kGwpAsanAppRecoverableSysprop, true)
--                    ? Action::TURN_ON_FOR_APP_SAMPLED_NON_CRASHING
--                    : Action::DONT_TURN_ON_UNLESS_OVERRIDDEN;
+-            gwp_asan_options.mode = GetBoolProperty(kGwpAsanAppRecoverableSysprop, true)
+-                    ? Mode::APP_MANIFEST_DEFAULT
+-                    : Mode::APP_MANIFEST_NEVER;
 -            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 -            break;
 -        case RuntimeFlags::GWP_ASAN_LEVEL_NEVER:
--            gwp_asan_options.desire = Action::DONT_TURN_ON_UNLESS_OVERRIDDEN;
+-            gwp_asan_options.mode = Mode::APP_MANIFEST_NEVER;
 -            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 -            break;
 -        case RuntimeFlags::GWP_ASAN_LEVEL_ALWAYS:
--            gwp_asan_options.desire = Action::TURN_ON_FOR_APP;
+-            gwp_asan_options.mode = Mode::APP_MANIFEST_ALWAYS;
 -            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 -            break;
 -        case RuntimeFlags::GWP_ASAN_LEVEL_LOTTERY:
--            gwp_asan_options.desire = Action::TURN_ON_WITH_SAMPLING;
+-            gwp_asan_options.mode = Mode::APP_MANIFEST_DEFAULT;
 -            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
 -            break;
 -    }
@@ -268,7 +267,7 @@ index 3ed9f49ede26..236f34e7239f 100644
  
      SetCapabilities(permitted_capabilities, effective_capabilities, permitted_capabilities,
                      fail_fn);
-@@ -3044,6 +3049,10 @@ static void com_android_internal_os_Zygote_nativeAllowFilesOpenedByPreload(JNIEn
+@@ -3056,6 +3061,10 @@ static void com_android_internal_os_Zygote_nativeAllowFilesOpenedByPreload(JNIEn
      gPreloadFdsExtracted = true;
  }
  
@@ -279,7 +278,7 @@ index 3ed9f49ede26..236f34e7239f 100644
  static const JNINativeMethod gMethods[] = {
          {"nativeForkAndSpecialize",
           "(II[II[[IILjava/lang/String;Ljava/lang/String;[I[IZLjava/lang/String;Ljava/lang/"
-@@ -3096,6 +3105,7 @@ static const JNINativeMethod gMethods[] = {
+@@ -3108,6 +3117,7 @@ static const JNINativeMethod gMethods[] = {
           (void*)com_android_internal_os_Zygote_nativeMarkOpenedFilesBeforePreload},
          {"nativeAllowFilesOpenedByPreload", "()V",
           (void*)com_android_internal_os_Zygote_nativeAllowFilesOpenedByPreload},

@@ -89,7 +89,7 @@ index 65784709c..6c4bf98eb 100644
  genfscon proc /sys/fs/suid_dumpable u:object_r:proc_security:s0
  genfscon proc /sys/fs/verity/require_signatures u:object_r:proc_fs_verity:s0
 diff --git a/prebuilts/api/34.0/private/genfs_contexts b/prebuilts/api/34.0/private/genfs_contexts
-index c0a15f767..26213b258 100644
+index 759ac383f..59dd45f17 100644
 --- a/prebuilts/api/34.0/private/genfs_contexts
 +++ b/prebuilts/api/34.0/private/genfs_contexts
 @@ -40,7 +40,9 @@ genfscon proc /sysrq-trigger u:object_r:proc_sysrq:s0
@@ -103,10 +103,10 @@ index c0a15f767..26213b258 100644
  genfscon proc /sys/fs/suid_dumpable u:object_r:proc_security:s0
  genfscon proc /sys/kernel/bpf_ u:object_r:proc_bpf:s0
 diff --git a/private/genfs_contexts b/private/genfs_contexts
-index e4baeeeda..c27fa76cc 100644
+index 3ff1012b7..90634347e 100644
 --- a/private/genfs_contexts
 +++ b/private/genfs_contexts
-@@ -41,7 +41,9 @@ genfscon proc /sysrq-trigger u:object_r:proc_sysrq:s0
+@@ -42,7 +42,9 @@ genfscon proc /sysrq-trigger u:object_r:proc_sysrq:s0
  genfscon proc /kpageflags u:object_r:proc_kpageflags:s0
  genfscon proc /sys/abi/swp u:object_r:proc_abi:s0
  genfscon proc /sys/fs/pipe-max-size u:object_r:proc_pipe_conf:s0

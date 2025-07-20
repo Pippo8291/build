@@ -14,7 +14,7 @@ Change-Id: Ie457bb2dad17bddbf9dc3a818e3ec586023ce918
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/core/java/android/permission/PermissionUsageHelper.java b/core/java/android/permission/PermissionUsageHelper.java
-index 141ffc9a491a..20ccdb025604 100644
+index a698b180dbe0..dbb8f2ede782 100644
 --- a/core/java/android/permission/PermissionUsageHelper.java
 +++ b/core/java/android/permission/PermissionUsageHelper.java
 @@ -114,7 +114,7 @@ public class PermissionUsageHelper implements AppOpsManager.OnOpActiveChangedLis

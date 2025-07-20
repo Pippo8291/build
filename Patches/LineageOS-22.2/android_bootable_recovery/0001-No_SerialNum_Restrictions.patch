@@ -8,10 +8,10 @@ Subject: [PATCH] reject updates with serialno constraints
  1 file changed, 2 insertions(+), 11 deletions(-)
 
 diff --git a/install/install.cpp b/install/install.cpp
-index 9906a41f..e85a95c5 100644
+index 68cf59e9..df7d7b7b 100644
 --- a/install/install.cpp
 +++ b/install/install.cpp
-@@ -234,17 +234,8 @@ bool CheckPackageMetadata(const std::map<std::string, std::string>& metadata, Ot
+@@ -245,17 +245,8 @@ bool CheckPackageMetadata(const std::map<std::string, std::string>& metadata, Ot
  
    auto pkg_serial_no = get_value(metadata, "serialno");
    if (!pkg_serial_no.empty()) {
