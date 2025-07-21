@@ -269,7 +269,7 @@ index dfff5af..9b3f98a 100644
      public static final String PREF_AB_PERF_MODE = "ab_perf_mode";
      public static final String PREF_METERED_NETWORK_WARNING = "pref_metered_network_warning";
 diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/main/java/org/lineageos/updater/misc/Utils.java
-index 2c096dd..3fe9744 100644
+index 114b4cc..90156fe 100644
 --- a/app/src/main/java/org/lineageos/updater/misc/Utils.java
 +++ b/app/src/main/java/org/lineageos/updater/misc/Utils.java
 @@ -46,6 +46,7 @@ import java.io.BufferedReader;
@@ -280,7 +280,7 @@ index 2c096dd..3fe9744 100644
  import java.util.ArrayList;
  import java.util.Enumeration;
  import java.util.HashSet;
-@@ -161,11 +162,75 @@ public class Utils {
+@@ -161,12 +162,76 @@ public class Utils {
          return updates;
      }
  
@@ -348,13 +348,14 @@ index 2c096dd..3fe9744 100644
          String incrementalVersion = SystemProperties.get(Constants.PROP_BUILD_VERSION_INCREMENTAL);
          String device = SystemProperties.get(Constants.PROP_NEXT_DEVICE,
                  SystemProperties.get(Constants.PROP_DEVICE));
+         String type = SystemProperties.get(Constants.PROP_RELEASE_TYPE).toLowerCase(Locale.ROOT);
          String server = "0OTA_SERVER_CLEARNET0";
 +        String serverOnion = "0OTA_SERVER_ONION0";
 +        if(serverOnion.toLowerCase().startsWith("http") && isOnionRoutingEnabled(context)) {
 +            server = serverOnion;
 +        }
  
-         return server + "?base=LineageOS&device=" + device + "&inc=" + incrementalVersion;
+         return server + "/axp/api/v1/" + device + "/" + type + "/" + incrementalVersion;
      }
 diff --git a/app/src/main/res/layout/preferences_dialog.xml b/app/src/main/res/layout/preferences_dialog.xml
 index c1b4356..93f1bfc 100644

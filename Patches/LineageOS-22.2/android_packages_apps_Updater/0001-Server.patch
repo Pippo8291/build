@@ -7,8 +7,8 @@ adjusted for AXP.OS
 
 Change-Id: I26dc2942736cf0cfe4e7b92ddfdd04b9d74dbae5
 ---
- .../main/java/org/lineageos/updater/misc/Utils.java   | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ .../main/java/org/lineageos/updater/misc/Utils.java    | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/main/java/org/lineageos/updater/misc/Utils.java
 index 518c8e7..114b4cc 100644
