@@ -74,7 +74,7 @@ diff --git a/app/src/main/java/org/lineageos/updater/misc/Constants.java b/app/s
 diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/main/java/org/lineageos/updater/misc/Utils.java
 --- a/app/src/main/java/org/lineageos/updater/misc/Utils.java
 +++ b/app/src/main/java/org/lineageos/updater/misc/Utils.java
-@@ -222,16 +222,34 @@ public class Utils {
+@@ -222,16 +222,35 @@ public class Utils {
          return listening;
      }
  
@@ -108,9 +108,10 @@ diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/m
 -        if(serverOnion.toLowerCase().startsWith("http") && isOnionRoutingEnabled(context)) {
 -            server = serverOnion;
 -        }
-+	String server = getServerBaseUrl(context);
++       String server = getServerBaseUrl(context);
 +        if (!isOnionRoutingEnabled(context) && server.toLowerCase().startsWith("http://") && server.toLowerCase().contains(".onion")) {
 +            server = Constants.PREF_SERVER_CHOICE_PRIMARY_ACTUAL;
++       }
  
          return server + "/axp/api/v1/" + device + "/" + type + "/" + incrementalVersion;
      }
