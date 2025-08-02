@@ -27,8 +27,8 @@ index cc94b21e2..12294da04 100644
  
 +	char value[PROP_VALUE_MAX] = { 0 };
 +	if (__system_property_get("persist.security.hosts_disable", value) != 0)
-+		if (atoi(value) != 0 && strcmp(name, "localhost") != 0 && strcmp(name, "ip6-localhost") != 0)
-+			return NS_NOTFOUND;
++		if (atoi(value) != 0 && strcmp(qname, "localhost") != 0 && strcmp(qname, "ip6-localhost") != 0)
++			return NULL;
 +
  	memset(&sentinel, 0, sizeof(sentinel));
  	cur = &sentinel;
