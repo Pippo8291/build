@@ -1,0 +1,31 @@
+From 0086d4a135e555f83018426033b6a65c6b2ce3e7 Mon Sep 17 00:00:00 2001
+From: steadfasterX <steadfasterX@binbash.rocks>
+Date: Sun, 3 Aug 2025 07:56:34 +0000
+Subject: [PATCH] rcsservice: fix registering
+
+fixes:
+
+> com.android.service.ims: One of RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED should be specified when a receiver isn't being registered exclusively for system broadcasts
+
+Change-Id: Ica100bdd787ac6e2ec4705ea7265b644f50f5c42
+Signed-off-by: steadfasterX <steadfasterX@binbash.rocks>
+---
+ rcs/rcsservice/src/com/android/service/ims/RcsService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsService.java b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
+index 1823656..1f3bba0 100644
+--- a/rcs/rcsservice/src/com/android/service/ims/RcsService.java
++++ b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
+@@ -248,7 +248,7 @@ public class RcsService extends Service {
+         IntentFilter filter = new IntentFilter(TelecomManager.ACTION_TTY_PREFERRED_MODE_CHANGED);
+         filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+         filter.addAction(SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED);
+-        registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null);
++	registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null, Context.RECEIVER_NOT_EXPORTED);
+     }
+ 
+     private void unregisterBroadcastReceiver() {
+-- 
+2.43.0
+

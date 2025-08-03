@@ -121,6 +121,10 @@ sed -i -e '74,76d;' Android.bp; #fix compile under A13
 MSG="DOS patching" commitChanges
 fi;
 
+if enterAndClear "external/ims"; then
+applyPatch "$DOS_PATCHES_COMMON/0001-rcsservice-fix-registering.patch" # fix RcsService
+fi
+
 if enterAndClear "frameworks/base"; then 
 git revert --no-edit c174e1c42975c140c63ecac9c022665ab5e0b1b2 #Reverts "Remove sensitive info from SUPL requests" in favor of below patch
 git revert --no-edit c60ecdffedf5ec9e05bd92dc022cbb763f49a104 #Reverts "Allow spoofing signingInfo for microG Companion/Services" in favor of below patch
