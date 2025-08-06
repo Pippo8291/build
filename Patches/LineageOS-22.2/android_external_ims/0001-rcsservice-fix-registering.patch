@@ -50,7 +50,7 @@ index 8bfd8d1..206f77e 100644
  
      private void handleDefaultSubChanged() {
 diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java b/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
-index 6cc32f0..d2713f0 100644
+index 6cc32f0..062caca 100644
 --- a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
 +++ b/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
 @@ -494,7 +494,7 @@ public class RcsStackAdaptor implements PresencePublisher, SubscribePublisher {
@@ -58,7 +58,7 @@ index 6cc32f0..d2713f0 100644
              };
  
 -            mContext.registerReceiver(mRcsServiceReceiver, filter);
-+            mContext.registerReceiver(mReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
++            mContext.registerReceiver(mRcsServiceReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
          }
      }
  
