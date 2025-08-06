@@ -10,22 +10,55 @@ fixes:
 Change-Id: Ica100bdd787ac6e2ec4705ea7265b644f50f5c42
 Signed-off-by: steadfasterX <steadfasterX@binbash.rocks>
 ---
- rcs/rcsservice/src/com/android/service/ims/RcsService.java | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsService.java b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
-index 1823656..1f3bba0 100644
---- a/rcs/rcsservice/src/com/android/service/ims/RcsService.java
-+++ b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
-@@ -248,7 +248,7 @@ public class RcsService extends Service {
-         IntentFilter filter = new IntentFilter(TelecomManager.ACTION_TTY_PREFERRED_MODE_CHANGED);
-         filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-         filter.addAction(SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED);
--        registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null);
-+	registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null, Context.RECEIVER_NOT_EXPORTED);
+diff --git a/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java b/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java
+index 5002b60..83fcdcb 100644
+--- a/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java
++++ b/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java
+@@ -278,7 +278,7 @@ public class CapabilityPolling {
+         intentFilter.addAction(RcsManager.ACTION_RCS_SERVICE_DIED);
+         intentFilter.addAction(RcsPresence.ACTION_PUBLISH_STATE_CHANGED);
+         intentFilter.addAction(SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED);
+-        mContext.registerReceiver(mReceiver, intentFilter);
++        mContext.registerReceiver(mReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
      }
  
-     private void unregisterBroadcastReceiver() {
--- 
-2.43.0
-
+     private void registerPublishStateChangedCallback() {
+diff --git a/rcs/presencepolling/src/com/android/service/ims/presence/EABService.java b/rcs/presencepolling/src/com/android/service/ims/presence/EABService.java
+index 65ca1d4..ce3c302 100644
+--- a/rcs/presencepolling/src/com/android/service/ims/presence/EABService.java
++++ b/rcs/presencepolling/src/com/android/service/ims/presence/EABService.java
+@@ -201,7 +201,7 @@ public class EABService extends Service {
+         filter.addAction(Intent.ACTION_TIME_CHANGED);
+         filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+         filter.addAction(Contacts.ACTION_EAB_DATABASE_RESET);
+-        registerReceiver(mReceiver, filter);
++        registerReceiver(mReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+ 
+         initializeRcsInterfacer();
+ 
+diff --git a/rcs/presencepolling/src/com/android/service/ims/presence/PollingService.java b/rcs/presencepolling/src/com/android/service/ims/presence/PollingService.java
+index 8bfd8d1..206f77e 100644
+--- a/rcs/presencepolling/src/com/android/service/ims/presence/PollingService.java
++++ b/rcs/presencepolling/src/com/android/service/ims/presence/PollingService.java
+@@ -159,7 +159,7 @@ public class PollingService extends Service {
+     private void registerBroadcastReceiver() {
+         IntentFilter filter = new IntentFilter(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
+         filter.addAction(SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED);
+-        registerReceiver(mReceiver, filter);
++        registerReceiver(mReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+     }
+ 
+     private void handleDefaultSubChanged() {
+diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java b/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
+index 6cc32f0..d2713f0 100644
+--- a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
++++ b/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
+@@ -494,7 +494,7 @@ public class RcsStackAdaptor implements PresencePublisher, SubscribePublisher {
+                 }
+             };
+ 
+-            mContext.registerReceiver(mRcsServiceReceiver, filter);
++            mContext.registerReceiver(mReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+         }
+     }
+ 
