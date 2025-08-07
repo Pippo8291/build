@@ -850,7 +850,7 @@ deblobVendorBpHelper() {
 	regex_list=$(echo "$blobsBp" | tr '|' '\n')
 
 	# Clean log
-	mkdir out/deblobbing 2> /dev/null || true
+	mkdir -p out/deblobbing 2> /dev/null || true
 	local deblob_log=out/deblobbing/$(echo "${bpfile}" | sed 's#/#_#g').log
 	: > $deblob_log
 
