@@ -826,6 +826,8 @@ deblobVendorBpHelper() {
         local removedblobs=$(for i in $(git status |grep deleted: | tr -d ' ' |cut -d ':' -f2);do echo ${i/*\/};done | tr '\n' '|')
         cd $back
         local blobsBp="${blobs} ${removedblobs} ${extrablobs}"
+        
+	[ ! -z "$removedblobs" ] && echo -e "\t|- $bpfile\n\t   also parsing for uncommitted file removals: $removedblobs"
 
         # change IFS
 	IFS='|' read -r -a patterns <<< "$blobsBp"
@@ -836,34 +838,127 @@ deblobVendorBpHelper() {
         # find valid blocks
         skipblocks="hidl_interface|soong_namespace|hidl_package_root"   # allowing hidl_* breaks building e.g. fstman. "enabled: false" not avail?
                                                                         # (-hidl-lint target was not configured correctly)
-        blockstart=$(grep -E '^\w+.*{' "$bpfile" | cut -d ' ' -f 1 | grep -vE "$skipblocks" | sort -u | tr '\n' ' ')
+	# Generate blockstart types dynamically
+	blockstart=$(grep -E '^\w+[[:space:]]*\{' "$bpfile" | cut -d ' ' -f 1 | grep -vE "$skipblocks" | sort -u | tr '\n' ' ')
 
-        [ ! -z "$removedblobs" ] && echo -e "\t   also parsing for uncommitted file removals: $removedblobs"
-
+	#########################################################
         # set "enabled: false" for any removed blob
         # (will avoid re-add on second run)
-        for m in $(echo "$blobsBp" | tr '|' ' '); do
-#            printf "\r\t|--- parsing %-80s" "$m" > /dev/tty # as we use XARGS this would be just confusing
-            for block in $blockstart; do
-                awk -v regex="$m" '
-                    /^'$block' {/{print; in_block=1; found=0; enabled_present=0; next}
-                    in_block && /^}/ {  # Check for end of block 
-                        if(found && !enabled_present) {     # Only add if enabled: false is not present
-                           print "    //disabled due to Scripts/Common/Deblob.sh regex: >'$m'< (other search patterns may apply, too)"
-                           print "    enabled: false,";       # Insert once before closing brace
-                        }
-                        print;                              # Print the closing brace
-                        in_block=0;                         # End block processing
-                       next;                               # Skip to the next line
-                    }
-                    in_block && ($0 ~ /disabled due to Scripts/) {
-                       enabled_present=1;
-                    }
-                   in_block && ($0 ~ regex) {found=1}       # Check if the current line matches the regex
-                   {print}                                    # Print every line outside the block
-                ' "$bpfile" > "${bpfile}.tmp" && mv "${bpfile}.tmp" "$bpfile"
-           done
-        done
+
+	# Assume blobsBp is already defined (pipe-separated regex string)
+	# e.g., blobsBp="foo|bar|google-ril.jar"
+	regex_list=$(echo "$blobsBp" | tr '|' '\n')
+
+	# Clean log
+	mkdir out/deblobbing 2> /dev/null || true
+	local deblob_log=out/deblobbing/$(echo "${bpfile}" | sed 's#/#_#g').log
+	: > $deblob_log
+
+	# Join blockstart patterns into alternation (e.g., cc_library|dex_import)
+	blockstart_pattern=$(echo "$blockstart" | sed 's/ /|/g')
+	# Escape and build alternated regex list
+	regex_union=$(printf "%s|" $regex_list | sed 's/|$//')
+
+	awk -v blockstart_pattern="$blockstart_pattern" -v regex_union="$regex_union" -v deblob_log="$deblob_log" '
+	BEGIN {
+	    in_block = 0
+	    found = 0
+	    enabled_present = 0
+	    matched_regex = ""
+	    matched_line = ""
+	    n = split(regex_union, regex_arr, "|")
+
+	    multiline_keys["srcs"] = 1
+	    multiline_keys["shared_libs"] = 1
+	    multiline_keys["imports"] = 1
+	    multiline_keys["jars"] = 1
+	    multiline_keys["required"] = 1
+	}
+
+	# Detect the start of a block with an allowed block type
+	$0 ~ "^(" blockstart_pattern ")[[:space:]]*\\{$" {
+	    in_block = 1
+	    found = 0
+	    enabled_present = 0
+	    matched_regex = ""
+	    matched_line = ""
+	    inside_multiline_key = 0
+	    delete block_lines
+	    block_lines_len = 0
+	    block_lines[block_lines_len++] = $0
+	    next
+	}
+
+	in_block {
+	    block_lines[block_lines_len++] = $0
+
+	    # Check if already disabled
+	    if ($0 ~ /disabled due to Scripts/) {
+		enabled_present = 1
+	    }
+
+	    # Detect start of multiline field
+	    if ($0 ~ /^[[:space:]]*(srcs|shared_libs|imports|jars|required):[[:space:]]*\[$/) {
+		inside_multiline_key = 1
+		next
+	    }
+
+	    # Detect end of multiline array
+	    if (inside_multiline_key && $0 ~ /^[[:space:]]*\],?[[:space:]]*$/) {
+		inside_multiline_key = 0
+		next
+	    }
+
+	    # Only match in:
+	    # - name: "..." or src: "..."
+	    # - or lines inside multiline_keys
+	    if ($0 ~ /^[[:space:]]*(name|src):[[:space:]]*".*"$/ || inside_multiline_key) {
+		for (r = 1; r <= n; r++) {
+		    if ($0 ~ regex_arr[r]) {
+			if (!found) {
+			    found = 1
+			    matched_regex = regex_arr[r]
+			    matched_line = $0
+			}
+		    }
+		}
+	    }
+
+	    # Detect end of block (must be strict: line must be just a brace)
+	    if ($0 ~ /^}[[:space:]]*$/) {
+		if (found && !enabled_present) {
+		    print "--- Matched Regex: " matched_regex " in: " matched_line >> deblob_log
+		    for (i = 0; i < block_lines_len; i++) {
+			print block_lines[i] >> deblob_log
+		    }
+
+		    # Emit modified block to stdout
+		    for (i = 0; i < block_lines_len; i++) {
+			if (block_lines[i] ~ /^}[[:space:]]*$/) {
+			    print "    //disabled due to Scripts/Common/Deblob.sh regex"
+			    print "    enabled: false,"
+			}
+			print block_lines[i]
+		    }
+		} else {
+		    # Print unmodified block
+		    for (i = 0; i < block_lines_len; i++) {
+			print block_lines[i]
+		    }
+		}
+
+		in_block = 0
+		next
+	    }
+
+	    next
+	}
+
+	# Outside block — print line as-is
+	{
+	    print
+	}
+	' "$bpfile" > "${bpfile}.tmp" && mv "${bpfile}.tmp" "$bpfile"
 
         # Reset IFS back to default
         IFS=$' \t\n'
