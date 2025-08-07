@@ -19,6 +19,8 @@ umask 0022;
 set -uo pipefail;
 source "$DOS_SCRIPTS_COMMON/Shell.sh";
 
+INTERACTIVE=0
+
 #Goal: Remove as many proprietary blobs without breaking core functionality
 #Outcome: Increased battery/performance/privacy/security, Decreased ROM size
 #TODO: Clean init*.rc files, Modularize, Remove more variants
@@ -1010,7 +1012,12 @@ export -f commitDeblob
 #START OF DEBLOBBING
 #
 cd "$DOS_BUILD_BASE";
-deblobVendors # Deblob entire vendor directory
+
+if sh -c ": >/dev/tty" >/dev/null 2>&1; then
+    INTERACTIVE=1
+fi
+
+deblobVendors # filob entire vendor directory
 
 projects=$(cat .repo/project.list)
 device_projects=$(echo "$projects" | grep ^device/ | tr '\n' ' ')
@@ -1032,7 +1039,7 @@ echo "   |- [DEBLOB: Blueprints (vendor)]"
 find $vendor_projects -name "Android.bp" -type f -print0 | xargs -0 -P $(( 1 + $DOS_MAX_THREADS_BUILD / 3)) -I {} bash -c 'deblobVendorBp "{}"'
 # commit changes (must run serialized to avoid run conflicts)
 for vend in $vendor_projects; do
-    if [ -e /dev/tty ];then printf "\r\t|--- committing... %-80s" "$vend" > /dev/tty; fi
+    if [ $INTERACTIVE -eq 1 ];then printf "\r\t|--- committing... %-80s" "$vend" > /dev/tty; fi
     commitDeblob "$vend" "deblobVendorBp"
 done
 
@@ -1040,7 +1047,7 @@ echo -e "\n   |- [DEBLOB: Makefiles (vendor)]"
 find vendor -name "*endor*.mk" -type f -print0 | xargs -0 -P $(( 1 + $DOS_MAX_THREADS_BUILD / 3)) -I {} bash -c 'deblobVendorMk "{}"' #Deblob all makefiles
 # commit changes (must run serialized to avoid run conflicts)
 for vend in $vendor_projects; do
-    if [ -e /dev/tty ];then printf "\r\t|--- committing... %-80s" "$vend" > /dev/tty ;fi
+    if [ $INTERACTIVE -eq 1 ];then printf "\r\t|--- committing... %-80s" "$vend" > /dev/tty ;fi
     commitDeblob "$vend" "deblobVendorMk"
 done
 
