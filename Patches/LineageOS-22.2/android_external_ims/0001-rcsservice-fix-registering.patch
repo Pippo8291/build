@@ -49,6 +49,19 @@ index 8bfd8d1..206f77e 100644
      }
  
      private void handleDefaultSubChanged() {
+diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsService.java b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
+index 1823656..92f95a4 100644
+--- a/rcs/rcsservice/src/com/android/service/ims/RcsService.java
++++ b/rcs/rcsservice/src/com/android/service/ims/RcsService.java
+@@ -248,7 +248,7 @@ public class RcsService extends Service {
+         IntentFilter filter = new IntentFilter(TelecomManager.ACTION_TTY_PREFERRED_MODE_CHANGED);
+         filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+         filter.addAction(SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED);
+-        registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null);
++        registerReceiver(mReceiver, filter, android.Manifest.permission.MODIFY_PHONE_STATE, null, Context.RECEIVER_NOT_EXPORTED);
+     }
+ 
+     private void unregisterBroadcastReceiver() {
 diff --git a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java b/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
 index 6cc32f0..062caca 100644
 --- a/rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java
