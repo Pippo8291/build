@@ -122,7 +122,7 @@ MSG="DOS patching" commitChanges
 fi;
 
 if enterAndClear "external/ims"; then
-applyPatch "$DOS_PATCHES_COMMON/0001-rcsservice-fix-registering.patch" # fix RcsService
+applyPatch "$DOS_PATCHES/android_external_ims/0001-rcsservice-fix-registering.patch" # fix RcsService
 fi
 
 if enterAndClear "frameworks/base"; then 
