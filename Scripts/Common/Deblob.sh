@@ -827,143 +827,15 @@ deblobVendorBpHelper() {
         cd "${bpfile/Android.bp/}"
         local removedblobs=$(for i in $(git status |grep deleted: | tr -d ' ' |cut -d ':' -f2);do echo ${i/*\/};done | tr '\n' '|')
         cd $back
-        local blobsBp="${blobs} ${removedblobs} ${extrablobs}"
+        local blobsBp="${blobs}|${removedblobs}${extrablobs}"
+        local regex_patterns=$(echo "${blobsBp}" | sed 's/|+$//g')  # Remove trailing pipe(s)
         
-	[ ! -z "$removedblobs" ] && echo -e "\t|- $bpfile\n\t   also parsing for uncommitted file removals: $removedblobs"
+	[ ! -z "$removedblobs" ] && echo -e "\t|- $bpfile\n\t   |- also parsing for uncommitted file removals: $removedblobs"
 
-        # change IFS
-	IFS='|' read -r -a patterns <<< "$blobsBp"
-
-        awk_patterns=$(printf "%s\n" "${patterns[@]}" | tr '\n' '|')
-        awk_patterns=${awk_patterns%|}  # Remove trailing pipe
-
-        # find valid blocks
-        skipblocks="hidl_interface|soong_namespace|hidl_package_root"   # allowing hidl_* breaks building e.g. fstman. "enabled: false" not avail?
-                                                                        # (-hidl-lint target was not configured correctly)
-	# Generate blockstart types dynamically
-	blockstart=$(grep -E '^\w+[[:space:]]*\{' "$bpfile" | cut -d ' ' -f 1 | grep -vE "$skipblocks" | sort -u | tr '\n' ' ')
-
-	#########################################################
-        # set "enabled: false" for any removed blob
-        # (will avoid re-add on second run)
-
-	# Assume blobsBp is already defined (pipe-separated regex string)
-	# e.g., blobsBp="foo|bar|google-ril.jar"
-	regex_list=$(echo "$blobsBp" | tr '|' '\n')
-
-	# Clean log
+	# prep logging
+	rm -r out/deblobbing 2> /dev/null || true
 	mkdir -p out/deblobbing 2> /dev/null || true
-	local deblob_log=out/deblobbing/$(echo "${bpfile}" | sed 's#/#_#g').log
-	: > $deblob_log
-
-	# Join blockstart patterns into alternation (e.g., cc_library|dex_import)
-	blockstart_pattern=$(echo "$blockstart" | sed 's/ /|/g')
-	# Escape and build alternated regex list
-	regex_union=$(printf "%s|" $regex_list | sed 's/|$//')
-
-	awk -v blockstart_pattern="$blockstart_pattern" -v regex_union="$regex_union" -v deblob_log="$deblob_log" '
-	BEGIN {
-	    in_block = 0
-	    found = 0
-	    enabled_present = 0
-	    matched_regex = ""
-	    matched_line = ""
-	    n = split(regex_union, regex_arr, "|")
-
-	    multiline_keys["srcs"] = 1
-	    multiline_keys["shared_libs"] = 1
-	    multiline_keys["imports"] = 1
-	    multiline_keys["jars"] = 1
-	    multiline_keys["required"] = 1
-	}
-
-	# Detect the start of a block with an allowed block type
-	$0 ~ "^(" blockstart_pattern ")[[:space:]]*\\{$" {
-	    in_block = 1
-	    found = 0
-	    enabled_present = 0
-	    matched_regex = ""
-	    matched_line = ""
-	    inside_multiline_key = 0
-	    delete block_lines
-	    block_lines_len = 0
-	    block_lines[block_lines_len++] = $0
-	    next
-	}
-
-	in_block {
-	    block_lines[block_lines_len++] = $0
-
-	    # Check if already disabled
-	    if ($0 ~ /disabled due to Scripts/) {
-		enabled_present = 1
-	    }
-
-	    # Detect start of multiline field
-	    if ($0 ~ /^[[:space:]]*(srcs|shared_libs|imports|jars|required):[[:space:]]*\[$/) {
-		inside_multiline_key = 1
-		next
-	    }
-
-	    # Detect end of multiline array
-	    if (inside_multiline_key && $0 ~ /^[[:space:]]*\],?[[:space:]]*$/) {
-		inside_multiline_key = 0
-		next
-	    }
-
-	    # Only match in:
-	    # - name: "..." or src: "..."
-	    # - or lines inside multiline_keys
-	    if ($0 ~ /^[[:space:]]*(name|src):[[:space:]]*".*"$/ || inside_multiline_key) {
-		for (r = 1; r <= n; r++) {
-		    if ($0 ~ regex_arr[r]) {
-			if (!found) {
-			    found = 1
-			    matched_regex = regex_arr[r]
-			    matched_line = $0
-			}
-		    }
-		}
-	    }
-
-	    # Detect end of block (must be strict: line must be just a brace)
-	    if ($0 ~ /^}[[:space:]]*$/) {
-		if (found && !enabled_present) {
-		    print "--- Matched Regex: " matched_regex " in: " matched_line >> deblob_log
-		    for (i = 0; i < block_lines_len; i++) {
-			print block_lines[i] >> deblob_log
-		    }
-
-		    # Emit modified block to stdout
-		    for (i = 0; i < block_lines_len; i++) {
-			if (block_lines[i] ~ /^}[[:space:]]*$/) {
-			    print "    //disabled due to Scripts/Common/Deblob.sh regex"
-			    print "    enabled: false,"
-			}
-			print block_lines[i]
-		    }
-		} else {
-		    # Print unmodified block
-		    for (i = 0; i < block_lines_len; i++) {
-			print block_lines[i]
-		    }
-		}
-
-		in_block = 0
-		next
-	    }
-
-	    next
-	}
-
-	# Outside block — print line as-is
-	{
-	    print
-	}
-	' "$bpfile" > "${bpfile}.tmp" && mv "${bpfile}.tmp" "$bpfile"
-
-        # Reset IFS back to default
-        IFS=$' \t\n'
+	$DOS_SCRIPTS_COMMON/deblob-bp.py --regex "$regex_patterns" --path "$bpfile"
 }
 export -f deblobVendorBpHelper
 
@@ -971,14 +843,6 @@ deblobVendorBp() {
 	local bpfile="$1"
 	cd "$DOS_BUILD_BASE"
         echo -e "\t|- $bpfile"
-	if [ "$AXP_ADVANCED_DEBLOB" == "true" ];then
-            deblobVendorBpHelper
-	else
-		sed -i -E "s/apk.*("$blobs").*/apk: \"proprietary\/priv-app\/qcrilmsgtunnel\/qcrilmsgtunnel.apk\", enabled: false,/g" "$bpfile";
-		sed -i -E "s/jars.*("$blobs").*/jars: \[\"proprietary\/system\/framework\/qcrilhook.jar\"\], enabled: false,/g" "$bpfile";
-		sed -i -E "s/srcs.*("$blobs").*/srcs: \[\"proprietary\/vendor\/lib\/libtime_genoff.so\"\], enabled: false,/g" "$bpfile";
-		sed -i ':a;N;s/\n/&/3;Ta;/vendor.qti.hardware.radio.atcmdfwd@1.0.xml/!{P;D};:b;N;s/\n/&/8;Tb;d' "$bpfile";
-    fi
 	#Credit: https://stackoverflow.com/a/26053127
 	if [ "$DOS_DEBLOBBER_REMOVE_WIDEVINE_DRM" != "false" ]; then
 		sed -i ':a;N;s/\n/&/3;Ta;/manifest_android.hardware.drm@1.*-service.widevine.xml/!{P;D};:b;N;s/\n/&/8;Tb;d' "$bpfile"
@@ -991,6 +855,14 @@ deblobVendorBp() {
 	if [ "$DOS_DEBLOBBER_REMOVE_FACE" = true ]; then
 		sed -i ':a;N;s/\n/&/3;Ta;/android.hardware.biometrics.face-service.22.pixel.xml/!{P;D};:b;N;s/\n/&/8;Tb;d' "$bpfile"
 		sed -i ':a;N;s/\n/&/3;Ta;/manifest_face.xml/!{P;D};:b;N;s/\n/&/8;Tb;d' "$bpfile"
+	fi
+	if [ "$AXP_ADVANCED_DEBLOB" == "true" ];then
+	    echo "$bpfile" | grep -qE 'vendor/qcom/opensource' || deblobVendorBpHelper
+	else
+		sed -i -E "s/apk.*("$blobs").*/apk: \"proprietary\/priv-app\/qcrilmsgtunnel\/qcrilmsgtunnel.apk\", enabled: false,/g" "$bpfile";
+		sed -i -E "s/jars.*("$blobs").*/jars: \[\"proprietary\/system\/framework\/qcrilhook.jar\"\], enabled: false,/g" "$bpfile";
+		sed -i -E "s/srcs.*("$blobs").*/srcs: \[\"proprietary\/vendor\/lib\/libtime_genoff.so\"\], enabled: false,/g" "$bpfile";
+		sed -i ':a;N;s/\n/&/3;Ta;/vendor.qti.hardware.radio.atcmdfwd@1.0.xml/!{P;D};:b;N;s/\n/&/8;Tb;d' "$bpfile";
 	fi
 }
 export -f deblobVendorBp
@@ -1024,6 +896,10 @@ device_projects=$(echo "$projects" | grep ^device/ | tr '\n' ' ')
 vendor_projects=$(echo "$projects" | grep ^vendor/ | tr '\n' ' ')
 
 #find kernel -maxdepth 2 -mindepth 2 -type d -print0 | xargs -0 -P 8 -I {} bash -c 'deblobKernel "{}"'; #Deblob all kernel directories
+
+#debug deblobber
+#find vendor/google/sunfish -name "Android.bp" -type f -print0 | xargs -0 -P $(( 1 + $DOS_MAX_THREADS_BUILD / 3)) -I {} bash -c 'deblobVendorBp "{}"'
+#exit
 
 echo "   |- [DEBLOB: Makefiles (build,device)]"
 find build device -name "*.mk" -type f -print0 | xargs -0 -P $(( 1 + $DOS_MAX_THREADS_BUILD / 3)) -I {} bash -c 'awk -i inplace "!/$makes/" "{}"'; #Deblob all makefiles
