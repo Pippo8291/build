@@ -320,7 +320,9 @@ commentPatches android_kernel_google_msm-4.14.sh \
     "CVE-2025-38034" \
     "CVE-2022-49980" \
     "CVE-2025-38253/ANY/0001.patch" \
-    "CVE-2025-38099/ANY/0001.patch"
+    "CVE-2025-38099/ANY/0001.patch" \
+    "CVE-2023-51043/4.19/0002.patch" \
+    "CVE-2021-46921/4.19/0002.patch"
 
 commentPatches android_kernel_google_redbull.sh \
     "CVE-2018-5873" \
