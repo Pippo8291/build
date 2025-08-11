@@ -118,7 +118,8 @@ commitChanges(){
             local gitmail="${DOS_GIT_MAIL}"
           fi
           if [ "$silentcommit" == 1 ];then
-            $GITCM --author="${gitauthor} <${gitmail}>" -m "$MSG" >> LOG 2>&1
+            echo "Current work dir: $PWD" >> $ANDROID_BUILD_TOP/out/$FUNCNAME.log
+            $GITCM --author="${gitauthor} <${gitmail}>" -m "$MSG" >> $ANDROID_BUILD_TOP/out/$FUNCNAME.log 2>&1
           else
             echo "Adding commit: $MSG"
             $GITCM --author="${gitauthor} <${gitmail}>" -m "$MSG"
