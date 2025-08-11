@@ -12,10 +12,11 @@ Usage:
 Notes:
  - regex is a pipe-separated list of regexes. Empty entries are ignored.
  - Fields checked: name, and any property key whose last segment is in:
-   shared_libs, src, srcs, deps, imports, jars (including target.* nested keys).
+   shared_libs, src, srcs, deps, imports, jars, apk (including target.* nested keys).
  - Whitelisted module types are skipped entirely.
  - Modules already containing `enabled: false` are skipped.
  - Matches are logged to --log (default: out/deblobbing/<path_with_slashes_replaced>.log).
+ - After regex match, also disables any module depending (directly or indirectly) on disabled ones.
 """
 
 import argparse
@@ -24,6 +25,7 @@ import sys
 import re
 import json
 from pathlib import Path
+from collections import defaultdict, deque
 
 WHITELIST_TYPES = {"hidl_interface", "soong_namespace", "hidl_package_root"}
 MATCH_FIELDS = {"shared_libs", "apk", "src", "srcs", "deps", "imports", "jars"}
@@ -60,11 +62,7 @@ def matches_any_pattern(value: str, patterns):
     return any(p.search(value) for p in patterns)
 
 def scan_props(props, patterns, mod_name, bp_file, log_f, prefix=""):
-    """
-    Recursively scan a PropertyMap-like dict for any key that ends with one of MATCH_FIELDS
-    and check its *string* values against the regex patterns. Handles both flattened keys
-    (like 'target.android_arm.shared_libs') and nested dicts (target -> android_arm -> shared_libs).
-    """
+    """Recursively scan PropertyMap for keys ending with MATCH_FIELDS and check string values."""
     if not isinstance(props, dict):
         return False
 
@@ -72,7 +70,6 @@ def scan_props(props, patterns, mod_name, bp_file, log_f, prefix=""):
         sep = "." if prefix else ""
         full_key = f"{prefix}{sep}{key}" if prefix or key else key
 
-        # If the full key ends with one of the fields, examine its values (list or string).
         if any(full_key.endswith(field) for field in MATCH_FIELDS):
             values = []
             if isinstance(val, list):
@@ -80,34 +77,49 @@ def scan_props(props, patterns, mod_name, bp_file, log_f, prefix=""):
             elif isinstance(val, str):
                 values = [val]
             else:
-                # Non-list, non-str values (bool/int/None/dict) are skipped for matching.
                 values = []
-
             for item in values:
                 if isinstance(item, str):
                     if matches_any_pattern(item, patterns):
                         log_write(log_f, f"[MATCH] regex-match in '{full_key}' value='{item}' module='{mod_name}' file='{bp_file}'")
                         return True
-                # If a list contains nested dicts, recurse into them to be robust.
                 elif isinstance(item, dict):
-                    if scan_props(item, patterns, mod_name, bp_file, log_f, prefix=f"{full_key}"):
+                    if scan_props(item, patterns, mod_name, bp_file, log_f, prefix=full_key):
                         return True
 
-        # If the value is a nested dict, recurse (handles hierarchical JSON output).
         if isinstance(val, dict):
             if scan_props(val, patterns, mod_name, bp_file, log_f, prefix=full_key):
                 return True
-
-        # If the value is a list and contains dict items, scan those dicts as well.
         if isinstance(val, list):
             for element in val:
                 if isinstance(element, dict):
                     if scan_props(element, patterns, mod_name, bp_file, log_f, prefix=full_key):
                         return True
-
     return False
 
+def extract_dependencies(props):
+    """Return a list of dependency module names from MATCH_FIELDS in props."""
+    deps = []
+    if not isinstance(props, dict):
+        return deps
+    for key, val in props.items():
+        if any(key.endswith(field) for field in MATCH_FIELDS):
+            if isinstance(val, list):
+                for item in val:
+                    if isinstance(item, str):
+                        deps.append(item)
+            elif isinstance(val, str):
+                deps.append(val)
+        if isinstance(val, dict):
+            deps.extend(extract_dependencies(val))
+        if isinstance(val, list):
+            for element in val:
+                if isinstance(element, dict):
+                    deps.extend(extract_dependencies(element))
+    return deps
+
 def process_module(mod, patterns, bp_file, log_f):
+    """Check if a module matches regex patterns directly."""
     mod_type = mod.get("Type")
     mod_name = mod.get("Name")
     props = mod.get("PropertyMap", {})
@@ -116,18 +128,14 @@ def process_module(mod, patterns, bp_file, log_f):
         log_write(log_f, f"[SKIP-WHITELIST] type='{mod_type}' module='{mod_name or '?'}' file='{bp_file}'")
         return None
 
-    # skip already disabled ones 
     if str(props.get("enabled", "")).strip().lower() == "false":
         log_write(log_f, f"[SKIP-ALREADY-DISABLED] module='{mod_name or '?'}' file='{bp_file}'")
         return None
 
-    # Check module name itself
     if mod_name and matches_any_pattern(mod_name, patterns):
         log_write(log_f, f"[MATCH] regex-match in 'name' value='{mod_name}' module='{mod_name}' file='{bp_file}'")
         return mod_name
 
-    # Recursively check dependency-like fields (handles flattened keys like
-    # 'target.android_arm.shared_libs' and nested dicts).
     if scan_props(props, patterns, mod_name, bp_file, log_f):
         return mod_name
 
@@ -165,19 +173,43 @@ def main():
         print(f"Error: No .bp files found under {bp_path}", file=sys.stderr)
         sys.exit(1)
 
-    all_pairs = []
+    all_modules = {}         # module_name -> (file_path, props)
+    dep_graph = defaultdict(set)  # module_name -> set(dependencies)
+    disabled = set()         # modules to disable
+
     with log_path.open("w") as log_f:
         for f in bp_files:
             log_write(log_f, f"[INFO] scanning file '{f}'")
             modules = flatten_bp_file(f, args.bpflatten)
             for mod in modules:
+                name = mod.get("Name")
+                props = mod.get("PropertyMap", {})
+                if not name:
+                    continue
+                all_modules[name] = (f, props)
+
+                deps = extract_dependencies(props)
+                for d in deps:
+                    dep_graph[name].add(d)
+
                 mod_name = process_module(mod, patterns, f, log_f)
                 if mod_name:
-                    all_pairs.append((mod_name, f))
+                    disabled.add(mod_name)
 
-    unique_pairs = sorted(set(all_pairs), key=lambda x: (str(x[1]), x[0]))
+        # Cascade disable: BFS until no new modules are found
+        queue = deque(disabled)
+        while queue:
+            current = queue.popleft()
+            for mod_name, deps in dep_graph.items():
+                if mod_name not in disabled and any(dep in disabled for dep in deps):
+                    disabled.add(mod_name)
+                    queue.append(mod_name)
+                    file_path, _ = all_modules[mod_name]
+                    log_write(log_f, f"[MATCH-DEPENDENCY] module='{mod_name}' depends on disabled module(s) -> file='{file_path}'")
 
-    for module, file_path in unique_pairs:
+    # Apply disabling via bpmodify
+    for module in sorted(disabled):
+        file_path, _ = all_modules[module]
         try:
             subprocess.run([
                 args.bpmodify,
