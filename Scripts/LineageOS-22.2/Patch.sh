@@ -117,7 +117,7 @@ applyPatch "$DOS_PATCHES_COMMON/android_external_hardened_malloc/0001-Broken_Cam
 applyPatch "$DOS_PATCHES_COMMON/android_external_hardened_malloc/0001-Broken_Cameras-2.patch"; #Expand workaround to all camera executables (DivestOS)
 applyPatch "$DOS_PATCHES_COMMON/android_external_hardened_malloc/0002-Broken_Displays.patch"; #Add workaround for OnePlus 8 & 9 display driver crash (DivestOS)
 sed -i 's/34359738368/2147483648/' Android.bp; #revert 48-bit address space requirement
-sed -i -e '74,76d;' Android.bp; #fix compile under A13
+sed -i '/device_has_arm_mte[: ]*{/,/},/d' Android.bp #fix compile under A15 (unrecognized property "product_variables.device_has_arm_mte.cflags")
 MSG="DOS patching" commitChanges
 fi;
 
