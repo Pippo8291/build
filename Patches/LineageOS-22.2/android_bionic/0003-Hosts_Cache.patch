@@ -20,20 +20,14 @@ RM-290
 
 Change-Id: I3b322883cbc48b0d76a0ce9d149b59faaac1dc58
 (cherry picked from commit ed4c3a6bd449a4ed70645071a440ae146f194116)
----
- libc/dns/net/getaddrinfo.c |  10 +
- libc/dns/net/hosts_cache.c | 520 +++++++++++++++++++++++++++++++++++++
- libc/dns/net/hosts_cache.h |  23 ++
- libc/dns/net/sethostent.c  |   7 +
- 4 files changed, 560 insertions(+)
- create mode 100644 libc/dns/net/hosts_cache.c
- create mode 100644 libc/dns/net/hosts_cache.h
 
+adapted by steadfasterX for Android 15.
+---
 diff --git a/libc/dns/net/getaddrinfo.c b/libc/dns/net/getaddrinfo.c
-index d0c11d2b0..cc94b21e2 100644
+index 2fb8a6add..3cfda0731 100644
 --- a/libc/dns/net/getaddrinfo.c
 +++ b/libc/dns/net/getaddrinfo.c
-@@ -109,6 +109,8 @@
+@@ -110,6 +110,8 @@
  #include "nsswitch.h"
  #include "private/bionic_defs.h"
  
@@ -42,7 +36,16 @@ index d0c11d2b0..cc94b21e2 100644
  typedef union sockaddr_union {
      struct sockaddr     generic;
      struct sockaddr_in  in;
-@@ -2125,6 +2127,14 @@ _files_getaddrinfo(void *rv, void *cb_data, va_list ap)
+@@ -386,7 +388,7 @@ static int
+ _have_ipv4(unsigned mark, uid_t uid) {
+ 	static const struct sockaddr_in sin_test = {
+ 		.sin_family = AF_INET,
+-		.sin_addr.s_addr = __constant_htonl(0x08080808L)  // 8.8.8.8
++		.sin_addr.s_addr = __constant_htonl(0x09090909L)  // 9.9.9.9
+ 	};
+ 	sockaddr_union addr = { .in = sin_test };
+ 	return _find_src_addr(&addr.generic, NULL, mark, uid) == 1;
+@@ -2131,6 +2133,14 @@ _files_getaddrinfo(void *rv, void *cb_data, va_list ap)
  	name = va_arg(ap, char *);
  	pai = va_arg(ap, struct addrinfo *);
  
@@ -59,10 +62,10 @@ index d0c11d2b0..cc94b21e2 100644
  	cur = &sentinel;
 diff --git a/libc/dns/net/hosts_cache.c b/libc/dns/net/hosts_cache.c
 new file mode 100644
-index 000000000..52d29e032
+index 000000000..7bef628b4
 --- /dev/null
 +++ b/libc/dns/net/hosts_cache.c
-@@ -0,0 +1,520 @@
+@@ -0,0 +1,522 @@
 +/*
 + * Copyright (C) 2016 The CyanogenMod Project
 + *
@@ -100,6 +103,8 @@ index 000000000..52d29e032
 +
 +#include "hostent.h"
 +#include "resolv_private.h"
++#include <sys/cdefs.h>
++#include <stddef.h>
 +
 +#define MAX_ADDRLEN	(INET6_ADDRSTRLEN - (1 + 5))
 +#define MAX_HOSTLEN	MAXHOSTNAMELEN
@@ -534,7 +539,7 @@ index 000000000..52d29e032
 +				if (naliases >= MAXALIASES)
 +					goto nospc;
 +			}
-+			aligned = (char *)ALIGN(info->buf);
++			aligned = (char *)__BIONIC_ALIGN((uintptr_t)info->buf, sizeof(long));
 +			if (info->buf != aligned) {
 +				if ((ptrdiff_t)info->buflen < (aligned - info->buf))
 +					goto nospc;
