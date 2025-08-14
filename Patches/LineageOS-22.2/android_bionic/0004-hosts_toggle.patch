@@ -10,7 +10,7 @@ Change-Id: I92679c57e73228dc194e61a86ea1a18b2ac90e04
  1 file changed, 6 insertions(+)
 
 diff --git a/libc/dns/net/getaddrinfo.c b/libc/dns/net/getaddrinfo.c
-index cc94b21e2..12294da04 100644
+index 31aaeac3f..ea4a7d45e 100644
 --- a/libc/dns/net/getaddrinfo.c
 +++ b/libc/dns/net/getaddrinfo.c
 @@ -83,6 +83,7 @@

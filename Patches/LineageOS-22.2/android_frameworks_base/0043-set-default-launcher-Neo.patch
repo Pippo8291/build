@@ -1,4 +1,4 @@
-From 95698d48a42e0f2aa2367a71ea2d54a52007f7fc Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: steadfasterX <steadfasterX@binbash.rocks>
 Date: Thu, 14 Aug 2025 22:14:14 +0000
 Subject: [PATCH] set default launcher: Neo
@@ -34,6 +34,3 @@ index 7808c4ed50a4..7340150b8f51 100644
          }
  
          // Emergency
--- 
-2.43.0
-

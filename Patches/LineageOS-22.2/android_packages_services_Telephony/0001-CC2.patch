@@ -6,9 +6,11 @@ Subject: [PATCH] Runtime control of platform carrier config package
 Change-Id: I8cc8f2bda264bd42fe83d5c96fa6382e63a88410
 Signed-off-by: Tavi <tavi@divested.dev>
 ---
+ src/com/android/phone/CarrierConfigLoader.java | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/src/com/android/phone/CarrierConfigLoader.java b/src/com/android/phone/CarrierConfigLoader.java
-index 1384f71ab..66ec88cf1 100644
+index 1384f71ab..3bd6a9815 100644
 --- a/src/com/android/phone/CarrierConfigLoader.java
 +++ b/src/com/android/phone/CarrierConfigLoader.java
 @@ -710,8 +710,13 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {

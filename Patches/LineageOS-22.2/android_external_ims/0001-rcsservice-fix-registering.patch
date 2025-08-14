@@ -1,4 +1,4 @@
-From 0086d4a135e555f83018426033b6a65c6b2ce3e7 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: steadfasterX <steadfasterX@binbash.rocks>
 Date: Sun, 3 Aug 2025 07:56:34 +0000
 Subject: [PATCH] rcsservice: fix registering
@@ -10,6 +10,13 @@ fixes:
 Change-Id: Ica100bdd787ac6e2ec4705ea7265b644f50f5c42
 Signed-off-by: steadfasterX <steadfasterX@binbash.rocks>
 ---
+ .../src/com/android/service/ims/presence/CapabilityPolling.java | 2 +-
+ .../src/com/android/service/ims/presence/EABService.java        | 2 +-
+ .../src/com/android/service/ims/presence/PollingService.java    | 2 +-
+ rcs/rcsservice/src/com/android/service/ims/RcsService.java      | 2 +-
+ rcs/rcsservice/src/com/android/service/ims/RcsStackAdaptor.java | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
 diff --git a/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java b/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java
 index 5002b60..83fcdcb 100644
 --- a/rcs/presencepolling/src/com/android/service/ims/presence/CapabilityPolling.java
