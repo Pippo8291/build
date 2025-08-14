@@ -1,0 +1,39 @@
+From 95698d48a42e0f2aa2367a71ea2d54a52007f7fc Mon Sep 17 00:00:00 2001
+From: steadfasterX <steadfasterX@binbash.rocks>
+Date: Thu, 14 Aug 2025 22:14:14 +0000
+Subject: [PATCH] set default launcher: Neo
+
+Change-Id: I12d0b70b0fab4519be7ade00d636657e10321150
+Signed-off-by: steadfasterX <steadfasterX@binbash.rocks>
+---
+ .../server/policy/role/RoleServicePlatformHelperImpl.java  | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/policy/role/RoleServicePlatformHelperImpl.java b/services/core/java/com/android/server/policy/role/RoleServicePlatformHelperImpl.java
+index 7808c4ed50a4..7340150b8f51 100644
+--- a/services/core/java/com/android/server/policy/role/RoleServicePlatformHelperImpl.java
++++ b/services/core/java/com/android/server/policy/role/RoleServicePlatformHelperImpl.java
+@@ -62,6 +62,7 @@ import java.util.Collections;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Set;
++import java.util.LinkedHashSet;
+ 
+ /**
+  * Implementation of {@link RoleServicePlatformHelper}.
+@@ -275,7 +276,11 @@ public class RoleServicePlatformHelperImpl implements RoleServicePlatformHelper
+             homePackageName = null;
+         }
+         if (homePackageName != null) {
+-            roles.put(RoleManager.ROLE_HOME, Collections.singleton(homePackageName));
++	    roles.put(RoleManager.ROLE_HOME, Collections.singleton(homePackageName));
++	} else {
++	    Set<String> homeHolders = new LinkedHashSet<>();
++	    homeHolders.add("com.saggitt.omega"); // enforce Neo Launcher as default
++	    roles.put(RoleManager.ROLE_HOME, homeHolders);
+         }
+ 
+         // Emergency
+-- 
+2.43.0
+

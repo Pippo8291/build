@@ -179,6 +179,7 @@ sed -i 's/MAX_PASSWORD_LENGTH = 16/MAX_PASSWORD_LENGTH = 64/' core/java/android/
 sed -i 's/DEFAULT_STRONG_AUTH_TIMEOUT_MS = 72 \* 60 \* 60 \* 1000;/DEFAULT_STRONG_AUTH_TIMEOUT_MS = 12 * 60 * 60 * 1000;/' core/java/android/app/admin/DevicePolicyManager.java; #Decrease the strong auth prompt timeout to occur more often
 #rm -rf packages/CompanionDeviceManager; #Used to support Android Wear (which hard depends on GMS)
 rm -rf packages/PrintRecommendationService; #Creates popups to install proprietary print apps
+applyPatch "$DOS_PATCHES/android_frameworks_base/0043-set-default-launcher-Neo.patch" # Set default launcher to Neo Launcher / AOSLauncher
 MSG="DOS patching" commitChanges
 fi;
 
