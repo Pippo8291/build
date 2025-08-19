@@ -113,7 +113,8 @@ commentPatches android_kernel_fairphone_sdm632.sh \
     "CVE-2025-37960/ANY/0001.patch" \
     "CVE-2022-49545/ANY/0001.patch" \
     "CVE-2025-38034" \
-    "CVE-2022-49980"
+    "CVE-2022-49980" \
+    "CVE-2025-38099/ANY/0001.patch"
 
 # Fairphone 4
 commentPatches android_kernel_fairphone_sm7225.sh \
