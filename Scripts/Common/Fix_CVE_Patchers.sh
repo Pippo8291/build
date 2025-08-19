@@ -1199,7 +1199,8 @@ do
         "CVE-2023-2513" \
         "CVE-2023-4132" \
         "CVE-2022-49980" \
-        "CVE-2025-38034"
+        "CVE-2025-38034" \
+        "CVE-2025-38099/ANY/0001.patch"
 done
 
 #4.9
@@ -1229,7 +1230,8 @@ do
         "CVE-2025-21859/ANY/0001.patch" \
         "CVE-2025-21954/ANY/0001.patch" \
         "CVE-2022-49980" \
-        "CVE-2025-38034"
+        "CVE-2025-38034" \
+        "CVE-2025-38099/ANY/0001.patch"
 done
 
 #4.14
@@ -1249,7 +1251,8 @@ do
         "CVE-2025-21764/ANY/0001.patch" \
         "CVE-2025-21765/ANY/0001.patch" \
         "CVE-2025-38034" \
-        "CVE-2022-49980"
+        "CVE-2022-49980" \
+        "CVE-2025-38099/ANY/0001.patch"
 done
 
 echo -e "\e[0;32m[SCRIPT COMPLETE] Fixed CVE patchers\e[0m"
