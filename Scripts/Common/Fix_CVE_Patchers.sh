@@ -410,7 +410,8 @@ commentPatches android_kernel_lge_msm8992.sh \
     "CVE-2022-49111/4.4/0001.patch" \
     "CVE-2025-38034" \
     "CVE-2022-49980" \
-    "CVE-2022-50020"
+    "CVE-2022-50020" \
+    "CVE-2025-38219/ANY/0001.patch"
 
 commentPatches android_kernel_lge_msm8996.sh \
     "0008-Graphene-Kernel_Hardening-canaries/4.4/0002.patch" \
