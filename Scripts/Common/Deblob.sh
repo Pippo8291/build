@@ -830,7 +830,7 @@ deblobVendorBpHelper() {
         local blobsBp="${blobs}|${removedblobs}${extrablobs}"
         local regex_patterns=$(echo "${blobsBp}" | sed 's/|+$//g')  # Remove trailing pipe(s)
         
-	[ ! -z "$removedblobs" ] && echo -e "\t|- $bpfile\n\t   |- also parsing for uncommitted file removals: $removedblobs"
+	if [ ! -z "$removedblobs" ]; then echo -e "\t|- $bpfile\n\t   |- also parsing for uncommitted file removals: $removedblobs"; fi
 
 	# prep logging
 	rm -r out/deblobbing 2> /dev/null || true
