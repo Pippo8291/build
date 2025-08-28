@@ -17,6 +17,7 @@
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 umask 0022;
 set -uo pipefail;
+set -eE
 source "$DOS_SCRIPTS_COMMON/Shell.sh";
 
 INTERACTIVE=0
@@ -817,6 +818,8 @@ export -f deblobVendors;
 deblobVendorMk() {
 	local makefile="$1";
 	cd "$DOS_BUILD_BASE";
+        echo -e "\t|- $1"
+	awk -i inplace '!/'$makes'/' "$makefile"; #Remove all make references from makefile
 	awk -i inplace '!/'$blobs'/' "$makefile"; #Remove all blob references from makefile
 }
 export -f deblobVendorMk;
