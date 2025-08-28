@@ -582,7 +582,8 @@ commentPatches android_kernel_oneplus_sm8150.sh \
     "CVE-2025-38253/ANY/0001.patch" \
     "CVE-2024-56692/ANY/0001.patch" \
     "CVE-2024-56692/ANY/0001.patch" \
-    "CVE-2025-21629/ANY/0001.patch" 
+    "CVE-2025-21629/ANY/0001.patch" \
+    "CVE-2024-42247/^6.10/0001.patch"
     
 commentPatches android_kernel_oneplus_sm8250.sh \
     "CVE-2018-5873" \
