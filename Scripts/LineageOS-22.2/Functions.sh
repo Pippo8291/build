@@ -34,7 +34,7 @@ export -f scanWorkspaceForMalware;
 buildDevice() {
 	cd "$DOS_BUILD_BASE";
 	if [[ -d "$DOS_SIGNING_KEYS/$1" ]]; then
-		mka target-files-package otatools && processRelease $1 true $2;
+		mka -j${DOS_MAX_THREADS_BUILD} target-files-package otatools otapackage && processRelease $1 true $2;
 	else
 		echo -e "\e[0;31mNo signing keys available for $1\e[0m";
 	fi;
